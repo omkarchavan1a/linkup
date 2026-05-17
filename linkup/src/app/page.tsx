@@ -15,7 +15,7 @@ export default function Home() {
   const [maxParticipants, setMaxParticipants] = useState(10);
   const [allowChat, setAllowChat] = useState(true);
   const [allowScreenShare, setAllowScreenShare] = useState(true);
-  const [waitingRoom, setWaitingRoom] = useState(false);
+  const [waitingRoom, setWaitingRoom] = useState(true);
   const [roomExpiry, setRoomExpiry] = useState("0");
   const [showAdvanced, setShowAdvanced] = useState(false);
 

@@ -27,7 +27,7 @@ const RoomSchema: Schema = new Schema({
   settings: {
     allowChat: { type: Boolean, default: true },
     allowScreenShare: { type: Boolean, default: true },
-    waitingRoom: { type: Boolean, default: false }
+    waitingRoom: { type: Boolean, default: true }
   },
   participantCount: { type: Number, default: 0 }
 });

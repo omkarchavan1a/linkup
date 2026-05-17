@@ -12,7 +12,7 @@ import {
 } from "react-icons/fi";
 import PreJoinScreen from "@/components/PreJoinScreen";
 import Whiteboard from "@/components/Whiteboard";
-import { playJoinChime, playLeaveChime, playMessageBeep, playHandRaiseChime } from "@/lib/audio";
+import { playJoinChime, playLeaveChime, playMessageBeep, playHandRaiseChime, playLobbyAlertChime } from "@/lib/audio";
  
 interface RoomDetails {
   id: string;
@@ -286,6 +286,12 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   const [isDraggingFile, setIsDraggingFile] = useState(false);
   const [isUploadingFile, setIsUploadingFile] = useState(false);
 
+  // Active Speakers and Native Notification states
+  const [activeSpeakers, setActiveSpeakers] = useState<{ [socketId: string]: number }>({});
+  const [hasNotificationPermission, setHasNotificationPermission] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const audioAnalysersRef = useRef<{ [socketId: string]: AnalyserNode }>({});
+
   // Connection states
   const [peers, setPeers] = useState<Peer[]>([]);
   const socketRef = useRef<Socket | null>(null);
@@ -316,6 +322,22 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     }
 
     fetchRoom();
+  }, [roomId]);
+
+  // Request browser desktop notification permissions if host
+  useEffect(() => {
+    const isHost = typeof window !== "undefined" && localStorage.getItem(`host_token_${roomId}`);
+    if (isHost && typeof window !== "undefined" && "Notification" in window) {
+      if (Notification.permission === "granted") {
+        setHasNotificationPermission(true);
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            setHasNotificationPermission(true);
+          }
+        });
+      }
+    }
   }, [roomId]);
 
   // Client Countdown timer ticks
@@ -383,6 +405,20 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       if (socketRef.current) {
         socketRef.current.disconnect();
       }
+
+      // Close AudioContext and Analysers cleanly to prevent audio leaks
+      if (audioContextRef.current) {
+        try {
+          audioContextRef.current.close();
+        } catch {}
+        audioContextRef.current = null;
+      }
+      Object.values(audioAnalysersRef.current).forEach((analyser) => {
+        try {
+          analyser.disconnect();
+        } catch {}
+      });
+      audioAnalysersRef.current = {};
     };
   }, [localStream]);
 
@@ -600,6 +636,72 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
 
 
+  // Web Audio API Audio Level Monitor for Active Speaker Detection
+  const startAudioAnalysis = (socketId: string, stream: MediaStream) => {
+    try {
+      const audioTracks = stream.getAudioTracks();
+      if (audioTracks.length === 0) return;
+
+      if (!audioContextRef.current) {
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        audioContextRef.current = new AudioContextClass();
+      }
+
+      const ctx = audioContextRef.current;
+      if (ctx.state === "suspended") {
+        ctx.resume();
+      }
+
+      // Disconnect previous analyser if active
+      if (audioAnalysersRef.current[socketId]) {
+        try {
+          audioAnalysersRef.current[socketId].disconnect();
+        } catch {}
+      }
+
+      const source = ctx.createMediaStreamSource(stream);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.4;
+      source.connect(analyser);
+
+      audioAnalysersRef.current[socketId] = analyser;
+
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      const checkVolume = () => {
+        if (!audioAnalysersRef.current[socketId]) return;
+
+        analyser.getByteFrequencyData(dataArray);
+        
+        let total = 0;
+        for (let i = 0; i < bufferLength; i++) {
+          total += dataArray[i];
+        }
+        const average = total / bufferLength;
+
+        // Trigger active speaker state if speaking volume is above baseline
+        if (average > 15) {
+          setActiveSpeakers((prev) => ({
+            ...prev,
+            [socketId]: Date.now()
+          }));
+        }
+
+        setTimeout(() => {
+          if (audioAnalysersRef.current[socketId]) {
+            requestAnimationFrame(checkVolume);
+          }
+        }, 150);
+      };
+
+      checkVolume();
+    } catch (err) {
+      console.warn(`Failed to initialize audio analysis for peer ${socketId}:`, err);
+    }
+  };
+
   const proceedToJoin = (name: string, audio: boolean, video: boolean, stream: MediaStream | null, socket: Socket) => {
     setJoined(true);
     playJoinChime();
@@ -650,6 +752,11 @@ export default function RoomPage({ params }: { params: { id: string } }) {
             return p;
           })
         );
+
+        // Start volume analysis
+        if (remoteStream) {
+          startAudioAnalysis(peerSocketId, remoteStream);
+        }
       };
 
       // If this client is the initiator, create the SDP offer
@@ -886,7 +993,26 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           if (prev.some((g) => g.socketId === guest.socketId)) return prev;
           return [...prev, guest];
         });
-        playHandRaiseChime(); // Warm arpeggio alert for new arrivals
+        
+        // Play premium synthesized lobby alarm
+        playLobbyAlertChime();
+
+        // Trigger native desktop push notification
+        if ("Notification" in window && Notification.permission === "granted") {
+          try {
+            const notif = new Notification("LinkUp Join Request", {
+              body: `${guest.name} is waiting to join the meeting room.`,
+              tag: `lobby-${guest.socketId}`,
+              requireInteraction: true
+            });
+            notif.onclick = () => {
+              window.focus();
+              notif.close();
+            };
+          } catch (e) {
+            console.warn("Push notification blocked or failed:", e);
+          }
+        }
       });
     }
 
@@ -927,6 +1053,11 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         audio: audio,
       });
       setLocalStream(stream);
+
+      // Start audio analyzer for local micro-meter animation
+      if (audio && stream) {
+        startAudioAnalysis("local", stream);
+      }
     } catch (err) {
       console.error("Accessing media devices failed on join:", err);
     }
@@ -1256,6 +1387,48 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Dynamic WebRTC Outbound Bandwidth & Resolution Adaptive Scaling
+  useEffect(() => {
+    if (!joined) return;
+
+    const numPeers = peers.length;
+    console.log(`[Load Balancer] Peer count updated to ${numPeers}. Adjusting local outbound encoding parameters...`);
+
+    Object.values(pcsRef.current).forEach(async (pc) => {
+      try {
+        const senders = pc.getSenders();
+        const videoSender = senders.find((s) => s.track && s.track.kind === "video");
+        if (videoSender) {
+          const parameters = videoSender.getParameters();
+          if (!parameters.encodings) {
+            parameters.encodings = [{}];
+          }
+
+          if (numPeers >= 5) {
+            // High load: limit video bandwidth to 250kbps and scale down resolution by 2.0 (360p)
+            parameters.encodings[0].maxBitrate = 250000;
+            parameters.encodings[0].scaleResolutionDownBy = 2.0;
+          } else if (numPeers >= 3) {
+            // Medium load: limit video bandwidth to 500kbps and scale down resolution by 1.5 (480p)
+            parameters.encodings[0].maxBitrate = 500000;
+            parameters.encodings[0].scaleResolutionDownBy = 1.5;
+          } else {
+            // Low load: normal full resolution up to 1.5Mbps
+            parameters.encodings[0].maxBitrate = 1500000;
+            parameters.encodings[0].scaleResolutionDownBy = 1.0;
+          }
+
+          await videoSender.setParameters(parameters);
+          console.log(
+            `[Load Balancer] Adjusted local outbound video encoding. Bitrate cap: ${parameters.encodings[0].maxBitrate} bps, scale: ${parameters.encodings[0].scaleResolutionDownBy}`
+          );
+        }
+      } catch (err) {
+        console.warn("[Load Balancer] Failed to adjust local video encoding parameters on peer connection:", err);
+      }
+    });
+  }, [peers.length, joined]);
+
   // Automatically terminate local screen share if host disables it mid-session
   useEffect(() => {
     const isHost = typeof window !== 'undefined' ? !!localStorage.getItem(`host_token_${roomId}`) : false;
@@ -1499,6 +1672,35 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     );
   };
 
+  // Prioritized selective rendering
+  const MAX_ACTIVE_VIDEOS = 3; // Render local participant + 3 remote participants concurrently
+  
+  const getRenderPriorities = () => {
+    return [...peers].sort((a, b) => {
+      // 1. Screen sharing takes highest priority
+      const aIsSharing = screenSharer === a.socketId;
+      const bIsSharing = screenSharer === b.socketId;
+      if (aIsSharing && !bIsSharing) return -1;
+      if (!aIsSharing && bIsSharing) return 1;
+
+      // 2. Hand raised takes second priority
+      if (a.isHandRaised && !b.isHandRaised) return -1;
+      if (!a.isHandRaised && b.isHandRaised) return 1;
+
+      // 3. Active speaking takes third priority (MRU spoke time)
+      const aSpoke = activeSpeakers[a.socketId] || 0;
+      const bSpoke = activeSpeakers[b.socketId] || 0;
+      if (aSpoke > bSpoke) return -1;
+      if (bSpoke > aSpoke) return 1;
+
+      // 4. Fallback to standard order
+      return a.socketId.localeCompare(b.socketId);
+    });
+  };
+
+  const prioritizedPeers = getRenderPriorities();
+  const activePeerIds = prioritizedPeers.slice(0, MAX_ACTIVE_VIDEOS).map(p => p.socketId);
+
   // Auto-resize grid layouts based on participant count
   const totalCount = peers.length + 1;
   const gridCols = totalCount === 1 
@@ -1508,6 +1710,9 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     : totalCount === 3 
     ? "grid-cols-2 md:grid-cols-3" 
     : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
+
+  // Speaking state flags
+  const isLocalSpeaking = !!(activeSpeakers["local"] && Date.now() - activeSpeakers["local"] < 1500);
 
   return (
     <div className="min-h-screen flex bg-black text-white overflow-hidden p-4">
@@ -1547,7 +1752,13 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         <div className="flex-1 my-4 flex items-center justify-center overflow-hidden">
           <div className={`w-full h-full max-w-6xl grid ${gridCols} gap-4 auto-rows-fr`}>
             {/* Local Stream view */}
-            <div className={`relative bg-zinc-900/60 rounded-3xl overflow-hidden border group shadow-lg transition-all duration-300 ${isHandRaised ? "border-amber-500/85 shadow-[0_0_20px_rgba(245,158,11,0.3)]" : "border-white/10"}`}>
+            <div className={`relative bg-zinc-900/60 rounded-3xl overflow-hidden border group shadow-lg transition-all duration-300 ${
+              isLocalSpeaking 
+                ? "border-primary/80 ring-4 ring-primary shadow-[0_0_20px_rgba(59,130,246,0.4)]" 
+                : isHandRaised 
+                  ? "border-amber-500/85 shadow-[0_0_20px_rgba(245,158,11,0.3)]" 
+                  : "border-white/10"
+            }`}>
               {isHandRaised && (
                 <div className="absolute top-4 right-4 bg-amber-500/90 text-black font-extrabold px-3 py-1.5 rounded-xl flex items-center space-x-1 border border-amber-400 shadow-md backdrop-blur-sm z-20 animate-bounce">
                   <span>✋</span>
@@ -1564,8 +1775,13 @@ export default function RoomPage({ params }: { params: { id: string } }) {
                 />
               ) : (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500">
-                  <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-3">
-                    <FiVideoOff size={32} />
+                  <div className="relative mb-3">
+                    <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center text-zinc-400">
+                      <FiVideoOff size={32} />
+                    </div>
+                    {isLocalSpeaking && (
+                      <div className="absolute inset-0 rounded-full border-4 border-primary/30 animate-ping"></div>
+                    )}
                   </div>
                   <span className="font-semibold text-lg">{userName} (You)</span>
                 </div>
@@ -1588,46 +1804,88 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
             {/* Connected WebRTC Mesh peers view */}
             {peers.length > 0 ? (
-              [...peers].sort((a, b) => (b.isHandRaised ? 1 : 0) - (a.isHandRaised ? 1 : 0)).map((peer) => (
-                <div key={peer.socketId} className={`relative bg-zinc-900/60 rounded-3xl overflow-hidden border group shadow-lg transition-all duration-300 ${peer.isHandRaised ? "border-amber-500/85 shadow-[0_0_20px_rgba(245,158,11,0.3)]" : "border-white/10"}`}>
-                  {peer.isHandRaised && (
-                    <div className="absolute top-4 right-4 bg-amber-500/90 text-black font-extrabold px-3 py-1.5 rounded-xl flex items-center space-x-1 border border-amber-400 shadow-md backdrop-blur-sm z-20 animate-bounce">
-                      <span>✋</span>
-                      <span className="text-[10px] uppercase tracking-wider font-bold">Hand Raised</span>
-                    </div>
-                  )}
-                  {peer.videoEnabled !== false && peer.stream ? (
-                    <RemoteVideo stream={peer.stream} />
-                  ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500">
-                      <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-3 text-zinc-400">
-                        <FiVideoOff size={32} />
+              prioritizedPeers.map((peer) => {
+                const isPeerSpeaking = !!(activeSpeakers[peer.socketId] && Date.now() - activeSpeakers[peer.socketId] < 1500);
+                const isActiveRenderer = activePeerIds.includes(peer.socketId);
+
+                return (
+                  <div 
+                    key={peer.socketId} 
+                    className={`relative bg-zinc-900/60 rounded-3xl overflow-hidden border group shadow-lg transition-all duration-300 ${
+                      isPeerSpeaking 
+                        ? "border-primary/80 ring-4 ring-primary shadow-[0_0_20px_rgba(59,130,246,0.4)] animate-pulse" 
+                        : peer.isHandRaised 
+                          ? "border-amber-500/85 shadow-[0_0_20px_rgba(245,158,11,0.3)] animate-none" 
+                          : "border-white/10 animate-none"
+                    }`}
+                  >
+                    {peer.isHandRaised && (
+                      <div className="absolute top-4 right-4 bg-amber-500/90 text-black font-extrabold px-3 py-1.5 rounded-xl flex items-center space-x-1 border border-amber-400 shadow-md backdrop-blur-sm z-20 animate-bounce">
+                        <span>✋</span>
+                        <span className="text-[10px] uppercase tracking-wider font-bold">Hand Raised</span>
                       </div>
-                      <span className="font-semibold text-lg">{peer.name}</span>
+                    )}
+
+                    {peer.videoEnabled !== false && peer.stream ? (
+                      isActiveRenderer ? (
+                        <RemoteVideo stream={peer.stream} />
+                      ) : (
+                        /* Resource-saving High-Fidelity Avatar Overlay */
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-400 p-6 text-center space-y-3">
+                          <div className="relative">
+                            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 text-primary font-black text-2xl">
+                              {peer.name.slice(0, 2).toUpperCase()}
+                            </div>
+                            {isPeerSpeaking && (
+                              <div className="absolute inset-0 rounded-full border-4 border-primary/30 animate-ping"></div>
+                            )}
+                          </div>
+                          <span className="font-bold text-lg text-white truncate max-w-full">{peer.name}</span>
+                          <span className="text-[10px] bg-primary/20 text-primary font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider animate-pulse">
+                            Video paused to optimize CPU
+                          </span>
+                        </div>
+                      )
+                    ) : (
+                      /* Camera turned off overlay */
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500">
+                        <div className="relative mb-3">
+                          <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center text-zinc-400">
+                            <FiVideoOff size={32} />
+                          </div>
+                          {isPeerSpeaking && (
+                            <div className="absolute inset-0 rounded-full border-4 border-primary/30 animate-ping"></div>
+                          )}
+                        </div>
+                        <span className="font-semibold text-lg">{peer.name}</span>
+                        {peer.audioEnabled === false && (
+                          <span className="text-xs text-red-500 font-semibold mt-1 bg-red-500/10 px-2 py-0.5 rounded-full flex items-center">
+                            <FiMicOff size={10} className="mr-1" /> Muted
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    {/* Peer Audio and Video off overlay status icons */}
+                    <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 flex items-center space-x-2.5">
+                      <span className="text-xs font-semibold">{peer.name}</span>
+                      <ConnectionSpeedometer 
+                        socketId={peer.socketId} 
+                        stats={peerQualityStats[peer.socketId]} 
+                        quality={peerQuality[peer.socketId]} 
+                      />
                       {peer.audioEnabled === false && (
-                        <span className="text-xs text-red-500 font-semibold mt-1 bg-red-500/10 px-2 py-0.5 rounded-full flex items-center">
-                          <FiMicOff size={10} className="mr-1" /> Muted
-                        </span>
+                        <FiMicOff size={12} className="text-destructive animate-pulse" />
+                      )}
+                      {peer.videoEnabled === false && (
+                        <FiVideoOff size={12} className="text-destructive animate-pulse" />
+                      )}
+                      {!isActiveRenderer && peer.videoEnabled !== false && (
+                        <FiVideoOff size={12} className="text-primary animate-pulse" title="Video paused automatically to save bandwidth" />
                       )}
                     </div>
-                  )}
-                  {/* Peer Audio and Video off overlay status icons */}
-                  <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 flex items-center space-x-2.5">
-                    <span className="text-xs font-semibold">{peer.name}</span>
-                    <ConnectionSpeedometer 
-                      socketId={peer.socketId} 
-                      stats={peerQualityStats[peer.socketId]} 
-                      quality={peerQuality[peer.socketId]} 
-                    />
-                    {peer.audioEnabled === false && (
-                      <FiMicOff size={12} className="text-destructive animate-pulse" />
-                    )}
-                    {peer.videoEnabled === false && (
-                      <FiVideoOff size={12} className="text-destructive animate-pulse" />
-                    )}
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <div className="relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-white/5 flex flex-col items-center justify-center text-center p-6 min-h-[300px] w-full">
                 <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">

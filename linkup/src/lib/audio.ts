@@ -138,3 +138,34 @@ export function playHandRaiseChime() {
     console.warn('Audio synthesis blocked by user gesture settings:', err);
   }
 }
+
+export function playLobbyAlertChime() {
+  try {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+
+    // Dual-tone synthesizer alert (High C6 and E6 in sequence, repeating twice)
+    const tones = [880.00, 1046.50, 880.00, 1318.51];
+    tones.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+
+      // Smooth modern envelop
+      gainNode.gain.setValueAtTime(0, now + idx * 0.12);
+      gainNode.gain.linearRampToValueAtTime(0.08, now + idx * 0.12 + 0.03);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.12 + 0.22);
+
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      osc.start(now + idx * 0.12);
+      osc.stop(now + idx * 0.12 + 0.25);
+    });
+  } catch (err) {
+    console.warn('Audio synthesis blocked by user gesture settings:', err);
+  }
+}
+
