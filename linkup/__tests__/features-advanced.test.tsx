@@ -74,7 +74,7 @@ class MockRTCPeerConnection {
   close = jest.fn();
   getSenders = jest.fn().mockReturnValue([]);
   getStats = jest.fn().mockResolvedValue(new Map());
-  
+
   createOffer = jest.fn().mockResolvedValue({ sdp: 'mock-offer-sdp', type: 'offer' });
   createAnswer = jest.fn().mockResolvedValue({ sdp: 'mock-answer-sdp', type: 'answer' });
   setLocalDescription = jest.fn();
@@ -129,7 +129,7 @@ describe('LinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expir
     const joinButton = screen.getByRole('button', { name: /Join Room/i });
 
     fireEvent.change(nameInput, { target: { value: 'Guest Alice' } });
-    
+
     await act(async () => {
       fireEvent.click(joinButton);
     });
@@ -200,7 +200,7 @@ describe('LinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expir
     const joinButton = screen.getByRole('button', { name: /Join Room/i });
 
     fireEvent.change(nameInput, { target: { value: 'Host Bob' } });
-    
+
     await act(async () => {
       fireEvent.click(joinButton);
     });
@@ -228,7 +228,7 @@ describe('LinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expir
 
     // Click Admit to accept guest
     const admitBtn = screen.getByRole('button', { name: /Admit/i });
-    
+
     await act(async () => {
       fireEvent.click(admitBtn);
     });
@@ -274,7 +274,7 @@ describe('LinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expir
     const joinButton = screen.getByRole('button', { name: /Join Room/i });
 
     fireEvent.change(nameInput, { target: { value: 'Dave' } });
-    
+
     await act(async () => {
       fireEvent.click(joinButton);
     });
@@ -330,7 +330,7 @@ describe('LinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expir
     const joinButton = screen.getByRole('button', { name: /Join Room/i });
 
     fireEvent.change(nameInput, { target: { value: 'Eve' } });
-    
+
     await act(async () => {
       fireEvent.click(joinButton);
     });
@@ -347,7 +347,7 @@ describe('LinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expir
 
     // Pick "❤️" reaction
     const heartBtn = screen.getByLabelText('Send ❤️ reaction');
-    
+
     await act(async () => {
       fireEvent.click(heartBtn);
     });
@@ -403,7 +403,7 @@ describe('LinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expir
     const joinButton = screen.getByRole('button', { name: /Join Room/i });
 
     fireEvent.change(nameInput, { target: { value: 'Frank' } });
-    
+
     await act(async () => {
       fireEvent.click(joinButton);
     });

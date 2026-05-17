@@ -1,0 +1,2811 @@
+﻿node.exe : [0m[7m[1m[31m FAIL [39m[22m[27m[0m [2m__tests__/[22m[1mwebrtc-advanced.test.tsx[22m
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\oomka\AppData\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([0m[7m[1m[3...d.test.tsx[22m:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  [1mΓùÅ [22mConsole
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[33m          at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[33m          at listOnTimeout (node:internal/timers:549:9)[39m
+[33m          at processTimers (node:internal/timers:523:7)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+[1m[31m  [1mΓùÅ [22m[1mAdvanced WebRTC and Encryption Layer Integration Test Suite ΓÇ║ verifies room access 
+credentials check for locked channels and correctly joins[39m[22m
+
+    Unable to find an element with the text: Bob (You). This could be because the text is broken up by multiple 
+elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-h-screen flex flex-col items-center justify-center p-4 relative 
+overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/3 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+            [33mstyle[39m=[32m"animation-delay: 2s;"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative z-10 w-full max-w-3xl glass rounded-3xl p-8 shadow-2xl border 
+border-border/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-col items-center space-y-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"relative w-full aspect-video bg-black/40 rounded-2xl overflow-hidden border 
+border-border/60 shadow-inner flex items-center justify-center"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-muted-foreground flex flex-col items-center space-y-2"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"w-16 h-16 bg-muted rounded-full flex items-center justify-center"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"28"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"28"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 
+2 2v3.34l1 1L23 7v10"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"1"[39m
+                        [33mx2[39m=[32m"23"[39m
+                        [33my1[39m=[32m"1"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"text-sm"[39m
+                  [36m>[39m
+                    [0mCamera is off[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-3 
+bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 10v2a7 7 0 0 1-14 0v-2"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"12"[39m
+                        [33mx2[39m=[32m"12"[39m
+                        [33my1[39m=[32m"19"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"8"[39m
+                        [33mx2[39m=[32m"16"[39m
+                        [33my1[39m=[32m"23"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<polygon[39m
+                        [33mpoints[39m=[32m"23 7 16 12 23 17 23 7"[39m
+                      [36m/>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"15"[39m
+                        [33mx[39m=[32m"1"[39m
+                        [33my[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"space-y-6"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-xs font-semibold tracking-wider text-primary uppercase"[39m
+                [36m>[39m
+                  [0mJoining Meeting[0m
+                [36m</span>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"text-3xl font-extrabold tracking-tight mt-1"[39m
+                [36m>[39m
+                  [0mLocked Operational Channel[0m
+                [36m</h2>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm text-muted-foreground mt-2"[39m
+                [36m>[39m
+                  [0mPrepare your name and check your device settings before entering the room.[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<form[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"block text-xs font-semibold text-muted-foreground uppercase mb-2"[39m
+                    [33mfor[39m=[32m"display-name"[39m
+                  [36m>[39m
+                    [0mYour Display Name[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full bg-background/50 border border-border rounded-xl px-4 py-3 
+outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"[39m
+                    [33mid[39m=[32m"display-name"[39m
+                    [33mplaceholder[39m=[32m"Enter display name..."[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"Bob"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"block text-xs font-semibold text-muted-foreground uppercase mb-2"[39m
+                    [33mfor[39m=[32m"room-password"[39m
+                  [36m>[39m
+                    [0mSecurity Room Password[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full bg-background/50 border border-border rounded-xl px-4 py-3 
+outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"[39m
+                    [33mid[39m=[32m"room-password"[39m
+                    [33mplaceholder[39m=[32m"Enter room password..."[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mtype[39m=[32m"password"[39m
+                    [33mvalue[39m=[32m"correct_password"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"w-full group py-4 bg-primary text-primary-foreground font-semibold rounded-xl 
+flex items-center justify-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] 
+active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
+disabled:hover:scale-100 disabled:hover:shadow-none"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mJoin Room[0m
+                  [36m</span>[39m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"group-hover:translate-x-1 transition-transform"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"5"[39m
+                      [33mx2[39m=[32m"19"[39m
+                      [33my1[39m=[32m"12"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<polyline[39m
+                      [33mpoints[39m=[32m"12 5 19 12 12 19"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</form>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+[2m[22m
+[2m    [0m [90m 161 |[39m[22m
+[2m     [90m 162 |[39m     [90m// Verify participant is logged into secure room[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 163 |[39m     [36mawait[39m waitFor(() [33m=>[39m {[22m
+[2m     [90m     |[39m                  [31m[1m^[22m[2m[39m[22m
+[2m     [90m 164 |[39m       expect(screen[33m.[39mgetByText([32m'Bob 
+(You)'[39m))[33m.[39mtoBeInTheDocument()[33m;[39m[22m
+[2m     [90m 165 |[39m     })[33m;[39m[22m
+[2m     [90m 166 |[39m   })[33m;[39m[0m[22m
+[2m[22m
+[2m      [2mat waitForWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/dom/dist/wait-for.js[2m:163:27)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/webrtc-advanced.test.tsx[2m:163:18)[22m[2m[22m
+
+[1m[31m  [1mΓùÅ [22m[1mAdvanced WebRTC and Encryption Layer Integration Test Suite ΓÇ║ triggers local screen 
+sharing session and swaps track dynamically across peer connections[39m[22m
+
+    Unable to find a label with the text of: Toggle Screen Sharing
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-h-screen flex flex-col items-center justify-center p-4 relative 
+overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/3 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+            [33mstyle[39m=[32m"animation-delay: 2s;"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative z-10 w-full max-w-3xl glass rounded-3xl p-8 shadow-2xl border 
+border-border/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-col items-center space-y-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"relative w-full aspect-video bg-black/40 rounded-2xl overflow-hidden border 
+border-border/60 shadow-inner flex items-center justify-center"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-muted-foreground flex flex-col items-center space-y-2"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"w-16 h-16 bg-muted rounded-full flex items-center justify-center"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"28"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"28"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 
+2 2v3.34l1 1L23 7v10"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"1"[39m
+                        [33mx2[39m=[32m"23"[39m
+                        [33my1[39m=[32m"1"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"text-sm"[39m
+                  [36m>[39m
+                    [0mCamera is off[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-3 
+bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 10v2a7 7 0 0 1-14 0v-2"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"12"[39m
+                        [33mx2[39m=[32m"12"[39m
+                        [33my1[39m=[32m"19"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"8"[39m
+                        [33mx2[39m=[32m"16"[39m
+                        [33my1[39m=[32m"23"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<polygon[39m
+                        [33mpoints[39m=[32m"23 7 16 12 23 17 23 7"[39m
+                      [36m/>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"15"[39m
+                        [33mx[39m=[32m"1"[39m
+                        [33my[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"space-y-6"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-xs font-semibold tracking-wider text-primary uppercase"[39m
+                [36m>[39m
+                  [0mJoining Meeting[0m
+                [36m</span>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"text-3xl font-extrabold tracking-tight mt-1"[39m
+                [36m>[39m
+                  [0mWidescreen Workspace Channel[0m
+                [36m</h2>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm text-muted-foreground mt-2"[39m
+                [36m>[39m
+                  [0mPrepare your name and check your device settings before entering the room.[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<form[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"block text-xs font-semibold text-muted-foreground uppercase mb-2"[39m
+                    [33mfor[39m=[32m"display-name"[39m
+                  [36m>[39m
+                    [0mYour Display Name[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full bg-background/50 border border-border rounded-xl px-4 py-3 
+outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"[39m
+                    [33mid[39m=[32m"display-name"[39m
+                    [33mplaceholder[39m=[32m"Enter display name..."[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"Charlie"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"w-full group py-4 bg-primary text-primary-foreground font-semibold rounded-xl 
+flex items-center justify-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] 
+active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
+disabled:hover:scale-100 disabled:hover:shadow-none"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mJoin Room[0m
+                  [36m</span>[39m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"group-hover:translate-x-1 transition-transform"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"5"[39m
+                      [33mx2[39m=[32m"19"[39m
+                      [33my1[39m=[32m"12"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<polyline[39m
+                      [33mpoints[39m=[32m"12 5 19 12 12 19"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</form>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+[2m[22m
+[2m    [0m [90m 202 |[39m[22m
+[2m     [90m 203 |[39m     [90m// Expect controls panel to load[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 204 |[39m     [36mawait[39m waitFor(() [33m=>[39m {[22m
+[2m     [90m     |[39m                  [31m[1m^[22m[2m[39m[22m
+[2m     [90m 205 |[39m       expect(screen[33m.[39mgetByLabelText([32m'Toggle Screen 
+Sharing'[39m))[33m.[39mtoBeInTheDocument()[33m;[39m[22m
+[2m     [90m 206 |[39m     })[33m;[39m[22m
+[2m     [90m 207 |[39m[0m[22m
+[2m[22m
+[2m      [2mat waitForWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/dom/dist/wait-for.js[2m:163:27)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/webrtc-advanced.test.tsx[2m:204:18)[22m[2m[22m
+
+[1m[31m  [1mΓùÅ [22m[1mAdvanced WebRTC and Encryption Layer Integration Test Suite ΓÇ║ renders interactive visual 
+telemetry speedometers and triggers hover telemetry HUD cards[39m[22m
+
+    Unable to find an element by: [data-testid="telemetry-local"]
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-h-screen flex flex-col items-center justify-center p-4 relative 
+overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/3 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+            [33mstyle[39m=[32m"animation-delay: 2s;"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative z-10 w-full max-w-3xl glass rounded-3xl p-8 shadow-2xl border 
+border-border/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-col items-center space-y-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"relative w-full aspect-video bg-black/40 rounded-2xl overflow-hidden border 
+border-border/60 shadow-inner flex items-center justify-center"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-muted-foreground flex flex-col items-center space-y-2"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"w-16 h-16 bg-muted rounded-full flex items-center justify-center"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"28"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"28"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 
+2 2v3.34l1 1L23 7v10"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"1"[39m
+                        [33mx2[39m=[32m"23"[39m
+                        [33my1[39m=[32m"1"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"text-sm"[39m
+                  [36m>[39m
+                    [0mCamera is off[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-3 
+bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 10v2a7 7 0 0 1-14 0v-2"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"12"[39m
+                        [33mx2[39m=[32m"12"[39m
+                        [33my1[39m=[32m"19"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"8"[39m
+                        [33mx2[39m=[32m"16"[39m
+                        [33my1[39m=[32m"23"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<polygon[39m
+                        [33mpoints[39m=[32m"23 7 16 12 23 17 23 7"[39m
+                      [36m/>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"15"[39m
+                        [33mx[39m=[32m"1"[39m
+                        [33my[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"space-y-6"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-xs font-semibold tracking-wider text-primary uppercase"[39m
+                [36m>[39m
+                  [0mJoining Meeting[0m
+                [36m</span>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"text-3xl font-extrabold tracking-tight mt-1"[39m
+                [36m>[39m
+                  [0mTelemetry Diagnostics Channel[0m
+                [36m</h2>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm text-muted-foreground mt-2"[39m
+                [36m>[39m
+                  [0mPrepare your name and check your device settings before entering the room.[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<form[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"block text-xs font-semibold text-muted-foreground uppercase mb-2"[39m
+                    [33mfor[39m=[32m"display-name"[39m
+                  [36m>[39m
+                    [0mYour Display Name[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full bg-background/50 border border-border rounded-xl px-4 py-3 
+outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"[39m
+                    [33mid[39m=[32m"display-name"[39m
+                    [33mplaceholder[39m=[32m"Enter display name..."[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"Delta"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"w-full group py-4 bg-primary text-primary-foreground font-semibold rounded-xl 
+flex items-center justify-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] 
+active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
+disabled:hover:scale-100 disabled:hover:shadow-none"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mJoin Room[0m
+                  [36m</span>[39m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"group-hover:translate-x-1 transition-transform"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"5"[39m
+                      [33mx2[39m=[32m"19"[39m
+                      [33my1[39m=[32m"12"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<polyline[39m
+                      [33mpoints[39m=[32m"12 5 19 12 12 19"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</form>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+[2m[22m
+[2m    [0m [90m 259 |[39m[22m
+[2m     [90m 260 |[39m     [90m// Expect speedometer elements to load in the local video card view[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 261 |[39m     [36mawait[39m waitFor(() [33m=>[39m {[22m
+[2m     [90m     |[39m                  [31m[1m^[22m[2m[39m[22m
+[2m     [90m 262 |[39m       
+expect(screen[33m.[39mgetByTestId([32m'telemetry-local'[39m))[33m.[39mtoBeInTheDocument()[33m;[39m[22m
+[2m     [90m 263 |[39m     })[33m;[39m[22m
+[2m     [90m 264 |[39m[0m[22m
+[2m[22m
+[2m      [2mat waitForWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/dom/dist/wait-for.js[2m:163:27)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/webrtc-advanced.test.tsx[2m:261:18)[22m[2m[22m
+
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2m__tests__/[22m[1mfeatures-advanced.test.tsx[22m
+  [1mΓùÅ [22mConsole
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Waiting room: connected guest socket emitting waiting lobby subscription
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1284:19)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Admitted successfully by the host!
+[2m[22m
+[2m      [2mat Object.log [as waiting-room:approved] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1289:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as waiting-room:approved] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1291:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-advanced.test.tsx:159:49[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-advanced.test.tsx:157:14)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as waiting-room:approved] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1291:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-advanced.test.tsx[2m:159:49[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-advanced.test.tsx[2m:157:14)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+[1m[31m  [1mΓùÅ [22m[1mLinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expiry ΓÇ║ verifies host 
+can view pending guests and approve them in the lobby[39m[22m
+
+    Unable to find an element with the text: Host Bob (You). This could be because the text is broken up by multiple 
+elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-h-screen flex flex-col items-center justify-center p-4 relative 
+overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/3 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+            [33mstyle[39m=[32m"animation-delay: 2s;"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative z-10 w-full max-w-3xl glass rounded-3xl p-8 shadow-2xl border 
+border-border/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-col items-center space-y-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"relative w-full aspect-video bg-black/40 rounded-2xl overflow-hidden border 
+border-border/60 shadow-inner flex items-center justify-center"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-muted-foreground flex flex-col items-center space-y-2"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"w-16 h-16 bg-muted rounded-full flex items-center justify-center"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"28"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"28"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 
+2 2v3.34l1 1L23 7v10"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"1"[39m
+                        [33mx2[39m=[32m"23"[39m
+                        [33my1[39m=[32m"1"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"text-sm"[39m
+                  [36m>[39m
+                    [0mCamera is off[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-3 
+bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 10v2a7 7 0 0 1-14 0v-2"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"12"[39m
+                        [33mx2[39m=[32m"12"[39m
+                        [33my1[39m=[32m"19"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"8"[39m
+                        [33mx2[39m=[32m"16"[39m
+                        [33my1[39m=[32m"23"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<polygon[39m
+                        [33mpoints[39m=[32m"23 7 16 12 23 17 23 7"[39m
+                      [36m/>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"15"[39m
+                        [33mx[39m=[32m"1"[39m
+                        [33my[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"space-y-6"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-xs font-semibold tracking-wider text-primary uppercase"[39m
+                [36m>[39m
+                  [0mJoining Meeting[0m
+                [36m</span>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"text-3xl font-extrabold tracking-tight mt-1"[39m
+                [36m>[39m
+                  [0mHost Panel Channel[0m
+                [36m</h2>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm text-muted-foreground mt-2"[39m
+                [36m>[39m
+                  [0mPrepare your name and check your device settings before entering the room.[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<form[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"block text-xs font-semibold text-muted-foreground uppercase mb-2"[39m
+                    [33mfor[39m=[32m"display-name"[39m
+                  [36m>[39m
+                    [0mYour Display Name[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full bg-background/50 border border-border rounded-xl px-4 py-3 
+outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"[39m
+                    [33mid[39m=[32m"display-name"[39m
+                    [33mplaceholder[39m=[32m"Enter display name..."[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"Host Bob"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"w-full group py-4 bg-primary text-primary-foreground font-semibold rounded-xl 
+flex items-center justify-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] 
+active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
+disabled:hover:scale-100 disabled:hover:shadow-none"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mJoin Room[0m
+                  [36m</span>[39m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"group-hover:translate-x-1 transition-transform"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"5"[39m
+                      [33mx2[39m=[32m"19"[39m
+                      [33my1[39m=[32m"12"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<polyline[39m
+                      [33mpoints[39m=[32m"12 5 19 12 12 19"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</form>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+[2m[22m
+[2m    [0m [90m 207 |[39m[22m
+[2m     [90m 208 |[39m     [90m// Check the host enters directly without being held in wait lobby[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 209 |[39m     [36mawait[39m waitFor(() [33m=>[39m {[22m
+[2m     [90m     |[39m                  [31m[1m^[22m[2m[39m[22m
+[2m     [90m 210 |[39m       expect(screen[33m.[39mgetByText([32m'Host Bob 
+(You)'[39m))[33m.[39mtoBeInTheDocument()[33m;[39m[22m
+[2m     [90m 211 |[39m     })[33m;[39m[22m
+[2m     [90m 212 |[39m[0m[22m
+[2m[22m
+[2m      [2mat waitForWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/dom/dist/wait-for.js[2m:163:27)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-advanced.test.tsx[2m:209:18)[22m[2m[22m
+
+[1m[31m  [1mΓùÅ [22m[1mLinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expiry ΓÇ║ triggers local 
+hand raise toggle status and displays it on video grids[39m[22m
+
+    Unable to find a label with the text of: Toggle Raise Hand
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-h-screen flex flex-col items-center justify-center p-4 relative 
+overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/3 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+            [33mstyle[39m=[32m"animation-delay: 2s;"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative z-10 w-full max-w-3xl glass rounded-3xl p-8 shadow-2xl border 
+border-border/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-col items-center space-y-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"relative w-full aspect-video bg-black/40 rounded-2xl overflow-hidden border 
+border-border/60 shadow-inner flex items-center justify-center"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-muted-foreground flex flex-col items-center space-y-2"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"w-16 h-16 bg-muted rounded-full flex items-center justify-center"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"28"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"28"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 
+2 2v3.34l1 1L23 7v10"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"1"[39m
+                        [33mx2[39m=[32m"23"[39m
+                        [33my1[39m=[32m"1"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"text-sm"[39m
+                  [36m>[39m
+                    [0mCamera is off[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-3 
+bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 10v2a7 7 0 0 1-14 0v-2"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"12"[39m
+                        [33mx2[39m=[32m"12"[39m
+                        [33my1[39m=[32m"19"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"8"[39m
+                        [33mx2[39m=[32m"16"[39m
+                        [33my1[39m=[32m"23"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<polygon[39m
+                        [33mpoints[39m=[32m"23 7 16 12 23 17 23 7"[39m
+                      [36m/>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"15"[39m
+                        [33mx[39m=[32m"1"[39m
+                        [33my[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"space-y-6"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-xs font-semibold tracking-wider text-primary uppercase"[39m
+                [36m>[39m
+                  [0mJoining Meeting[0m
+                [36m</span>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"text-3xl font-extrabold tracking-tight mt-1"[39m
+                [36m>[39m
+                  [0mHand Raise Channel[0m
+                [36m</h2>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm text-muted-foreground mt-2"[39m
+                [36m>[39m
+                  [0mPrepare your name and check your device settings before entering the room.[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<form[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"block text-xs font-semibold text-muted-foreground uppercase mb-2"[39m
+                    [33mfor[39m=[32m"display-name"[39m
+                  [36m>[39m
+                    [0mYour Display Name[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full bg-background/50 border border-border rounded-xl px-4 py-3 
+outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"[39m
+                    [33mid[39m=[32m"display-name"[39m
+                    [33mplaceholder[39m=[32m"Enter display name..."[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"Dave"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"w-full group py-4 bg-primary text-primary-foreground font-semibold rounded-xl 
+flex items-center justify-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] 
+active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
+disabled:hover:scale-100 disabled:hover:shadow-none"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mJoin Room[0m
+                  [36m</span>[39m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"group-hover:translate-x-1 transition-transform"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"5"[39m
+                      [33mx2[39m=[32m"19"[39m
+                      [33my1[39m=[32m"12"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<polyline[39m
+                      [33mpoints[39m=[32m"12 5 19 12 12 19"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</form>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+[2m[22m
+[2m    [0m [90m 281 |[39m[22m
+[2m     [90m 282 |[39m     [90m// Look for raise hand button[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 283 |[39m     [36mawait[39m waitFor(() [33m=>[39m {[22m
+[2m     [90m     |[39m                  [31m[1m^[22m[2m[39m[22m
+[2m     [90m 284 |[39m       expect(screen[33m.[39mgetByLabelText([32m'Toggle Raise 
+Hand'[39m))[33m.[39mtoBeInTheDocument()[33m;[39m[22m
+[2m     [90m 285 |[39m     })[33m;[39m[22m
+[2m     [90m 286 |[39m[0m[22m
+[2m[22m
+[2m      [2mat waitForWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/dom/dist/wait-for.js[2m:163:27)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-advanced.test.tsx[2m:283:18)[22m[2m[22m
+
+[1m[31m  [1mΓùÅ [22m[1mLinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expiry ΓÇ║ verifies 
+reaction selection emits to socket and renders on float layer HUD[39m[22m
+
+    Unable to find a label with the text of: Send Reaction
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-h-screen flex flex-col items-center justify-center p-4 relative 
+overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/3 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+            [33mstyle[39m=[32m"animation-delay: 2s;"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative z-10 w-full max-w-3xl glass rounded-3xl p-8 shadow-2xl border 
+border-border/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-col items-center space-y-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"relative w-full aspect-video bg-black/40 rounded-2xl overflow-hidden border 
+border-border/60 shadow-inner flex items-center justify-center"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-muted-foreground flex flex-col items-center space-y-2"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"w-16 h-16 bg-muted rounded-full flex items-center justify-center"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"28"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"28"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 
+2 2v3.34l1 1L23 7v10"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"1"[39m
+                        [33mx2[39m=[32m"23"[39m
+                        [33my1[39m=[32m"1"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"text-sm"[39m
+                  [36m>[39m
+                    [0mCamera is off[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-3 
+bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 10v2a7 7 0 0 1-14 0v-2"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"12"[39m
+                        [33mx2[39m=[32m"12"[39m
+                        [33my1[39m=[32m"19"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"8"[39m
+                        [33mx2[39m=[32m"16"[39m
+                        [33my1[39m=[32m"23"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<polygon[39m
+                        [33mpoints[39m=[32m"23 7 16 12 23 17 23 7"[39m
+                      [36m/>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"15"[39m
+                        [33mx[39m=[32m"1"[39m
+                        [33my[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"space-y-6"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-xs font-semibold tracking-wider text-primary uppercase"[39m
+                [36m>[39m
+                  [0mJoining Meeting[0m
+                [36m</span>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"text-3xl font-extrabold tracking-tight mt-1"[39m
+                [36m>[39m
+                  [0mReaction Emitter Channel[0m
+                [36m</h2>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm text-muted-foreground mt-2"[39m
+                [36m>[39m
+                  [0mPrepare your name and check your device settings before entering the room.[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<form[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"block text-xs font-semibold text-muted-foreground uppercase mb-2"[39m
+                    [33mfor[39m=[32m"display-name"[39m
+                  [36m>[39m
+                    [0mYour Display Name[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full bg-background/50 border border-border rounded-xl px-4 py-3 
+outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"[39m
+                    [33mid[39m=[32m"display-name"[39m
+                    [33mplaceholder[39m=[32m"Enter display name..."[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"Eve"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"w-full group py-4 bg-primary text-primary-foreground font-semibold rounded-xl 
+flex items-center justify-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] 
+active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
+disabled:hover:scale-100 disabled:hover:shadow-none"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mJoin Room[0m
+                  [36m</span>[39m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"group-hover:translate-x-1 transition-transform"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"5"[39m
+                      [33mx2[39m=[32m"19"[39m
+                      [33my1[39m=[32m"12"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<polyline[39m
+                      [33mpoints[39m=[32m"12 5 19 12 12 19"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</form>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+[2m[22m
+[2m    [0m [90m 337 |[39m[22m
+[2m     [90m 338 |[39m     [90m// Check reaction selector button trigger is rendered[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 339 |[39m     [36mawait[39m waitFor(() [33m=>[39m {[22m
+[2m     [90m     |[39m                  [31m[1m^[22m[2m[39m[22m
+[2m     [90m 340 |[39m       expect(screen[33m.[39mgetByLabelText([32m'Send 
+Reaction'[39m))[33m.[39mtoBeInTheDocument()[33m;[39m[22m
+[2m     [90m 341 |[39m     })[33m;[39m[22m
+[2m     [90m 342 |[39m[0m[22m
+[2m[22m
+[2m      [2mat waitForWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/dom/dist/wait-for.js[2m:163:27)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-advanced.test.tsx[2m:339:18)[22m[2m[22m
+
+[1m[31m  [1mΓùÅ [22m[1mLinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expiry ΓÇ║ evicts 
+participants instantly when the countdown timer hits 0[39m[22m
+
+    Unable to find an element with the text: /Time Left:/i. This could be because the text is broken up by multiple 
+elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-h-screen flex flex-col items-center justify-center p-4 relative 
+overflow-hidden"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"absolute top-1/3 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply 
+filter blur-3xl opacity-70 animate-blob"[39m
+            [33mstyle[39m=[32m"animation-delay: 2s;"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative z-10 w-full max-w-3xl glass rounded-3xl p-8 shadow-2xl border 
+border-border/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-col items-center space-y-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"relative w-full aspect-video bg-black/40 rounded-2xl overflow-hidden border 
+border-border/60 shadow-inner flex items-center justify-center"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"text-muted-foreground flex flex-col items-center space-y-2"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"w-16 h-16 bg-muted rounded-full flex items-center justify-center"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"28"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"28"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 
+2 2v3.34l1 1L23 7v10"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"1"[39m
+                        [33mx2[39m=[32m"23"[39m
+                        [33my1[39m=[32m"1"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</div>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"text-sm"[39m
+                  [36m>[39m
+                    [0mCamera is off[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-3 
+bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M19 10v2a7 7 0 0 1-14 0v-2"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"12"[39m
+                        [33mx2[39m=[32m"12"[39m
+                        [33my1[39m=[32m"19"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                      [36m<line[39m
+                        [33mx1[39m=[32m"8"[39m
+                        [33mx2[39m=[32m"16"[39m
+                        [33my1[39m=[32m"23"[39m
+                        [33my2[39m=[32m"23"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"p-3 rounded-full transition-all duration-300 bg-primary 
+text-primary-foreground"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<polygon[39m
+                        [33mpoints[39m=[32m"23 7 16 12 23 17 23 7"[39m
+                      [36m/>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"15"[39m
+                        [33mx[39m=[32m"1"[39m
+                        [33my[39m=[32m"5"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"space-y-6"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-xs font-semibold tracking-wider text-primary uppercase"[39m
+                [36m>[39m
+                  [0mJoining Meeting[0m
+                [36m</span>[39m
+                [36m<h2[39m
+                  [33mclass[39m=[32m"text-3xl font-extrabold tracking-tight mt-1"[39m
+                [36m>[39m
+                  [0mExpiry Limited Channel[0m
+                [36m</h2>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-sm text-muted-foreground mt-2"[39m
+                [36m>[39m
+                  [0mPrepare your name and check your device settings before entering the room.[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<form[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"block text-xs font-semibold text-muted-foreground uppercase mb-2"[39m
+                    [33mfor[39m=[32m"display-name"[39m
+                  [36m>[39m
+                    [0mYour Display Name[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full bg-background/50 border border-border rounded-xl px-4 py-3 
+outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"[39m
+                    [33mid[39m=[32m"display-name"[39m
+                    [33mplaceholder[39m=[32m"Enter display name..."[39m
+                    [33mrequired[39m=[32m""[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"Frank"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"w-full group py-4 bg-primary text-primary-foreground font-semibold rounded-xl 
+flex items-center justify-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] 
+active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
+disabled:hover:scale-100 disabled:hover:shadow-none"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<span>[39m
+                    [0mJoin Room[0m
+                  [36m</span>[39m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"group-hover:translate-x-1 transition-transform"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"1em"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"1em"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"5"[39m
+                      [33mx2[39m=[32m"19"[39m
+                      [33my1[39m=[32m"12"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<polyline[39m
+                      [33mpoints[39m=[32m"12 5 19 12 12 19"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</form>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+[2m[22m
+[2m    [0m [90m 410 |[39m[22m
+[2m     [90m 411 |[39m     [90m// Wait for the room to render the clock HUD[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 412 |[39m     [36mawait[39m waitFor(() [33m=>[39m {[22m
+[2m     [90m     |[39m                  [31m[1m^[22m[2m[39m[22m
+[2m     [90m 413 |[39m       expect(screen[33m.[39mgetByText([35m/Time 
+Left:/i[39m))[33m.[39mtoBeInTheDocument()[33m;[39m[22m
+[2m     [90m 414 |[39m     })[33m;[39m[22m
+[2m     [90m 415 |[39m[0m[22m
+[2m[22m
+[2m      [2mat waitForWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/dom/dist/wait-for.js[2m:163:27)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-advanced.test.tsx[2m:412:18)[22m[2m[22m
+
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2m__tests__/api/[22m[1mrooms.test.ts[22m
+[1m[31m  [1mΓùÅ [22m[1mRooms API Endpoints ΓÇ║ GET /api/rooms/[id] ΓÇ║ returns a 404 if the room does not 
+exist[39m[22m
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m404[39m
+    Received: [31m400[39m
+[2m[22m
+[2m    [0m [90m 51 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m 
+[33mGET[39m(mockReq[33m,[39m { params[33m:[39m { id[33m:[39m [32m'test-id'[39m } })[33m;[39m[22m
+[2m     [90m 52 |[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 53 |[39m       
+expect(response[33m.[39mstatus)[33m.[39mtoBe([35m404[39m)[33m;[39m[22m
+[2m     [90m    |[39m                               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 54 |[39m       [36mconst[39m body [33m=[39m [36mawait[39m 
+response[33m.[39mjson()[33m;[39m[22m
+[2m     [90m 55 |[39m       expect(body[33m.[39msuccess)[33m.[39mtoBe([36mfalse[39m)[33m;[39m[22m
+[2m     [90m 56 |[39m       expect(body[33m.[39merror)[33m.[39mtoBe([32m'Room not 
+found'[39m)[33m;[39m[0m[22m
+[2m[22m
+[2m      [2mat Object.toBe (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/api/rooms.test.ts[2m:53:31)[22m[2m[22m
+
+[1m[31m  [1mΓùÅ [22m[1mRooms API Endpoints ΓÇ║ GET /api/rooms/[id] ΓÇ║ returns room details if the room is found 
+and not expired[39m[22m
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m200[39m
+    Received: [31m400[39m
+[2m[22m
+[2m    [0m [90m 77 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m 
+[33mGET[39m(mockReq[33m,[39m { params[33m:[39m { id[33m:[39m [32m'test-id'[39m } })[33m;[39m[22m
+[2m     [90m 78 |[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 79 |[39m       
+expect(response[33m.[39mstatus)[33m.[39mtoBe([35m200[39m)[33m;[39m[22m
+[2m     [90m    |[39m                               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 80 |[39m       [36mconst[39m body [33m=[39m [36mawait[39m 
+response[33m.[39mjson()[33m;[39m[22m
+[2m     [90m 81 |[39m       expect(body[33m.[39msuccess)[33m.[39mtoBe([36mtrue[39m)[33m;[39m[22m
+[2m     [90m 82 |[39m       
+expect(body[33m.[39mroom[33m.[39mid)[33m.[39mtoBe([32m'test-id'[39m)[33m;[39m[0m[22m
+[2m[22m
+[2m      [2mat Object.toBe (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/api/rooms.test.ts[2m:79:31)[22m[2m[22m
+
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2me2e/[22m[1mlobby-admission.spec.js[22m
+  [1mΓùÅ [22mTest suite failed to run
+
+    Playwright Test needs to be invoked via 'npx playwright test' and excluded from Jest test runs.
+    Creating one directory for Playwright tests and one for Jest is the recommended way of doing it.
+    See https://playwright.dev/docs/intro for more information about Playwright Test.
+
+    [0m [90m 117 |[39m [90m// TEST SUITE A: HOST ADMITS GUEST[39m
+     [90m 118 |[39m [90m// ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö
+ÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓ
+öÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ[39m
+    [31m[1m>[22m[39m[90m 119 |[39m test[33m.[39mdescribe([32m'Lobby ΓÇö Host ADMITS guest'[39m[33m,[39m () 
+[33m=>[39m {
+     [90m     |[39m      [31m[1m^[22m[39m
+     [90m 120 |[39m
+     [90m 121 |[39m   test([32m'Guest enters lobby ΓåÆ Host sees notification ΓåÆ Host admits ΓåÆ Guest joins 
+room'[39m[33m,[39m [36masync[39m ({ request[33m,[39m browser }) [33m=>[39m {
+     [90m 122 |[39m[0m
+
+      [2mat throwIfRunningInsideJest (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m../../../../../../linkup/node_modules/playwright/lib/common/index.js[2m:2428:11)[22m
+      [2mat _TestTypeImpl._describe (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m../../../../../../linkup/node_modules/playwright/lib/common/index.js[2m:2260:5)[22m
+      [2mat Function.describe (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m../../../../../../linkup/node_modules/playwright/lib/common/index.js[2m:1111:12)[22m
+      [2mat Object.describe (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m../../../../../../linkup/e2e/lobby-admission.spec.js[2m:119:6)[22m
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2m__tests__/[22m[1mfeatures-help-seo.test.tsx[22m ([0m[1m[41m5.041 
+s[49m[22m[0m)
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2m__tests__/[22m[1mfeatures-canvas-files.test.tsx[22m
+  [1mΓùÅ [22mConsole
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Connected directly to signaling server with ID: mock-socket-id
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1378:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1382:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-canvas-files.test.tsx:162:35[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-canvas-files.test.tsx:160:14)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1382:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-canvas-files.test.tsx[2m:162:35[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-canvas-files.test.tsx[2m:160:14)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Connected directly to signaling server with ID: mock-socket-id
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1378:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1382:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-canvas-files.test.tsx:231:35[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-canvas-files.test.tsx:229:14)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1382:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-canvas-files.test.tsx[2m:231:35[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-canvas-files.test.tsx[2m:229:14)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Connected directly to signaling server with ID: mock-socket-id
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1378:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1382:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-canvas-files.test.tsx:286:35[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-canvas-files.test.tsx:284:14)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1382:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-canvas-files.test.tsx[2m:286:35[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-canvas-files.test.tsx[2m:284:14)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Connected directly to signaling server with ID: mock-socket-id
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1378:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1382:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-canvas-files.test.tsx:358:35[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-canvas-files.test.tsx:356:14)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1382:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-canvas-files.test.tsx[2m:358:35[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/features-canvas-files.test.tsx[2m:356:14)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2m__tests__/[22m[1mchat.test.tsx[22m
+  [1mΓùÅ [22mConsole
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Connected directly to signaling server with ID: mock-socket-id
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1378:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1382:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:114:34[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at joinRoom (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:113:16)[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\chat.test.tsx:120:5)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1382:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:114:34[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat joinRoom (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:113:16)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:120:5)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[33m          at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[33m          at listOnTimeout (node:internal/timers:549:9)[39m
+[33m          at processTimers (node:internal/timers:523:7)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Connected directly to signaling server with ID: mock-socket-id
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1378:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1382:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:114:34[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at joinRoom (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:113:16)[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\chat.test.tsx:131:5)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1382:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:114:34[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat joinRoom (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:113:16)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:131:5)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[33m          at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[33m          at listOnTimeout (node:internal/timers:549:9)[39m
+[33m          at processTimers (node:internal/timers:523:7)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Connected directly to signaling server with ID: mock-socket-id
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1378:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1382:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:114:34[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at joinRoom (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:113:16)[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\chat.test.tsx:163:5)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1382:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:114:34[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat joinRoom (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:113:16)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:163:5)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:87:17)[39m
+[33m          at Object.chat:message (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1068:22)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:176:39[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\chat.test.tsx:175:16)[39m
+[2m[22m
+[2m    [0m [90m 106 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.09[39m)[33m;[39m[22m
+[2m     [90m 107 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 108 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 109 |[39m   }[22m
+[2m     [90m 110 |[39m }[22m
+[2m     [90m 111 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:108:13)[22m[2m[22m
+[2m      [2mat Object.chat:message (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1068:22)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:176:39[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:175:16)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[33m          at runNextTicks (node:internal/process/task_queues:65:5)[39m
+[33m          at listOnTimeout (node:internal/timers:549:9)[39m
+[33m          at processTimers (node:internal/timers:523:7)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Connected directly to signaling server with ID: mock-socket-id
+[2m[22m
+[2m      [2mat Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1378:19)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:821:18)[39m
+[33m          at Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1382:11)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:114:34[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at joinRoom (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:113:16)[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\chat.test.tsx:194:5)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:821:18)[22m[2m[22m
+[2m      [2mat Object.proceedToJoin [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1382:11)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:114:34[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat joinRoom (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:113:16)[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:194:5)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 0. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      New peer joined room: { userId: 'peer-1', name: 'Alice', socketId: 'peer-socket-1' }
+[2m[22m
+[2m      [2mat Object.log [as room:joined] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:904:15)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)[39m
+[33m          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)[39m
+[33m          at Object.room:joined (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:926:20)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:203:38[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24[39m
+[33m          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25[39m
+[33m          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\chat.test.tsx:202:16)[39m
+[2m[22m
+[2m    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m[22m
+[2m     [90m 49 |[39m   } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user 
+gesture settings:'[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m    |[39m             [31m[1m^[22m[2m[39m[22m
+[2m     [90m 51 |[39m   }[22m
+[2m     [90m 52 |[39m }[22m
+[2m     [90m 53 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/lib/audio.ts[2m:50:13)[22m[2m[22m
+[2m      [2mat Object.room:joined (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:926:20)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:203:38[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:47:24[22m[2m[22m
+[2m      [2mat act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2512:16)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js[2m:46:25[22m[2m[22m
+[2m      [2mat Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/__tests__/chat.test.tsx[2m:202:16)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [Load Balancer] Peer count updated to 1. Adjusting local outbound encoding parameters...
+[2m[22m
+[2m      [2mat log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1673:13)[22m[2m[22m
+
+    [2m[33mconsole.warn[39m[22m
+[33m      [Load Balancer] Failed to adjust local video encoding parameters on peer connection: TypeError: 
+pc.getSenders is not a function[39m
+[33m          at getSenders (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1677:28)[39m
+[33m          at Array.forEach (<anonymous>)[39m
+[33m          at forEach (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1675:35)[39m
+[33m          at commitHookEffectListMount (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:23189:26)[39m
+[33m          at commitPassiveMountOnFiber (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:24970:11)[39m
+[33m          at commitPassiveMountEffects_complete (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:24930:9)[39m
+[33m          at commitPassiveMountEffects_begin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:24917:7)[39m
+[33m          at commitPassiveMountEffects (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:24905:3)[39m
+[33m          at flushPassiveEffectsImpl (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:27078:3)[39m
+[33m          at flushPassiveEffects (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:27023:14)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:26808:9[39m
+[33m          at flushActQueue (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2667:24)[39m
+[33m          at recursivelyFlushAsyncActWork (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2633:9)[39m
+[33m          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2545:15[39m
+[2m[22m
+[2m    [0m [90m 1703 |[39m         }[22m
+[2m     [90m 1704 |[39m       } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 1705 |[39m         console[33m.[39mwarn([32m"[Load Balancer] Failed to 
+adjust local video encoding parameters on peer connection:"[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m      |[39m                 [31m[1m^[22m[2m[39m[22m
+[2m     [90m 1706 |[39m       }[22m
+[2m     [90m 1707 |[39m     })[33m;[39m[22m
+[2m     [90m 1708 |[39m   }[33m,[39m [peers[33m.[39mlength[33m,[39m joined])[33m;[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1705:17)[22m[2m[22m
+[2m          at Array.forEach (<anonymous>)[22m
+[2m      [2mat forEach (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1675:35)[22m[2m[22m
+[2m      [2mat commitHookEffectListMount (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js[2m:23189:26)[22m[2m[22m
+[2m      [2mat commitPassiveMountOnFiber (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js[2m:24970:11)[22m[2m[22m
+[2m      [2mat commitPassiveMountEffects_complete (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js[2m:24930:9)[22m[2m[22m
+[2m      [2mat commitPassiveMountEffects_begin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js[2m:24917:7)[22m[2m[22m
+[2m      [2mat commitPassiveMountEffects (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js[2m:24905:3)[22m[2m[22m
+[2m      [2mat flushPassiveEffectsImpl (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js[2m:27078:3)[22m[2m[22m
+[2m      [2mat flushPassiveEffects (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js[2m:27023:14)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js[2m:26808:9[22m[2m[22m
+[2m      [2mat flushActQueue (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2667:24)[22m[2m[22m
+[2m      [2mat recursivelyFlushAsyncActWork (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2633:9)[22m[2m[22m
+[2m      [2mat C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/node_modules/react/cjs/react.development.js[2m:2545:15[22m[2m[22m
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [2m__tests__/[22m[1mwebrtc.test.tsx[22m
+  [1mΓùÅ [22mConsole
+
+    [2m[33mconsole.warn[39m[22m
+[33m      Failed to initialize audio analysis for peer local: TypeError: AudioContextClass is not a constructor[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:761:35)[39m
+[33m          at startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:1260:9)[39m
+[2m[22m
+[2m    [0m [90m 813 |[39m       checkVolume()[33m;[39m[22m
+[2m     [90m 814 |[39m     } [36mcatch[39m (err) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 815 |[39m       console[33m.[39mwarn([32m`Failed to initialize audio 
+analysis for peer ${socketId}:`[39m[33m,[39m err)[33m;[39m[22m
+[2m     [90m     |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 816 |[39m     }[22m
+[2m     [90m 817 |[39m   }[33m;[39m[22m
+[2m     [90m 818 |[39m[0m[22m
+[2m[22m
+[2m      [2mat warn (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:815:15)[22m[2m[22m
+[2m      [2mat startAudioAnalysis (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)[22m[2m../../../../../../linkup/src/app/room/[id]/page.tsx[2m:1260:9)[22m[2m[22m
+
+
+[1mTest Suites: [22m[1m[31m4 failed[39m[22m, [1m[32m4 passed[39m[22m, 8 total
+[1mTests:       [22m[1m[31m9 failed[39m[22m, [1m[32m16 passed[39m[22m, 25 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        17.893 s, estimated 18 s
+[2mRan all test suites[22m[2m.[22m

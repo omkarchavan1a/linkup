@@ -11,7 +11,7 @@ jest.mock('@/models/Room', () => {
       save: mockSave,
     };
   });
-  
+
   // Attach findById mock directly to the model mock
   (mockRoom as any).findById = jest.fn();
   return mockRoom;
@@ -34,7 +34,7 @@ describe('Rooms API Endpoints', () => {
 
       const response = await POST(mockReq);
       expect(response.status).toBe(201);
-      
+
       const body = await response.json();
       expect(body.success).toBe(true);
       expect(body.roomId).toBeDefined();
