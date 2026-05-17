@@ -157,7 +157,7 @@ export default function HelpPage() {
       } else {
         throw new Error("Offline");
       }
-    } catch (_err) {
+    } catch {
       updateStatus("signaling", "failed", "Could not reach signaling routes. Check connection.");
       return false;
     }

@@ -32,8 +32,6 @@ export const metadata: Metadata = {
     "LinkUp"
   ],
   authors: [{ name: "Omkar Chavan", url: "https://github.com/omkarchavan1a" }],
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
-  themeColor: "#6366f1",
   robots: {
     index: true,
     follow: true,
@@ -64,6 +62,14 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#6366f1",
 };
 
 
