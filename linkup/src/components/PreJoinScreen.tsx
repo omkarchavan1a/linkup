@@ -19,16 +19,20 @@ export default function PreJoinScreen({ roomName, hasPassword = false, onVerifyP
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const stopPreview = useCallback(() => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      setStream(null);
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
     }
-  }, [stream]);
+    setStream(null);
+  }, []);
 
   useEffect(() => {
+    let activeStream: MediaStream | null = null;
+
     async function startPreview() {
       try {
         if (videoEnabled) {
@@ -36,6 +40,8 @@ export default function PreJoinScreen({ roomName, hasPassword = false, onVerifyP
             video: true,
             audio: audioEnabled,
           });
+          activeStream = localStream;
+          streamRef.current = localStream;
           setStream(localStream);
           if (videoRef.current) {
             videoRef.current.srcObject = localStream;
@@ -51,7 +57,9 @@ export default function PreJoinScreen({ roomName, hasPassword = false, onVerifyP
     startPreview();
 
     return () => {
-      stopPreview();
+      if (activeStream) {
+        activeStream.getTracks().forEach((track) => track.stop());
+      }
     };
   }, [videoEnabled, audioEnabled, stopPreview]);
 

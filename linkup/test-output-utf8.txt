@@ -1,0 +1,803 @@
+﻿node.exe : PASS __tests__/features-help-seo.test.tsx (5.656 s)
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\oomka\AppData\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (PASS __tests__/...t.tsx (5.656 s):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+PASS __tests__/features-advanced.test.tsx
+  ΓùÅ Console
+
+    console.log
+      Waiting room: connected guest socket emitting waiting lobby subscription
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:935:19)
+
+    console.log
+      Admitted successfully by the host!
+
+      at Object.log [as waiting-room:approved] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:940:19)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at Object.proceedToJoin [as waiting-room:approved] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:942:11)
+          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\features-advanced.test.tsx:159:49
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24
+          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25
+          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-advanced.test.tsx:157:14)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at Object.proceedToJoin [as waiting-room:approved] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:942:11)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/__tests__/features-advanced.test.tsx:159:49
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:47:24
+      at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react/cjs/react.development.js:2512:16)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/__tests__/features-advanced.test.tsx:157:14)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Host: guest is waiting in lobby: { socketId: 'guest-socket-abc', name: 'Pending Alice' }
+
+      at Object.log [as waiting-room:pending] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:882:17)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:114:17)
+          at Object.waiting-room:pending (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:887:27)
+          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\features-advanced.test.tsx:216:48
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24
+          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25
+          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-advanced.test.tsx:214:14)
+
+    [0m [90m 136 |[39m     })[33m;[39m
+     [90m 137 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 138 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 139 |[39m   }
+     [90m 140 |[39m }
+     [90m 141 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:138:13)
+      at Object.waiting-room:pending (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:887:27)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/__tests__/features-advanced.test.tsx:216:48
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:47:24
+      at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react/cjs/react.development.js:2512:16)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/__tests__/features-advanced.test.tsx:214:14)
+
+    console.log
+      Host approved waiting guest: guest-socket-abc
+
+      at log (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:1042:13)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:114:17)
+          at toggleHandRaise (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:1031:25)
+          at HTMLUnknownElement.callCallback (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+          at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+          at innerInvokeEventListeners (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:350:25)
+          at invokeEventListeners (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:286:3)
+          at HTMLUnknownElementImpl._dispatch (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:233:9)
+          at HTMLUnknownElementImpl.dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:104:17)
+          at HTMLUnknownElement.dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js:241:34)
+          at Object.invokeGuardedCallbackDev (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:4213:16)
+          at invokeGuardedCallback (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:4277:31)
+          at invokeGuardedCallbackAndCatchFirstError (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:4291:25)
+          at executeDispatch (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:9041:3)
+          at processDispatchQueueItemsInOrder (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:9073:7)
+          at processDispatchQueue (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:9086:5)
+          at dispatchEventsForPlugins (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:9097:3)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:9288:12
+          at batchedUpdates$1 (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:26179:12)
+          at batchedUpdates (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:3991:12)
+          at dispatchEventForPluginEventSystem (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:9287:3)
+          at dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay 
+(C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:6465:5)
+          at dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:6457:5)
+          at dispatchDiscreteEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react-dom\cjs\react-dom.development.js:6430:5)
+          at HTMLDivElement.callTheUserObjectsOperation (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+          at innerInvokeEventListeners (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:350:25)
+          at invokeEventListeners (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:286:3)
+          at HTMLButtonElementImpl._dispatch (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:233:9)
+          at HTMLButtonElementImpl.dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:104:17)
+          at HTMLButtonElement.dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\jsdom\lib\jsdom\living\generated\EventTarget.js:241:34)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\dom\dist\events.js:19:20
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\pure.js:107:16
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24
+          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25
+          at Object.eventWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\pure.js:106:28)
+          at fireEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\dom\dist\events.js:12:35)
+          at Function.fireEvent.<computed> [as click] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\dom\dist\events.js:110:36)
+          at Function.fireEvent.<computed> [as click] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\fire-event.js:15:52)
+          at click (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\features-advanced.test.tsx:291:17)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24
+          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25
+          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\__tests__\features-advanced.test.tsx:290:14)
+
+    [0m [90m 136 |[39m     })[33m;[39m
+     [90m 137 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 138 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 139 |[39m   }
+     [90m 140 |[39m }
+     [90m 141 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:138:13)
+      at toggleHandRaise (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:1031:25)
+      at HTMLUnknownElement.callCallback (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+      at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+      at innerInvokeEventListeners (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+      at invokeEventListeners (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+      at HTMLUnknownElementImpl._dispatch (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+      at HTMLUnknownElementImpl.dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+      at HTMLUnknownElement.dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+      at Object.invokeGuardedCallbackDev (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+      at invokeGuardedCallback (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+      at invokeGuardedCallbackAndCatchFirstError (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:4291:25)
+      at executeDispatch (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:9041:3)
+      at processDispatchQueueItemsInOrder (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:9073:7)
+      at processDispatchQueue (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:9086:5)
+      at dispatchEventsForPlugins (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:9097:3)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:9288:12
+      at batchedUpdates$1 (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:26179:12)
+      at batchedUpdates (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:3991:12)
+      at dispatchEventForPluginEventSystem (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:9287:3)
+      at dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay 
+(C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:6465:5)
+      at dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:6457:5)
+      at dispatchDiscreteEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react-dom/cjs/react-dom.development.js:6430:5)
+      at HTMLDivElement.callTheUserObjectsOperation (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+      at innerInvokeEventListeners (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+      at invokeEventListeners (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+      at HTMLButtonElementImpl._dispatch (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+      at HTMLButtonElementImpl.dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+      at HTMLButtonElement.dispatchEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/dom/dist/events.js:19:20
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/pure.js:107:16
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:47:24
+      at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react/cjs/react.development.js:2512:16)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at Object.eventWrapper (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/pure.js:106:28)
+      at fireEvent (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/dom/dist/events.js:12:35)
+      at Function.fireEvent.<computed> [as click] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/dom/dist/events.js:110:36)
+      at Function.fireEvent.<computed> [as click] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/fire-event.js:15:52)
+      at click (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/__tests__/features-advanced.test.tsx:291:17)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:47:24
+      at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react/cjs/react.development.js:2512:16)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/__tests__/features-advanced.test.tsx:290:14)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+PASS __tests__/features-canvas-files.test.tsx
+  ΓùÅ Console
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+          at runNextTicks (node:internal/process/task_queues:65:5)
+          at listOnTimeout (node:internal/timers:549:9)
+          at processTimers (node:internal/timers:523:7)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Connected directly to signaling server with ID: mock-socket-id
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:969:19)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Connected directly to signaling server with ID: mock-socket-id
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:969:19)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Connected directly to signaling server with ID: mock-socket-id
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:969:19)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+          at runNextTicks (node:internal/process/task_queues:65:5)
+          at listOnTimeout (node:internal/timers:549:9)
+          at processTimers (node:internal/timers:523:7)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Connected directly to signaling server with ID: mock-socket-id
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:969:19)
+
+PASS __tests__/webrtc-advanced.test.tsx
+  ΓùÅ Console
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+PASS __tests__/chat.test.tsx
+  ΓùÅ Console
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Connected directly to signaling server with ID: mock-socket-id
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:969:19)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Connected directly to signaling server with ID: mock-socket-id
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:969:19)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Connected directly to signaling server with ID: mock-socket-id
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:969:19)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:87:17)
+          at Object.chat:message (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:845:22)
+          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:176:39
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24
+          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25
+          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:175:16)
+
+    [0m [90m 106 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.09[39m)[33m;[39m
+     [90m 107 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 108 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 109 |[39m   }
+     [90m 110 |[39m }
+     [90m 111 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:108:13)
+      at Object.chat:message (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:845:22)
+      at C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/__tests__/chat.test.tsx:176:39
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:47:24
+      at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react/cjs/react.development.js:2512:16)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/__tests__/chat.test.tsx:175:16)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+    console.log
+      Connected directly to signaling server with ID: mock-socket-id
+
+      at Object.log [as connect] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:969:19)
+
+    console.log
+      New peer joined room: { userId: 'peer-1', name: 'Alice', socketId: 'peer-socket-1' }
+
+      at Object.log [as room:joined] (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:682:15)
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at Object.room:joined (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\src\app\room\[id]\page.tsx:704:20)
+          at C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:203:38
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:47:24
+          at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\react\cjs\react.development.js:2512:16)
+          at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)\linkup\node_modules\@testing-library\react\dist\act-compat.js:46:25
+          at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\__tests__\chat.test.tsx:202:16)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at Object.room:joined (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:704:20)
+      at C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/__tests__/chat.test.tsx:203:38
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:47:24
+      at act (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/react/cjs/react.development.js:2512:16)
+      at C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/node_modules/@testing-library/react/dist/act-compat.js:46:25
+      at Object.<anonymous> (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/__tests__/chat.test.tsx:202:16)
+
+PASS __tests__/webrtc.test.tsx
+  ΓùÅ Console
+
+    console.warn
+      Audio synthesis blocked by user gesture settings: Error: Web Audio API not supported in this browser
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:14:13)
+          at getAudioContext (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\lib\audio.ts:25:17)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:604:18)
+          at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder (2)\linkup\src\app\room\[id]\page.tsx:973:9)
+
+    [0m [90m 48 |[39m     osc[33m.[39mstop(now [33m+[39m [35m0.3[39m)[33m;[39m
+     [90m 49 |[39m   } [36mcatch[39m (err) {
+    [31m[1m>[22m[39m[90m 50 |[39m     console[33m.[39mwarn([32m'Audio synthesis blocked by user gesture 
+settings:'[39m[33m,[39m err)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 51 |[39m   }
+     [90m 52 |[39m }
+     [90m 53 |[39m[0m
+
+      at warn (C:\Users\oomka\OneDrive\Desktop\New folder (2)../../../../../../linkup/src/lib/audio.ts:50:13)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:604:18)
+      at proceedToJoin (C:\Users\oomka\OneDrive\Desktop\New folder 
+(2)../../../../../../linkup/src/app/room/[id]/page.tsx:973:9)
+
+PASS __tests__/api/rooms.test.ts
+
+Test Suites: 7 passed, 7 total
+Tests:       25 passed, 25 total
+Snapshots:   0 total
+Time:        11.003 s
+Ran all test suites.

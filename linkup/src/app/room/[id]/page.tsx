@@ -922,8 +922,8 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       try {
         const signalingUrl = process.env.NEXT_PUBLIC_SIGNALING_SERVER_URL;
         if (!signalingUrl) {
-          // Fallback to local serverless trigger only in development
-          await fetch("/api/socket");
+          // Fallback to local serverless trigger only in development (non-blocking)
+          fetch("/api/socket").catch((err) => console.error("Error triggering api socket:", err));
         }
         const socket = io(signalingUrl || undefined, {
           path: "/api/socket",
@@ -956,8 +956,8 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       try {
         const signalingUrl = process.env.NEXT_PUBLIC_SIGNALING_SERVER_URL;
         if (!signalingUrl) {
-          // Fallback to local serverless trigger only in development
-          await fetch("/api/socket");
+          // Fallback to local serverless trigger only in development (non-blocking)
+          fetch("/api/socket").catch((err) => console.error("Error triggering api socket:", err));
         }
         const socket = io(signalingUrl || undefined, {
           path: "/api/socket",
