@@ -113,9 +113,10 @@ describe("LinkUp Phase 3 Production Features & SEO", () => {
     it("declares strict robots crawl patterns blocking private pathways", () => {
       const config = robots();
       expect(config.rules).toBeDefined();
-      expect(config.rules.allow).toContain("/help");
-      expect(config.rules.disallow).toContain("/room/");
-      expect(config.rules.disallow).toContain("/api/");
+      const rules = config.rules as any;
+      expect(rules.allow).toContain("/help");
+      expect(rules.disallow).toContain("/room/");
+      expect(rules.disallow).toContain("/api/");
     });
   });
 });
