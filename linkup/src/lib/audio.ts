@@ -7,7 +7,12 @@ let audioCtx: AudioContext | null = null;
 
 function getAudioContext(): AudioContext {
   if (!audioCtx) {
-    audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    } else {
+      throw new Error("Web Audio API not supported in this browser");
+    }
   }
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();

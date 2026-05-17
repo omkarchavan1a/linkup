@@ -1073,7 +1073,13 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         <div className="flex-1 my-4 flex items-center justify-center overflow-hidden">
           <div className={`w-full h-full max-w-6xl grid ${gridCols} gap-4 auto-rows-fr`}>
             {/* Local Stream view */}
-            <div className="relative bg-zinc-900/60 rounded-3xl overflow-hidden border border-white/10 group shadow-lg">
+            <div className={`relative bg-zinc-900/60 rounded-3xl overflow-hidden border group shadow-lg transition-all duration-300 ${isHandRaised ? "border-amber-500/85 shadow-[0_0_20px_rgba(245,158,11,0.3)]" : "border-white/10"}`}>
+              {isHandRaised && (
+                <div className="absolute top-4 right-4 bg-amber-500/90 text-black font-extrabold px-3 py-1.5 rounded-xl flex items-center space-x-1 border border-amber-400 shadow-md backdrop-blur-sm z-20 animate-bounce">
+                  <span>✋</span>
+                  <span className="text-[10px] uppercase tracking-wider font-bold">Hand Raised</span>
+                </div>
+              )}
               {videoEnabled && localStream ? (
                 <video
                   ref={localVideoRef}
@@ -1103,8 +1109,14 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
             {/* Connected WebRTC Mesh peers view */}
             {peers.length > 0 ? (
-              peers.map((peer) => (
-                <div key={peer.socketId} className="relative bg-zinc-900/60 rounded-3xl overflow-hidden border border-white/10 group shadow-lg">
+              [...peers].sort((a, b) => (b.isHandRaised ? 1 : 0) - (a.isHandRaised ? 1 : 0)).map((peer) => (
+                <div key={peer.socketId} className={`relative bg-zinc-900/60 rounded-3xl overflow-hidden border group shadow-lg transition-all duration-300 ${peer.isHandRaised ? "border-amber-500/85 shadow-[0_0_20px_rgba(245,158,11,0.3)]" : "border-white/10"}`}>
+                  {peer.isHandRaised && (
+                    <div className="absolute top-4 right-4 bg-amber-500/90 text-black font-extrabold px-3 py-1.5 rounded-xl flex items-center space-x-1 border border-amber-400 shadow-md backdrop-blur-sm z-20 animate-bounce">
+                      <span>✋</span>
+                      <span className="text-[10px] uppercase tracking-wider font-bold">Hand Raised</span>
+                    </div>
+                  )}
                   {peer.videoEnabled !== false && peer.stream ? (
                     <RemoteVideo stream={peer.stream} />
                   ) : (
@@ -1151,8 +1163,14 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       {/* Media & Action Control Bar */}
       <div className="flex items-center justify-between z-10 glass border border-white/10 px-8 py-4 rounded-2xl bg-black/40 backdrop-blur-xl">
         <div className="hidden md:flex items-center space-x-2 text-xs font-mono text-zinc-400">
-          <FiClock size={14} />
-          <span>Room lifetime is limited</span>
+          <FiClock size={14} className={timeLeft !== null && timeLeft <= 60 ? "text-red-400 animate-pulse" : "text-zinc-400"} />
+          {timeLeft !== null ? (
+            <span className={timeLeft <= 60 ? "text-red-400 font-extrabold animate-pulse bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded-md" : "text-zinc-300 font-bold"}>
+              Time Left: {Math.floor(timeLeft / 60)}m {timeLeft % 60}s
+            </span>
+          ) : (
+            <span>No Lifetime Limit</span>
+          )}
         </div>
 
         <div className="flex items-center space-x-4 mx-auto md:mx-0">
@@ -1186,6 +1204,45 @@ export default function RoomPage({ params }: { params: { id: string } }) {
             aria-label="Toggle Screen Sharing"
           >
             <FiTv size={20} />
+          </button>
+
+          {/* Reaction Picker Popover */}
+          <div className="relative">
+            <button
+              onClick={() => setShowReactionsSelector(!showReactionsSelector)}
+              className={`p-4 rounded-2xl transition duration-300 ${
+                showReactionsSelector ? "bg-primary text-primary-foreground" : "bg-white/10 hover:bg-white/20 text-white"
+              }`}
+              aria-label="Send Reaction"
+            >
+              <FiSmile size={20} />
+            </button>
+            {showReactionsSelector && (
+              <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 glass border border-white/15 bg-zinc-950/90 backdrop-blur-2xl rounded-2xl p-3 flex items-center space-x-2.5 shadow-2xl z-30 animate-fade-in min-w-[280px] justify-center">
+                {["❤️", "👍", "👏", "😂", "😮", "🔥", "🎉"].map((emoji) => (
+                  <button
+                    key={emoji}
+                    onClick={() => sendReaction(emoji)}
+                    className="text-2xl hover:scale-130 active:scale-95 transition-all duration-200"
+                    aria-label={`Send ${emoji} reaction`}
+                  >
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <button
+            onClick={toggleHandRaise}
+            className={`p-4 rounded-2xl transition duration-300 ${
+              isHandRaised 
+                ? "bg-amber-500 text-black hover:bg-amber-600 drop-shadow-[0_0_12px_rgba(245,158,11,0.4)]" 
+                : "bg-white/10 hover:bg-white/20 text-white"
+            }`}
+            aria-label="Toggle Raise Hand"
+          >
+            <span className="text-xl font-bold leading-none">✋</span>
           </button>
 
           <button
@@ -1240,6 +1297,79 @@ export default function RoomPage({ params }: { params: { id: string } }) {
             >
               Close
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Reactions Overlay */}
+      <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+        {floatingReactions.map((reaction) => (
+          <div
+            key={reaction.id}
+            className="absolute bottom-24 text-4xl"
+            style={{
+              ...reaction.style,
+              animation: "floatUp 2.5s cubic-bezier(0.08, 0.82, 0.17, 1.0) forwards"
+            }}
+          >
+            {reaction.emoji}
+          </div>
+        ))}
+      </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes floatUp {
+          0% {
+            transform: translateY(0) scale(0.5) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+            transform: translateY(-30px) scale(1.2) rotate(10deg);
+          }
+          90% {
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(-600px) scale(0.8) rotate(-15deg);
+            opacity: 0;
+          }
+        }
+      `}} />
+
+      {/* Host waitlist pending request dashboard overlay card */}
+      {pendingGuests.length > 0 && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4">
+          <div className="glass rounded-3xl p-6 border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col space-y-4 bg-zinc-950/80 backdrop-blur-2xl">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary border border-primary/20">
+                🔒
+              </div>
+              <div>
+                <h4 className="font-bold text-sm text-white">Lobby Guest Request</h4>
+                <p className="text-xs text-zinc-400">Someone is asking to join this secure meeting room.</p>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {pendingGuests.map((guest) => (
+                <div key={guest.socketId} className="flex items-center justify-between bg-white/5 border border-white/5 p-3 rounded-2xl">
+                  <span className="text-sm font-semibold text-zinc-200">{guest.name}</span>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => approveGuest(guest.socketId)}
+                      className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-lg transition-all hover:scale-105"
+                    >
+                      Admit
+                    </button>
+                    <button
+                      onClick={() => denyGuest(guest.socketId)}
+                      className="px-3.5 py-1.5 bg-destructive hover:bg-destructive/80 text-white font-bold text-xs rounded-xl transition-all"
+                    >
+                      Deny
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

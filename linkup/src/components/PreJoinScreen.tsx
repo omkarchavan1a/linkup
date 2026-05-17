@@ -104,7 +104,7 @@ export default function PreJoinScreen({ roomName, hasPassword = false, onVerifyP
             </p>
           </div>
           <div className="bg-white/5 border border-white/5 py-3 px-4 rounded-xl text-xs font-mono text-zinc-400 select-none animate-pulse">
-            Connecting securely as guest: "{name}"
+            Connecting securely as guest: &quot;{name}&quot;
           </div>
         </div>
       </div>
