@@ -15,9 +15,57 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "LinkUp - Video Calling & Chat",
-  description: "Privacy-first, frictionless video calling and real-time chat platform. No signups required.",
+  metadataBase: new URL("https://linkup-calling.vercel.app"),
+  title: {
+    default: "LinkUp - Privacy-First Video Calling & Chat",
+    template: "%s | LinkUp",
+  },
+  description: "Secure, frictionless, and privacy-first video calling and real-time chat platform. No signups, no downloads. Start a secure room with just a link.",
+  keywords: [
+    "video call",
+    "free video conference",
+    "privacy-first video call",
+    "secure WebRTC calling",
+    "collaborative whiteboard room",
+    "screen share tool",
+    "zero friction video chat",
+    "LinkUp"
+  ],
+  authors: [{ name: "Omkar Chavan", url: "https://github.com/omkarchavan1a" }],
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+  themeColor: "#6366f1",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    title: "LinkUp - Instant Video Calling & Collaborative Whiteboard",
+    description: "Experience privacy-first video calling, real-time drawing whiteboards, file sharing, and host-lock controls. Zero accounts required.",
+    url: "https://linkup-calling.vercel.app",
+    siteName: "LinkUp",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LinkUp - Frictionless Video Calling & Chat",
+    description: "Start a video call or drawing whiteboard instantly without signup or app installations.",
+    creator: "@omkar_it_determination",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
+
 
 export default function RootLayout({
   children,

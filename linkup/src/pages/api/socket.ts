@@ -56,7 +56,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
         });
       });
 
-      socket.on('chat:message', ({ roomId, message, senderName, timestamp }) => {
+      socket.on('chat:message', ({ roomId, message, senderName, timestamp, type, fileId, fileMetadata }) => {
         // Broadcast chat message to all other participants in the room
         socket.to(roomId).emit('chat:message', {
           id: `${socket.id}-${Date.now()}`,
@@ -64,7 +64,10 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
           senderName,
           message,
           timestamp,
-          isSystem: false
+          isSystem: false,
+          type: type || "text",
+          fileId,
+          fileMetadata
         });
       });
 
@@ -114,6 +117,27 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 
       socket.on('waiting-room:deny', ({ targetSocketId }) => {
         io.to(targetSocketId).emit('waiting-room:denied');
+      });
+
+      // Whiteboard Synchronization & Permission Relays
+      socket.on('whiteboard:toggle', ({ roomId, isOpen }) => {
+        socket.to(roomId).emit('whiteboard:toggle', { isOpen });
+      });
+
+      socket.on('whiteboard:draw', ({ roomId, prevPos, currentPos, color, size }) => {
+        socket.to(roomId).emit('whiteboard:draw', { prevPos, currentPos, color, size });
+      });
+
+      socket.on('whiteboard:clear', ({ roomId }) => {
+        socket.to(roomId).emit('whiteboard:clear');
+      });
+
+      socket.on('whiteboard:undo', ({ roomId }) => {
+        socket.to(roomId).emit('whiteboard:undo');
+      });
+
+      socket.on('whiteboard:lock', ({ roomId, isLocked }) => {
+        socket.to(roomId).emit('whiteboard:lock', { isLocked });
       });
 
       socket.on('disconnecting', () => {

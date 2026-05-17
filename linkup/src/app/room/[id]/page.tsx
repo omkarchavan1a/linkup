@@ -1,5 +1,5 @@
 "use client";
-
+ 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { io, Socket } from "socket.io-client";
@@ -7,11 +7,13 @@ import { QRCodeSVG } from "qrcode.react";
 import { 
   FiMic, FiMicOff, FiVideo, FiVideoOff, FiPhoneOff, 
   FiCopy, FiShare2, FiUsers, FiClock, FiSettings,
-  FiMessageSquare, FiSend, FiX, FiTv, FiWifi, FiSmile
+  FiMessageSquare, FiSend, FiX, FiTv, FiWifi, FiSmile,
+  FiFile, FiPaperclip, FiDownload, FiEdit2
 } from "react-icons/fi";
 import PreJoinScreen from "@/components/PreJoinScreen";
+import Whiteboard from "@/components/Whiteboard";
 import { playJoinChime, playLeaveChime, playMessageBeep, playHandRaiseChime } from "@/lib/audio";
-
+ 
 interface RoomDetails {
   id: string;
   name: string;
@@ -24,7 +26,7 @@ interface RoomDetails {
   };
   hasPassword?: boolean;
 }
-
+ 
 interface Peer {
   socketId: string;
   name: string;
@@ -33,13 +35,20 @@ interface Peer {
   videoEnabled?: boolean;
   isHandRaised?: boolean;
 }
-
+ 
 interface ChatMessage {
   id: string;
   senderName: string;
   message: string;
   timestamp: number;
   isSystem: boolean;
+  type?: 'text' | 'file';
+  fileId?: string;
+  fileMetadata?: {
+    name: string;
+    size: number;
+    type: string;
+  };
 }
 
 interface RemoteVideoProps {
@@ -107,6 +116,14 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   const [floatingReactions, setFloatingReactions] = useState<{ id: string; emoji: string; style: React.CSSProperties }[]>([]);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [showReactionsSelector, setShowReactionsSelector] = useState(false);
+
+  // Whiteboard states
+  const [showWhiteboard, setShowWhiteboard] = useState(false);
+  const [isWhiteboardLocked, setIsWhiteboardLocked] = useState(false);
+
+  // File Sharing states
+  const [isDraggingFile, setIsDraggingFile] = useState(false);
+  const [isUploadingFile, setIsUploadingFile] = useState(false);
 
   // Connection states
   const [peers, setPeers] = useState<Peer[]>([]);
@@ -680,6 +697,15 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         playHandRaiseChime(); // Warm arpeggio alert for new arrivals
       });
     }
+
+    // Collaborative Whiteboard signaling events
+    socket.on("whiteboard:toggle", ({ isOpen }: { isOpen: boolean }) => {
+      setShowWhiteboard(isOpen);
+    });
+
+    socket.on("whiteboard:lock", ({ isLocked }: { isLocked: boolean }) => {
+      setIsWhiteboardLocked(isLocked);
+    });
   };
 
   const handleJoin = async (name: string, audio: boolean, video: boolean) => {
@@ -874,6 +900,71 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     setNewMessage("");
   };
 
+  const uploadFile = async (file: File) => {
+    if (file.size > 10 * 1024 * 1024) {
+      alert("Files are capped to 10MB to maintain responsive encrypted synchronization.");
+      return;
+    }
+
+    setIsUploadingFile(true);
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const base64Data = reader.result as string;
+        
+        const res = await fetch("/api/files/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            data: base64Data
+          })
+        });
+
+        const result = await res.json();
+        setIsUploadingFile(false);
+
+        if (res.ok && result.success) {
+          const fileMsg: ChatMessage = {
+            id: `msg-file-${Date.now()}-${Math.random()}`,
+            senderName: userName || "Me",
+            message: `Shared a file: ${file.name}`,
+            timestamp: Date.now(),
+            isSystem: false,
+            type: "file",
+            fileId: result.file._id,
+            fileMetadata: {
+              name: file.name,
+              size: file.size,
+              type: file.type
+            }
+          };
+
+          socketRef.current?.emit("chat:message", {
+            roomId,
+            message: fileMsg.message,
+            senderName: fileMsg.senderName,
+            timestamp: fileMsg.timestamp,
+            type: "file",
+            fileId: result.file._id,
+            fileMetadata: fileMsg.fileMetadata
+          });
+
+          setMessages((prev) => [...prev, fileMsg]);
+        } else {
+          alert(result.error || "File upload failed.");
+        }
+      };
+    } catch (err) {
+      console.error("Error uploading file:", err);
+      setIsUploadingFile(false);
+      alert("An unexpected error occurred during file upload.");
+    }
+  };
+
   const toggleChat = () => {
     setShowChat((prev) => !prev);
     setUnreadCount(0);
@@ -929,6 +1020,81 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       />
     );
   }
+
+  // Layout rendering when whiteboard is active
+  const renderWhiteboardView = () => {
+    const isHost = typeof window !== 'undefined' ? !!localStorage.getItem(`host_token_${roomId}`) : false;
+
+    return (
+      <div className="flex-1 flex flex-col min-h-0 space-y-4 my-4 overflow-hidden">
+        {/* Top Ribbon strip for camera thumbnails of participants */}
+        <div className="flex items-center space-x-4 overflow-x-auto pb-2 min-h-[140px] max-h-[180px] scrollbar-thin">
+          {/* Local participant thumbnail card */}
+          <div className="relative w-48 h-28 bg-zinc-900/60 rounded-2xl overflow-hidden border border-white/10 shrink-0 shadow-lg">
+            {videoEnabled && localStream ? (
+              <video
+                ref={localVideoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-full object-cover scale-x-[-1]"
+              />
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500 text-center p-2">
+                <div className="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center mb-1 text-zinc-400">
+                  <FiVideoOff size={16} />
+                </div>
+                <span className="font-semibold text-xs truncate max-w-full">{userName}</span>
+              </div>
+            )}
+            <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10 flex items-center space-x-1">
+              <span className="text-[10px] font-semibold truncate max-w-[80px]">{userName} (You)</span>
+              {!audioEnabled && <FiMicOff size={10} className="text-destructive" />}
+            </div>
+          </div>
+
+          {/* Remote participants thumbnail cards */}
+          {peers.map((peer) => (
+            <div key={peer.socketId} className="relative w-48 h-28 bg-zinc-900/60 rounded-2xl overflow-hidden border border-white/10 shrink-0 shadow-lg">
+              {peer.videoEnabled !== false && peer.stream ? (
+                <RemoteVideo stream={peer.stream} />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500 text-center p-2">
+                  <div className="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center mb-1 text-zinc-400">
+                    <FiVideoOff size={16} />
+                  </div>
+                  <span className="font-semibold text-xs truncate max-w-full">{peer.name}</span>
+                </div>
+              )}
+              <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10 flex items-center space-x-1">
+                <span className="text-[10px] font-semibold truncate max-w-[80px]">{peer.name}</span>
+                {renderWifiIcon(peerQuality[peer.socketId])}
+                {peer.audioEnabled === false && <FiMicOff size={10} className="text-destructive" />}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Primary central viewport for the collaborative whiteboard */}
+        <div className="flex-1 relative rounded-3xl overflow-hidden border border-zinc-200/50 shadow-2xl flex flex-col min-h-0 bg-white">
+          <Whiteboard
+            roomId={roomId}
+            socket={socketRef.current}
+            isHost={isHost}
+            isLocked={isWhiteboardLocked}
+            onClose={() => {
+              setShowWhiteboard(false);
+              socketRef.current?.emit('whiteboard:toggle', { roomId, isOpen: false });
+            }}
+            onLockToggle={(locked) => {
+              setIsWhiteboardLocked(locked);
+              socketRef.current?.emit('whiteboard:lock', { roomId, isLocked: locked });
+            }}
+          />
+        </div>
+      </div>
+    );
+  };
 
   // Layout rendering when screen is shared
   const renderScreenShareView = () => {
@@ -1069,7 +1235,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       </div>
 
       {/* Main Responsive Grid View or Widescreen Screen Share view */}
-      {screenSharer ? renderScreenShareView() : (
+      {screenSharer ? renderScreenShareView() : showWhiteboard ? renderWhiteboardView() : (
         <div className="flex-1 my-4 flex items-center justify-center overflow-hidden">
           <div className={`w-full h-full max-w-6xl grid ${gridCols} gap-4 auto-rows-fr`}>
             {/* Local Stream view */}
@@ -1204,6 +1370,27 @@ export default function RoomPage({ params }: { params: { id: string } }) {
             aria-label="Toggle Screen Sharing"
           >
             <FiTv size={20} />
+          </button>
+
+          <button
+            onClick={() => {
+              const isHost = typeof window !== 'undefined' ? !!localStorage.getItem(`host_token_${roomId}`) : false;
+              if (!isHost && !showWhiteboard) {
+                alert("Only the host can initiate the whiteboard session.");
+                return;
+              }
+              const nextState = !showWhiteboard;
+              setShowWhiteboard(nextState);
+              socketRef.current?.emit('whiteboard:toggle', { roomId, isOpen: nextState });
+            }}
+            className={`p-4 rounded-2xl transition duration-300 ${
+              showWhiteboard 
+                ? "bg-indigo-500 text-white hover:bg-indigo-600 drop-shadow-[0_0_12px_rgba(99,102,241,0.4)] animate-pulse" 
+                : "bg-white/10 hover:bg-white/20 text-white"
+            }`}
+            aria-label="Toggle Whiteboard"
+          >
+            <FiEdit2 size={20} />
           </button>
 
           {/* Reaction Picker Popover */}
@@ -1377,7 +1564,39 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
     {/* Chat Sidebar Panel */}
     {showChat && (
-      <div className="fixed top-0 right-0 h-full w-full md:w-[380px] z-40 flex flex-col bg-black/90 backdrop-blur-2xl border-l border-white/10 shadow-2xl">
+      <div 
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDraggingFile(true);
+        }}
+        onDragLeave={() => {
+          setIsDraggingFile(false);
+        }}
+        onDrop={(e) => {
+          e.preventDefault();
+          setIsDraggingFile(false);
+          const file = e.dataTransfer.files[0];
+          if (file) uploadFile(file);
+        }}
+        className="fixed top-0 right-0 h-full w-full md:w-[380px] z-40 flex flex-col bg-black/90 backdrop-blur-2xl border-l border-white/10 shadow-2xl relative"
+      >
+        {/* Drag and drop visual share overlay */}
+        {isDraggingFile && (
+          <div className="absolute inset-0 bg-indigo-500/15 border-2 border-dashed border-indigo-500 backdrop-blur-md m-4 rounded-3xl flex flex-col items-center justify-center text-indigo-400 z-50 pointer-events-none animate-pulse">
+            <span className="text-4xl mb-3">📥</span>
+            <span className="text-sm font-bold tracking-wide">Drop to share securely</span>
+            <span className="text-[10px] opacity-75 mt-1 font-mono">Upto 10MB (Purged in 24h)</span>
+          </div>
+        )}
+
+        {/* Uploading progress indicator */}
+        {isUploadingFile && (
+          <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-[2px] rounded-3xl flex flex-col items-center justify-center text-white z-50 pointer-events-none">
+            <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-3"></div>
+            <span className="text-xs font-bold tracking-wider animate-pulse">Encrypting & Uploading...</span>
+          </div>
+        )}
+
         {/* Chat Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
           <div className="flex items-center space-x-2">
@@ -1416,9 +1635,38 @@ export default function RoomPage({ params }: { params: { id: string } }) {
                       {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl rounded-tl-sm px-4 py-2.5">
-                    <p className="text-sm leading-relaxed break-words">{msg.message}</p>
-                  </div>
+                  {msg.type === "file" && msg.fileId ? (
+                    <div className="bg-zinc-900/80 border border-amber-500/35 rounded-2xl rounded-tl-sm p-4 shadow-lg flex flex-col space-y-3 relative group overflow-hidden">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full filter blur-xl pointer-events-none"></div>
+                      <div className="flex items-start space-x-3">
+                        <div className="w-10 h-10 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-xl flex items-center justify-center shrink-0">
+                          <FiFile size={20} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-sm text-zinc-100 truncate" title={msg.fileMetadata?.name}>
+                            {msg.fileMetadata?.name}
+                          </h4>
+                          <p className="text-[10px] text-zinc-400 font-mono mt-0.5">
+                            {msg.fileMetadata?.size ? (msg.fileMetadata.size / (1024 * 1024)).toFixed(2) : "0.0"} MB • Expiring
+                          </p>
+                        </div>
+                      </div>
+                      <a
+                        href={`/api/files/${msg.fileId}`}
+                        download={msg.fileMetadata?.name}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold text-xs rounded-xl flex items-center justify-center space-x-1.5 transition-all shadow-md active:scale-95 animate-fade-in"
+                      >
+                        <FiDownload size={14} />
+                        <span>Download Securely</span>
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="bg-white/5 border border-white/10 rounded-2xl rounded-tl-sm px-4 py-2.5">
+                      <p className="text-sm leading-relaxed break-words">{msg.message}</p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -1429,6 +1677,19 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         {/* Message Input */}
         <form onSubmit={sendMessage} className="px-4 py-4 border-t border-white/10">
           <div className="flex items-center space-x-2 bg-white/5 border border-white/10 rounded-2xl px-4 py-2 focus-within:border-primary/50 transition-all duration-300">
+            {/* Paperclip upload trigger */}
+            <label className="p-2 text-zinc-400 hover:text-white hover:bg-white/10 rounded-xl cursor-pointer transition duration-200">
+              <FiPaperclip size={18} />
+              <input
+                type="file"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) uploadFile(file);
+                }}
+              />
+            </label>
+
             <input
               type="text"
               value={newMessage}
