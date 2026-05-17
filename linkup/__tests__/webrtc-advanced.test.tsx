@@ -221,4 +221,65 @@ describe('Advanced WebRTC and Encryption Layer Integration Test Suite', () => {
       expect.objectContaining({ roomId: 'unlocked-room-id', isSharing: true })
     );
   });
+
+  it('renders interactive visual telemetry speedometers and triggers hover telemetry HUD cards', async () => {
+    // Mock room fetch without lock
+    mockFetch.mockImplementation(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({
+          success: true,
+          room: {
+            id: 'telemetry-room-id',
+            name: 'Telemetry Diagnostics Channel',
+            maxParticipants: 10,
+            participantCount: 1,
+            settings: { allowChat: true, allowScreenShare: true, waitingRoom: false },
+            hasPassword: false
+          }
+        })
+      })
+    );
+
+    render(<RoomPage params={{ id: 'telemetry-room-id' }} />);
+
+    // Wait for channel rendering
+    await waitFor(() => {
+      expect(screen.getByText('Telemetry Diagnostics Channel')).toBeInTheDocument();
+    });
+
+    const nameInput = screen.getByPlaceholderText('Enter display name...');
+    const joinButton = screen.getByRole('button', { name: /Join Room/i });
+
+    fireEvent.change(nameInput, { target: { value: 'Delta' } });
+
+    await act(async () => {
+      fireEvent.click(joinButton);
+    });
+
+    // Expect speedometer elements to load in the local video card view
+    await waitFor(() => {
+      expect(screen.getByTestId('telemetry-local')).toBeInTheDocument();
+    });
+
+    const localSpeedometer = screen.getByTestId('telemetry-local');
+    
+    // Initial latency check (default mocked fallback or local fluctuated RTT range 12-24ms)
+    expect(localSpeedometer).toHaveTextContent(/ms/);
+
+    // Hover over speedometer button to activate graph HUD overlay card
+    fireEvent.mouseEnter(localSpeedometer);
+
+    // Check presence of glassmorphic tooltip elements
+    expect(screen.getByText('Signal Status')).toBeInTheDocument();
+    expect(screen.getByText('Latency')).toBeInTheDocument();
+    expect(screen.getByText('Jitter')).toBeInTheDocument();
+    expect(screen.getByText('Loss Rate')).toBeInTheDocument();
+    expect(screen.getByText('Frame Rate')).toBeInTheDocument();
+    expect(screen.getByText('Ping Sparkline (RTT)')).toBeInTheDocument();
+
+    // Mouse leave triggers closing of card HUD
+    fireEvent.mouseLeave(localSpeedometer);
+    expect(screen.queryByText('Signal Status')).not.toBeInTheDocument();
+  });
 });
