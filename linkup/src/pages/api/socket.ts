@@ -100,23 +100,37 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
         });
       });
 
-      // Waiting Lobby Event Pipeline
+      // Waiting Lobby Event Pipeline (Fully Aligned & Robust)
       socket.on('waiting-room:join', ({ roomId, name, userId }) => {
         socket.join(`${roomId}-waiting`);
         console.log(`User ${name} (${userId}) waiting for approval in ${roomId}`);
-        socket.to(roomId).emit('waiting-room:request', {
+        const payload = {
           socketId: socket.id,
           name,
           userId
-        });
+        };
+        // Emit to both event keys for complete frontend compatibility
+        socket.to(roomId).emit('waiting-room:pending', payload);
+        socket.to(roomId).emit('waiting-room:request', payload);
       });
 
-      socket.on('waiting-room:approve', ({ targetSocketId }) => {
-        io.to(targetSocketId).emit('waiting-room:approved');
+      socket.on('waiting-room:approve', ({ targetSocketId, guestSocketId }) => {
+        const targetId = targetSocketId || guestSocketId;
+        if (targetId) {
+          io.to(targetId).emit('waiting-room:approved');
+        }
       });
 
-      socket.on('waiting-room:deny', ({ targetSocketId }) => {
-        io.to(targetSocketId).emit('waiting-room:denied');
+      socket.on('waiting-room:deny', ({ targetSocketId, guestSocketId }) => {
+        const targetId = targetSocketId || guestSocketId;
+        if (targetId) {
+          io.to(targetId).emit('waiting-room:denied');
+        }
+      });
+
+      // Real-time Host Settings Synchronization Relays
+      socket.on('room:settings:update', ({ roomId, settings }) => {
+        socket.to(roomId).emit('room:settings:updated', { settings });
       });
 
       // Whiteboard Synchronization & Permission Relays

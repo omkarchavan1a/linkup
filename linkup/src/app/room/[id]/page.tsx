@@ -247,6 +247,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   const [joined, setJoined] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showQR, setShowQR] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
@@ -798,6 +799,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
             if (p.socketId === senderSocketId) {
               return {
                 ...p,
+                name: signal.name !== undefined ? signal.name : p.name,
                 audioEnabled: signal.audioEnabled !== undefined ? signal.audioEnabled : p.audioEnabled,
                 videoEnabled: signal.videoEnabled !== undefined ? signal.videoEnabled : p.videoEnabled
               };
@@ -895,6 +897,21 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
     socket.on("whiteboard:lock", ({ isLocked }: { isLocked: boolean }) => {
       setIsWhiteboardLocked(isLocked);
+    });
+
+    // Real-time Room Settings Updates Listener
+    socket.on("room:settings:updated", ({ settings }) => {
+      console.log("Received real-time room settings update:", settings);
+      setRoom((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          settings: {
+            ...prev.settings,
+            ...settings
+          }
+        };
+      });
     });
   };
 
@@ -1021,6 +1038,29 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         });
       }
     }
+  };
+
+  const changeDisplayName = (newName: string) => {
+    if (!newName.trim()) return;
+    setUserName(newName);
+    
+    // Save to localStorage for room persistence
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(`user_name_${roomId}`, newName);
+    }
+    
+    // Broadcast status name update to all peers in the room
+    Object.keys(pcsRef.current).forEach((peerSocketId) => {
+      socketRef.current?.emit("signal", {
+        targetSocketId: peerSocketId,
+        signal: {
+          type: "status",
+          name: newName,
+          audioEnabled: audioEnabled,
+          videoEnabled: videoEnabled
+        }
+      });
+    });
   };
 
   const toggleHandRaise = () => {
@@ -1168,10 +1208,62 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     setUnreadCount(0);
   };
 
+  const updateRoomSetting = async (key: 'allowChat' | 'allowScreenShare' | 'waitingRoom', value: boolean) => {
+    try {
+      const isHost = typeof window !== 'undefined' ? !!localStorage.getItem(`host_token_${roomId}`) : false;
+      if (!isHost) return;
+
+      const hostToken = typeof window !== 'undefined' ? localStorage.getItem(`host_token_${roomId}`) : null;
+      const res = await fetch(`/api/rooms/${roomId}`, {
+        method: "PATCH",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": hostToken || ""
+        },
+        body: JSON.stringify({ key, value })
+      });
+      
+      const data = await res.json();
+      if (res.ok && data.success) {
+        // Update local state
+        setRoom((prev) => {
+          if (!prev) return null;
+          return {
+            ...prev,
+            settings: {
+              ...prev.settings,
+              [key]: value
+            }
+          };
+        });
+
+        // Broadcast setting change via sockets to everyone else in the room
+        socketRef.current?.emit("room:settings:update", {
+          roomId,
+          settings: { [key]: value }
+        });
+      } else {
+        alert(data.error || "Failed to update room setting.");
+      }
+    } catch (err) {
+      console.error("Error updating room setting:", err);
+      alert("Network error updating room setting.");
+    }
+  };
+
   // Auto-scroll chat to bottom when new messages arrive
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Automatically terminate local screen share if host disables it mid-session
+  useEffect(() => {
+    const isHost = typeof window !== 'undefined' ? !!localStorage.getItem(`host_token_${roomId}`) : false;
+    if (!isHost && isSharingScreen && room && !room.settings.allowScreenShare) {
+      stopScreenShare();
+      alert("Your screen sharing session has been stopped because the room host disabled screen sharing.");
+    }
+  }, [room?.settings.allowScreenShare, isSharingScreen, room]);
 
   if (loading) {
     return (
@@ -1586,11 +1678,20 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           </button>
 
           <button
-            onClick={toggleScreenShare}
+            onClick={() => {
+              const isHost = typeof window !== 'undefined' ? !!localStorage.getItem(`host_token_${roomId}`) : false;
+              if (!room?.settings.allowScreenShare && !isHost) {
+                alert("Screen sharing has been disabled by the room host.");
+                return;
+              }
+              toggleScreenShare();
+            }}
             className={`p-4 rounded-2xl transition duration-300 ${
               isSharingScreen 
                 ? "bg-emerald-500 text-white hover:bg-emerald-600 drop-shadow-[0_0_12px_rgba(16,185,129,0.3)] animate-pulse" 
-                : "bg-white/10 hover:bg-white/20 text-white"
+                : room && !room.settings.allowScreenShare && (typeof window !== 'undefined' ? !localStorage.getItem(`host_token_${roomId}`) : true)
+                  ? "bg-zinc-800 text-zinc-500 cursor-not-allowed opacity-50"
+                  : "bg-white/10 hover:bg-white/20 text-white"
             }`}
             aria-label="Toggle Screen Sharing"
           >
@@ -1681,9 +1782,9 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           </button>
         </div>
 
-        <div className="hidden md:flex items-center space-x-2">
+        <div className="flex items-center space-x-2">
           <button
-            onClick={() => {}}
+            onClick={() => setShowSettings(true)}
             className="p-3 bg-white/5 hover:bg-white/10 text-white rounded-xl transition duration-200"
             aria-label="Room Settings"
           >
@@ -1703,11 +1804,159 @@ export default function RoomPage({ params }: { params: { id: string } }) {
               <QRCodeSVG value={typeof window !== 'undefined' ? window.location.href : ""} size={200} />
             </div>
 
+            {/* Room Link Display and Copy Action */}
+            <div className="space-y-2 text-left">
+              <span className="text-[10px] uppercase font-bold text-zinc-400 tracking-wider">Room Link</span>
+              <div className="flex items-center space-x-2 bg-white/5 border border-white/10 rounded-xl p-2.5 focus-within:border-primary/50 transition-all duration-300">
+                <span className="flex-1 text-xs font-mono text-zinc-300 truncate select-all">
+                  {typeof window !== 'undefined' ? window.location.href : ""}
+                </span>
+                <button
+                  type="button"
+                  onClick={copyRoomUrl}
+                  className="p-1.5 hover:bg-white/10 text-zinc-400 hover:text-white rounded-lg transition duration-200 shrink-0"
+                  title="Copy Link"
+                  aria-label="Copy meeting link from QR modal"
+                >
+                  <FiCopy size={14} />
+                </button>
+              </div>
+              {copied && (
+                <span className="text-[10px] text-emerald-400 font-semibold animate-fade-in block text-center">
+                  Link copied to clipboard!
+                </span>
+              )}
+            </div>
+
             <button
               onClick={() => setShowQR(false)}
               className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl transition-all duration-200"
             >
               Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Premium Glassmorphic Room Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+          <div className="glass max-w-md w-full p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <FiSettings className="text-primary animate-spin" style={{ animationDuration: '6s' }} /> Room Settings
+              </h3>
+              <button 
+                onClick={() => setShowSettings(false)}
+                className="p-1.5 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition duration-200"
+                aria-label="Close Settings"
+              >
+                <span className="text-xl">✕</span>
+              </button>
+            </div>
+
+            {/* Profile/Display Name Form (Available to all users) */}
+            <div className="space-y-3 bg-white/5 border border-white/10 p-5 rounded-2xl">
+              <h4 className="text-sm font-semibold text-zinc-200">User Profile</h4>
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase font-bold text-zinc-400 tracking-wider">Display Name</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    defaultValue={userName}
+                    placeholder="Enter your name"
+                    id="settings-display-name-input"
+                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary/50 transition duration-200"
+                  />
+                  <button
+                    onClick={() => {
+                      const input = document.getElementById("settings-display-name-input") as HTMLInputElement;
+                      if (input && input.value.trim()) {
+                        changeDisplayName(input.value.trim());
+                        alert("Display name updated and synchronized successfully!");
+                      }
+                    }}
+                    className="px-4 bg-primary hover:bg-primary/80 text-primary-foreground font-bold text-xs rounded-xl transition duration-200"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Host Controlled Room Restrictions (Only rendered/active if the user is the host) */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-semibold text-zinc-200">Meeting Permissions</h4>
+                {!(typeof window !== 'undefined' && localStorage.getItem(`host_token_${roomId}`)) && (
+                  <span className="text-[9px] uppercase font-bold text-amber-500/80 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                    Host Only
+                  </span>
+                )}
+              </div>
+
+              <div className="space-y-3">
+                {/* Chat permission lock switch */}
+                <div className="flex items-center justify-between bg-white/5 border border-white/10 p-4 rounded-2xl">
+                  <div className="space-y-0.5">
+                    <span className="text-sm font-semibold text-zinc-200">Allow Chat Messaging</span>
+                    <p className="text-[11px] text-zinc-400">Permit participants to type messages & upload files</p>
+                  </div>
+                  <button
+                    disabled={!(typeof window !== 'undefined' && localStorage.getItem(`host_token_${roomId}`))}
+                    onClick={() => updateRoomSetting('allowChat', !room?.settings.allowChat)}
+                    className={`w-12 h-6 rounded-full p-1 transition-all duration-300 flex ${
+                      room?.settings.allowChat ? "bg-primary justify-end" : "bg-zinc-800 justify-start"
+                    } disabled:opacity-30 disabled:cursor-not-allowed`}
+                    aria-label="Toggle Chat Settings"
+                  >
+                    <div className="w-4 h-4 bg-white rounded-full shadow-md transition-all"></div>
+                  </button>
+                </div>
+
+                {/* Screen Share permission lock switch */}
+                <div className="flex items-center justify-between bg-white/5 border border-white/10 p-4 rounded-2xl">
+                  <div className="space-y-0.5">
+                    <span className="text-sm font-semibold text-zinc-200">Allow Screen Sharing</span>
+                    <p className="text-[11px] text-zinc-400">Permit participants to broadcast their screens</p>
+                  </div>
+                  <button
+                    disabled={!(typeof window !== 'undefined' && localStorage.getItem(`host_token_${roomId}`))}
+                    onClick={() => updateRoomSetting('allowScreenShare', !room?.settings.allowScreenShare)}
+                    className={`w-12 h-6 rounded-full p-1 transition-all duration-300 flex ${
+                      room?.settings.allowScreenShare ? "bg-primary justify-end" : "bg-zinc-800 justify-start"
+                    } disabled:opacity-30 disabled:cursor-not-allowed`}
+                    aria-label="Toggle Screen Share Settings"
+                  >
+                    <div className="w-4 h-4 bg-white rounded-full shadow-md transition-all"></div>
+                  </button>
+                </div>
+
+                {/* Waiting room lobby gate permission lock switch */}
+                <div className="flex items-center justify-between bg-white/5 border border-white/10 p-4 rounded-2xl">
+                  <div className="space-y-0.5">
+                    <span className="text-sm font-semibold text-zinc-200">Enable Waiting Room Lobby</span>
+                    <p className="text-[11px] text-zinc-400">Require host authorization before letting guests enter</p>
+                  </div>
+                  <button
+                    disabled={!(typeof window !== 'undefined' && localStorage.getItem(`host_token_${roomId}`))}
+                    onClick={() => updateRoomSetting('waitingRoom', !room?.settings.waitingRoom)}
+                    className={`w-12 h-6 rounded-full p-1 transition-all duration-300 flex ${
+                      room?.settings.waitingRoom ? "bg-primary justify-end" : "bg-zinc-800 justify-start"
+                    } disabled:opacity-30 disabled:cursor-not-allowed`}
+                    aria-label="Toggle Waiting Room Settings"
+                  >
+                    <div className="w-4 h-4 bg-white rounded-full shadow-md transition-all"></div>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowSettings(false)}
+              className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl transition-all duration-200"
+            >
+              Done
             </button>
           </div>
         </div>
@@ -1903,11 +2152,16 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         <form onSubmit={sendMessage} className="px-4 py-4 border-t border-white/10">
           <div className="flex items-center space-x-2 bg-white/5 border border-white/10 rounded-2xl px-4 py-2 focus-within:border-primary/50 transition-all duration-300">
             {/* Paperclip upload trigger */}
-            <label className="p-2 text-zinc-400 hover:text-white hover:bg-white/10 rounded-xl cursor-pointer transition duration-200">
+            <label className={`p-2 text-zinc-400 rounded-xl transition duration-200 ${
+              room && !room.settings.allowChat && (typeof window !== 'undefined' ? !localStorage.getItem(`host_token_${roomId}`) : true)
+                ? "cursor-not-allowed opacity-30"
+                : "hover:text-white hover:bg-white/10 cursor-pointer"
+            }`}>
               <FiPaperclip size={18} />
               <input
                 type="file"
                 className="hidden"
+                disabled={!!(room && !room.settings.allowChat && (typeof window !== 'undefined' ? !localStorage.getItem(`host_token_${roomId}`) : true))}
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) uploadFile(file);
@@ -1919,13 +2173,14 @@ export default function RoomPage({ params }: { params: { id: string } }) {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type a message..."
-              className="flex-1 bg-transparent outline-none text-sm placeholder-zinc-500"
+              placeholder={room && !room.settings.allowChat && (typeof window !== 'undefined' ? !localStorage.getItem(`host_token_${roomId}`) : true) ? "Chat is locked by host" : "Type a message..."}
+              disabled={!!(room && !room.settings.allowChat && (typeof window !== 'undefined' ? !localStorage.getItem(`host_token_${roomId}`) : true))}
+              className="flex-1 bg-transparent outline-none text-sm placeholder-zinc-500 disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Chat message input"
             />
             <button
               type="submit"
-              disabled={!newMessage.trim()}
+              disabled={!newMessage.trim() || !!(room && !room.settings.allowChat && (typeof window !== 'undefined' ? !localStorage.getItem(`host_token_${roomId}`) : true))}
               className="p-2 text-primary hover:bg-primary/10 rounded-xl transition duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Send Message"
             >

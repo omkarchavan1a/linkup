@@ -1,8 +1,18 @@
+"use client";
+
 import ThemeToggle from "./ThemeToggle";
 import { FiVideo, FiHelpCircle } from "react-icons/fi";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+
+  // Hide the global navigation header inside active call rooms to avoid visual collision/overlapping UI
+  if (pathname?.startsWith("/room")) {
+    return null;
+  }
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 p-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between glass px-6 py-3 rounded-2xl">
@@ -28,4 +38,5 @@ export default function Header() {
     </header>
   );
 }
+
 
