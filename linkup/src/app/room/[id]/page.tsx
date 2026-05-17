@@ -288,6 +288,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
   // Active Speakers and Native Notification states
   const [activeSpeakers, setActiveSpeakers] = useState<{ [socketId: string]: number }>({});
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hasNotificationPermission, setHasNotificationPermission] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioAnalysersRef = useRef<{ [socketId: string]: AnalyserNode }>({});
@@ -643,7 +644,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       if (audioTracks.length === 0) return;
 
       if (!audioContextRef.current) {
-        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        const AudioContextClass = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
         audioContextRef.current = new AudioContextClass();
       }
 
@@ -1436,6 +1437,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
       stopScreenShare();
       alert("Your screen sharing session has been stopped because the room host disabled screen sharing.");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room?.settings.allowScreenShare, isSharingScreen, room]);
 
   if (loading) {
