@@ -1368,12 +1368,19 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         });
         socketRef.current = socket;
 
+        // IMPORTANT: proceedToJoin MUST be called inside the connect callback,
+        // AFTER room:join is emitted. The server sends waiting-room:list immediately
+        // after room:join is received (the host must be in the room first so the
+        // server can target their socket). Calling proceedToJoin before connect
+        // means the host hasn't joined the room yet — any guest waiting in the
+        // lobby is invisible because io.to(roomId) won't include this socket yet.
         socket.on("connect", () => {
           console.log("Connected directly to signaling server with ID:", socket.id);
           socket.emit("room:join", { roomId, userId: socket.id, name });
+          // Register all event listeners (including waiting-room:list / pending)
+          // only after the socket has joined the room channel on the server.
+          proceedToJoin(name, audio, video, stream, socket);
         });
-
-        proceedToJoin(name, audio, video, stream, socket);
       } catch (err) {
         console.error("Direct room connection failed:", err);
       }
