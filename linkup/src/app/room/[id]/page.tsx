@@ -236,6 +236,116 @@ function ConnectionSpeedometer({ socketId, stats, quality = 'excellent' }: Conne
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// LobbyRequestToast — animated join request notification card with live video
+// ─────────────────────────────────────────────────────────────────────────────
+interface LobbyRequestToastProps {
+  guest: { socketId: string; name: string; userId: string; previewStream?: MediaStream };
+  index: number;
+  onAdmit: () => void;
+  onDeny: () => void;
+}
+
+function LobbyRequestToast({ guest, index, onAdmit, onDeny }: LobbyRequestToastProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  // Slide-in animation on mount
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 30);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Attach live preview stream whenever it becomes available
+  useEffect(() => {
+    if (videoRef.current && guest.previewStream) {
+      videoRef.current.srcObject = guest.previewStream;
+    }
+  }, [guest.previewStream]);
+
+  const initials = guest.name
+    .split(" ")
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? "")
+    .join("");
+
+  return (
+    <div
+      className="pointer-events-auto"
+      style={{
+        transform: visible ? "translateX(0)" : "translateX(calc(100% + 24px))",
+        opacity: visible ? 1 : 0,
+        transition: `transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 80}ms, opacity 300ms ease ${index * 80}ms`,
+      }}
+      role="alertdialog"
+      aria-label={`${guest.name} wants to join`}
+    >
+      <div className="w-[340px] rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.7)] bg-zinc-950/95 backdrop-blur-2xl">
+        {/* ── Header bar ── */}
+        <div className="flex items-center gap-3 px-4 pt-4 pb-3 border-b border-white/8">
+          <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-ping shrink-0" />
+          <span className="text-[11px] font-bold uppercase tracking-widest text-amber-400">
+            Join Request
+          </span>
+          <span className="ml-auto text-[10px] text-zinc-500 font-mono">Lobby</span>
+        </div>
+
+        {/* ── Body ── */}
+        <div className="p-4 flex gap-3.5 items-start">
+          {/* Video preview / avatar */}
+          <div className="relative w-[88px] h-[66px] shrink-0 rounded-xl overflow-hidden bg-zinc-900 border border-white/10">
+            {guest.previewStream ? (
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-full object-cover scale-x-[-1]"
+              />
+            ) : (
+              /* Avatar fallback while stream negotiates */
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/30 to-indigo-600/20">
+                <span className="text-xl font-black text-white select-none">{initials}</span>
+              </div>
+            )}
+            {/* Subtle live dot */}
+            {guest.previewStream && (
+              <div className="absolute top-1.5 right-1.5 flex items-center gap-1 bg-black/60 rounded-full px-1.5 py-0.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              </div>
+            )}
+          </div>
+
+          {/* Info + actions */}
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-white truncate leading-tight">{guest.name}</p>
+            <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
+              Waiting in the lobby to join this meeting
+            </p>
+
+            <div className="flex items-center gap-2 mt-3">
+              <button
+                onClick={onAdmit}
+                className="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 active:scale-95 transition-all duration-200 shadow-md shadow-emerald-900/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+                aria-label={`Admit ${guest.name}`}
+              >
+                ✓ Admit
+              </button>
+              <button
+                onClick={onDeny}
+                className="flex-1 py-2 rounded-xl text-xs font-bold text-zinc-300 bg-white/8 hover:bg-red-600/80 hover:text-white active:scale-95 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                aria-label={`Deny ${guest.name}`}
+              >
+                ✕ Deny
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function RoomPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const roomId = params.id;
@@ -272,7 +382,8 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
   // Interactive Live Features States
   const [waitingStatus, setWaitingStatus] = useState<"none" | "waiting" | "approved" | "denied">("none");
-  const [pendingGuests, setPendingGuests] = useState<{ socketId: string; name: string; userId: string }[]>([]);
+  const [pendingGuests, setPendingGuests] = useState<{ socketId: string; name: string; userId: string; previewStream?: MediaStream }[]>([]);
+  const lobbyPcsRef = useRef<{ [socketId: string]: RTCPeerConnection }>({});
   const [isHandRaised, setIsHandRaised] = useState(false);
   const [floatingReactions, setFloatingReactions] = useState<{ id: string; emoji: string; style: React.CSSProperties }[]>([]);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
@@ -990,6 +1101,41 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     if (isHost) {
       socket.on("waiting-room:pending", (guest: { socketId: string; name: string; userId: string }) => {
         console.log("Host: guest is waiting in lobby:", guest);
+
+        // ── Lobby Preview WebRTC ──────────────────────────────────────────────
+        // Create a lightweight one-way RTCPeerConnection to pull the guest camera.
+        // The guest sends us their stream so the host can see who is knocking.
+        const lobbyPc = new RTCPeerConnection({
+          iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+        });
+        lobbyPcsRef.current[guest.socketId] = lobbyPc;
+
+        // Forward ICE candidates to the waiting guest via signaling
+        lobbyPc.onicecandidate = (ev) => {
+          if (ev.candidate) {
+            socket.emit("signal", {
+              targetSocketId: guest.socketId,
+              signal: { type: "lobby-candidate", candidate: ev.candidate }
+            });
+          }
+        };
+
+        // When we receive the guest's video track, attach it to state
+        lobbyPc.ontrack = (ev) => {
+          const previewStream = ev.streams[0];
+          setPendingGuests((prev) =>
+            prev.map((g) =>
+              g.socketId === guest.socketId ? { ...g, previewStream } : g
+            )
+          );
+        };
+
+        // Request an offer from the guest by sending a lobby-offer-request signal
+        socket.emit("signal", {
+          targetSocketId: guest.socketId,
+          signal: { type: "lobby-offer-request", hostSocketId: socket.id }
+        });
+
         setPendingGuests((prev) => {
           if (prev.some((g) => g.socketId === guest.socketId)) return prev;
           return [...prev, guest];
@@ -1013,6 +1159,27 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           } catch (e) {
             console.warn("Push notification blocked or failed:", e);
           }
+        }
+      });
+
+      // Handle lobby preview signaling answer from the waiting guest
+      socket.on("signal", async ({ senderSocketId, signal: sig }: { senderSocketId: string; signal: Record<string, unknown> }) => {
+        const lobbyPc = lobbyPcsRef.current[senderSocketId];
+        if (!lobbyPc) return; // only handle if this is a lobby preview signal
+        try {
+          if (sig.type === "lobby-offer" && typeof sig.sdp === "string") {
+            await lobbyPc.setRemoteDescription(new RTCSessionDescription({ type: "offer", sdp: sig.sdp }));
+            const answer = await lobbyPc.createAnswer();
+            await lobbyPc.setLocalDescription(answer);
+            socket.emit("signal", {
+              targetSocketId: senderSocketId,
+              signal: { type: "lobby-answer", sdp: answer.sdp }
+            });
+          } else if (sig.type === "lobby-candidate" && sig.candidate) {
+            await lobbyPc.addIceCandidate(new RTCIceCandidate(sig.candidate as RTCIceCandidateInit));
+          }
+        } catch (e) {
+          console.warn("[Lobby Preview] Signaling error:", e);
         }
       });
     }
@@ -1097,6 +1264,60 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           setWaitingStatus("denied");
           socket.disconnect();
           router.push("/?error=denied");
+        });
+
+        // ── Lobby Video Preview: Guest Side ─────────────────────────────────
+        // When the host requests a preview, the guest creates a one-way WebRTC
+        // offer carrying their camera so the host can see who is knocking.
+        let lobbyGuestPc: RTCPeerConnection | null = null;
+
+        socket.on("signal", async ({ senderSocketId, signal: sig }: { senderSocketId: string; signal: Record<string, unknown> }) => {
+          if (sig.type === "lobby-offer-request") {
+            // Build a fresh peer connection to send preview stream to the host
+            lobbyGuestPc = new RTCPeerConnection({
+              iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+            });
+
+            // Add camera/mic tracks from the local stream captured at pre-join
+            if (stream) {
+              stream.getTracks().forEach((track) => lobbyGuestPc!.addTrack(track, stream!));
+            }
+
+            // Forward ICE candidates to the host
+            lobbyGuestPc.onicecandidate = (ev) => {
+              if (ev.candidate) {
+                socket.emit("signal", {
+                  targetSocketId: senderSocketId,
+                  signal: { type: "lobby-candidate", candidate: ev.candidate }
+                });
+              }
+            };
+
+            // Negotiate and send the offer to the host
+            try {
+              const offer = await lobbyGuestPc.createOffer({ offerToReceiveAudio: false, offerToReceiveVideo: false });
+              await lobbyGuestPc.setLocalDescription(offer);
+              socket.emit("signal", {
+                targetSocketId: senderSocketId,
+                signal: { type: "lobby-offer", sdp: offer.sdp }
+              });
+            } catch (e) {
+              console.warn("[Lobby Preview Guest] Failed to create offer:", e);
+            }
+          } else if (sig.type === "lobby-answer" && lobbyGuestPc && typeof sig.sdp === "string") {
+            // Host accepted our offer — complete the peer connection
+            try {
+              await lobbyGuestPc.setRemoteDescription(new RTCSessionDescription({ type: "answer", sdp: sig.sdp }));
+            } catch (e) {
+              console.warn("[Lobby Preview Guest] Failed to set remote answer:", e);
+            }
+          } else if (sig.type === "lobby-candidate" && lobbyGuestPc && sig.candidate) {
+            try {
+              await lobbyGuestPc.addIceCandidate(new RTCIceCandidate(sig.candidate as RTCIceCandidateInit));
+            } catch (e) {
+              console.warn("[Lobby Preview Guest] Failed to add ICE candidate:", e);
+            }
+          }
         });
       } catch (err) {
         console.error("Waiting room handshake connection failed:", err);
@@ -1210,15 +1431,25 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     setShowReactionsSelector(false);
   };
 
+  const closeLobbyPreview = (guestSocketId: string) => {
+    const lobbyPc = lobbyPcsRef.current[guestSocketId];
+    if (lobbyPc) {
+      try { lobbyPc.close(); } catch {}
+      delete lobbyPcsRef.current[guestSocketId];
+    }
+  };
+
   const approveGuest = (guestSocketId: string) => {
     console.log("Host approved waiting guest:", guestSocketId);
     socketRef.current?.emit("waiting-room:approve", { roomId, guestSocketId });
+    closeLobbyPreview(guestSocketId);
     setPendingGuests((prev) => prev.filter((g) => g.socketId !== guestSocketId));
   };
 
   const denyGuest = (guestSocketId: string) => {
     console.log("Host denied waiting guest:", guestSocketId);
     socketRef.current?.emit("waiting-room:deny", { roomId, guestSocketId });
+    closeLobbyPreview(guestSocketId);
     setPendingGuests((prev) => prev.filter((g) => g.socketId !== guestSocketId));
   };
 
@@ -2257,43 +2488,18 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         }
       `}} />
 
-      {/* Host waitlist pending request dashboard overlay card */}
-      {pendingGuests.length > 0 && (
-        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4">
-          <div className="glass rounded-3xl p-6 border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col space-y-4 bg-zinc-950/80 backdrop-blur-2xl">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary border border-primary/20">
-                🔒
-              </div>
-              <div>
-                <h4 className="font-bold text-sm text-white">Lobby Guest Request</h4>
-                <p className="text-xs text-zinc-400">Someone is asking to join this secure meeting room.</p>
-              </div>
-            </div>
-            <div className="space-y-2">
-              {pendingGuests.map((guest) => (
-                <div key={guest.socketId} className="flex items-center justify-between bg-white/5 border border-white/5 p-3 rounded-2xl">
-                  <span className="text-sm font-semibold text-zinc-200">{guest.name}</span>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => approveGuest(guest.socketId)}
-                      className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-lg transition-all hover:scale-105"
-                    >
-                      Admit
-                    </button>
-                    <button
-                      onClick={() => denyGuest(guest.socketId)}
-                      className="px-3.5 py-1.5 bg-destructive hover:bg-destructive/80 text-white font-bold text-xs rounded-xl transition-all"
-                    >
-                      Deny
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ── Join Request Notification Toasts ─────────────────────────────── */}
+      <div className="fixed top-4 right-4 z-50 flex flex-col gap-3 pointer-events-none" aria-live="polite" aria-label="Join requests">
+        {pendingGuests.map((guest, idx) => (
+          <LobbyRequestToast
+            key={guest.socketId}
+            guest={guest}
+            index={idx}
+            onAdmit={() => approveGuest(guest.socketId)}
+            onDeny={() => denyGuest(guest.socketId)}
+          />
+        ))}
+      </div>
     </div>
 
     {/* Chat Sidebar Panel */}
