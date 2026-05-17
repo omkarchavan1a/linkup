@@ -74,6 +74,48 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
         socket.to(roomId).emit('room:left', { userId, socketId: socket.id });
       });
 
+      socket.on('screen-share:state', ({ roomId, isSharing }) => {
+        socket.to(roomId).emit('screen-share:state', {
+          socketId: socket.id,
+          isSharing
+        });
+      });
+
+      // Interactive Emoji Reaction Event
+      socket.on('reaction:send', ({ roomId, reactionType }) => {
+        socket.to(roomId).emit('reaction:received', {
+          senderSocketId: socket.id,
+          reactionType
+        });
+      });
+
+      // Hand Raise Toggle Event
+      socket.on('hand-raise:toggle', ({ roomId, isRaised }) => {
+        socket.to(roomId).emit('hand-raise:state', {
+          socketId: socket.id,
+          isRaised
+        });
+      });
+
+      // Waiting Lobby Event Pipeline
+      socket.on('waiting-room:join', ({ roomId, name, userId }) => {
+        socket.join(`${roomId}-waiting`);
+        console.log(`User ${name} (${userId}) waiting for approval in ${roomId}`);
+        socket.to(roomId).emit('waiting-room:request', {
+          socketId: socket.id,
+          name,
+          userId
+        });
+      });
+
+      socket.on('waiting-room:approve', ({ targetSocketId }) => {
+        io.to(targetSocketId).emit('waiting-room:approved');
+      });
+
+      socket.on('waiting-room:deny', ({ targetSocketId }) => {
+        io.to(targetSocketId).emit('waiting-room:denied');
+      });
+
       socket.on('disconnecting', () => {
         socket.rooms.forEach((roomId) => {
           if (roomId !== socket.id) {

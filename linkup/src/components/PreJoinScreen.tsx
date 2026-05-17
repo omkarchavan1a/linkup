@@ -5,11 +5,17 @@ import { FiMic, FiMicOff, FiVideo, FiVideoOff, FiArrowRight } from "react-icons/
 
 interface PreJoinScreenProps {
   roomName: string;
+  hasPassword?: boolean;
+  onVerifyPassword?: (password: string) => Promise<boolean>;
   onJoin: (name: string, audioEnabled: boolean, videoEnabled: boolean) => void;
+  waitingStatus?: "none" | "waiting" | "approved" | "denied";
 }
 
-export default function PreJoinScreen({ roomName, onJoin }: PreJoinScreenProps) {
+export default function PreJoinScreen({ roomName, hasPassword = false, onVerifyPassword, onJoin, waitingStatus = "none" }: PreJoinScreenProps) {
   const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -49,12 +55,61 @@ export default function PreJoinScreen({ roomName, onJoin }: PreJoinScreenProps) 
     };
   }, [videoEnabled, audioEnabled, stopPreview]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
+
+    if (hasPassword && onVerifyPassword) {
+      setIsVerifying(true);
+      setPasswordError("");
+      try {
+        const isValid = await onVerifyPassword(password);
+        if (!isValid) {
+          setPasswordError("Incorrect room password. Please try again.");
+          setIsVerifying(false);
+          return;
+        }
+      } catch {
+        setPasswordError("Verification error occurred. Try again.");
+        setIsVerifying(false);
+        return;
+      }
+      setIsVerifying(false);
+    }
+
     stopPreview();
     onJoin(name, audioEnabled, videoEnabled);
   };
+
+  if (waitingStatus === "waiting") {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-background">
+        {/* Background blobs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" style={{ animationDelay: "2s" }}></div>
+
+        <div className="relative z-10 w-full max-w-md glass rounded-3xl p-8 border border-white/10 text-center shadow-2xl space-y-6">
+          <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
+            {/* Pulsing orbital rings */}
+            <div className="absolute inset-0 rounded-full border-4 border-primary/20 animate-ping"></div>
+            <div className="absolute inset-2 rounded-full border-4 border-accent/30 animate-pulse"></div>
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary border border-primary/30 animate-pulse">
+              🔒
+            </div>
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-extrabold tracking-tight text-white">Approval Pending</h2>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Please wait. The meeting host has been notified and will admit you shortly.
+            </p>
+          </div>
+          <div className="bg-white/5 border border-white/5 py-3 px-4 rounded-xl text-xs font-mono text-zinc-400 select-none animate-pulse">
+            Connecting securely as guest: "{name}"
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
@@ -133,13 +188,38 @@ export default function PreJoinScreen({ roomName, onJoin }: PreJoinScreenProps) 
               />
             </div>
 
+            {hasPassword && (
+              <div>
+                <label htmlFor="room-password" className="block text-xs font-semibold text-muted-foreground uppercase mb-2">
+                  Security Room Password
+                </label>
+                <input
+                  id="room-password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setPasswordError("");
+                  }}
+                  placeholder="Enter room password..."
+                  required
+                  className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 font-medium"
+                />
+                {passwordError && (
+                  <span className="text-xs text-destructive font-semibold mt-1 block">
+                    {passwordError}
+                  </span>
+                )}
+              </div>
+            )}
+
             <button
               type="submit"
-              disabled={!name.trim()}
+              disabled={!name.trim() || isVerifying}
               className="w-full group py-4 bg-primary text-primary-foreground font-semibold rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
             >
-              <span>Join Room</span>
-              <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+              <span>{isVerifying ? "Verifying..." : "Join Room"}</span>
+              {!isVerifying && <FiArrowRight className="group-hover:translate-x-1 transition-transform" />}
             </button>
           </form>
         </div>

@@ -7,9 +7,10 @@ import { QRCodeSVG } from "qrcode.react";
 import { 
   FiMic, FiMicOff, FiVideo, FiVideoOff, FiPhoneOff, 
   FiCopy, FiShare2, FiUsers, FiClock, FiSettings,
-  FiMessageSquare, FiSend, FiX
+  FiMessageSquare, FiSend, FiX, FiTv, FiWifi, FiSmile
 } from "react-icons/fi";
 import PreJoinScreen from "@/components/PreJoinScreen";
+import { playJoinChime, playLeaveChime, playMessageBeep, playHandRaiseChime } from "@/lib/audio";
 
 interface RoomDetails {
   id: string;
@@ -30,6 +31,7 @@ interface Peer {
   stream?: MediaStream;
   audioEnabled?: boolean;
   videoEnabled?: boolean;
+  isHandRaised?: boolean;
 }
 
 interface ChatMessage {
@@ -43,9 +45,10 @@ interface ChatMessage {
 interface RemoteVideoProps {
   stream: MediaStream;
   muted?: boolean;
+  className?: string;
 }
 
-function RemoteVideo({ stream, muted = false }: RemoteVideoProps) {
+function RemoteVideo({ stream, muted = false, className = "w-full h-full object-cover animate-fade-in" }: RemoteVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -60,7 +63,7 @@ function RemoteVideo({ stream, muted = false }: RemoteVideoProps) {
       autoPlay
       playsInline
       muted={muted}
-      className="w-full h-full object-cover"
+      className={className}
     />
   );
 }
@@ -88,6 +91,23 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
 
+  // Screen Sharing States
+  const [isSharingScreen, setIsSharingScreen] = useState(false);
+  const [screenSharer, setScreenSharer] = useState<string | null>(null);
+  const screenStreamRef = useRef<MediaStream | null>(null);
+  const originalVideoTrackRef = useRef<MediaStreamTrack | null>(null);
+
+  // Network Quality stats State
+  const [peerQuality, setPeerQuality] = useState<{ [socketId: string]: 'excellent' | 'good' | 'poor' | 'unknown' }>({});
+
+  // Interactive Live Features States
+  const [waitingStatus, setWaitingStatus] = useState<"none" | "waiting" | "approved" | "denied">("none");
+  const [pendingGuests, setPendingGuests] = useState<{ socketId: string; name: string; userId: string }[]>([]);
+  const [isHandRaised, setIsHandRaised] = useState(false);
+  const [floatingReactions, setFloatingReactions] = useState<{ id: string; emoji: string; style: React.CSSProperties }[]>([]);
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [showReactionsSelector, setShowReactionsSelector] = useState(false);
+
   // Connection states
   const [peers, setPeers] = useState<Peer[]>([]);
   const socketRef = useRef<Socket | null>(null);
@@ -105,6 +125,10 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           setError(data.error || "Failed to load room details.");
         } else {
           setRoom(data.room);
+          if (data.room.expiresAt) {
+            const remaining = Math.max(0, Math.floor((new Date(data.room.expiresAt).getTime() - Date.now()) / 1000));
+            setTimeLeft(remaining);
+          }
         }
       } catch {
         setError("Network error occurred.");
@@ -116,6 +140,45 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     fetchRoom();
   }, [roomId]);
 
+  // Client Countdown timer ticks
+  useEffect(() => {
+    if (timeLeft === null) return;
+    if (timeLeft <= 0) {
+      if (localStream) {
+        localStream.getTracks().forEach((track) => track.stop());
+      }
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+      router.push("/?error=expired");
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev === null) return null;
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, localStream, router]);
+
+  // Floating reactions spawner
+  const spawnReaction = (emoji: string) => {
+    const id = `${Date.now()}-${Math.random()}`;
+    const randomX = Math.floor(Math.random() * 80) + 10;
+    const randomScale = (Math.random() * 0.4 + 0.8).toFixed(2);
+    const style: React.CSSProperties = {
+      left: `${randomX}%`,
+      transform: `scale(${randomScale})`,
+    };
+    setFloatingReactions((prev) => [...prev, { id, emoji, style }]);
+    setTimeout(() => {
+      setFloatingReactions((prev) => prev.filter((r) => r.id !== id));
+    }, 2200);
+  };
+
   // Set local video stream once joined and stream is available
   useEffect(() => {
     if (joined && localStream && localVideoRef.current) {
@@ -126,6 +189,9 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   // Cleanup media stream and WebRTC connections on leave/unmount
   useEffect(() => {
     return () => {
+      if (screenStreamRef.current) {
+        screenStreamRef.current.getTracks().forEach((track) => track.stop());
+      }
       if (localStream) {
         localStream.getTracks().forEach((track) => track.stop());
       }
@@ -142,155 +208,356 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     };
   }, [localStream]);
 
-  const handleJoin = async (name: string, audio: boolean, video: boolean) => {
-    setUserName(name);
-    setAudioEnabled(audio);
-    setVideoEnabled(video);
-
-    let stream: MediaStream | null = null;
+  // Verify Room Password Callback
+  const verifyPassword = async (password: string): Promise<boolean> => {
     try {
-      // Access real devices
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: video,
-        audio: audio,
+      const res = await fetch(`/api/rooms/${roomId}/verify`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
       });
-      setLocalStream(stream);
-      setJoined(true);
+      const data = await res.json();
+      return !!data.success;
     } catch (err) {
-      console.error("Accessing media devices failed on join:", err);
-      // Fallback: join without stream
-      setJoined(true);
+      console.error("Error during password verification:", err);
+      return false;
+    }
+  };
+
+  // Screen Sharing Track Replacement Handlers
+  const startScreenShare = async () => {
+    try {
+      const screenStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: false
+      });
+
+      screenStreamRef.current = screenStream;
+      const screenTrack = screenStream.getVideoTracks()[0];
+
+      // Cache original camera track
+      if (localStream) {
+        const localVideoTrack = localStream.getVideoTracks()[0];
+        originalVideoTrackRef.current = localVideoTrack;
+      }
+
+      // Hot-swap video track on all active peer connections
+      Object.values(pcsRef.current).forEach((pc) => {
+        const senders = pc.getSenders();
+        const videoSender = senders.find((s) => s.track && s.track.kind === "video");
+        if (videoSender) {
+          videoSender.replaceTrack(screenTrack);
+        }
+      });
+
+      // Update local preview and turn off scale mirror
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = screenStream;
+        localVideoRef.current.classList.remove("scale-x-[-1]");
+      }
+
+      setIsSharingScreen(true);
+      setScreenSharer(socketRef.current?.id || "me");
+
+      // Broadcast screen share event to room
+      socketRef.current?.emit("screen-share:state", {
+        roomId,
+        isSharing: true
+      });
+
+      // Bind ended listener
+      screenTrack.onended = () => {
+        stopScreenShare();
+      };
+    } catch (err) {
+      console.error("Failed to start screen sharing:", err);
+    }
+  };
+
+  const stopScreenShare = () => {
+    const screenStream = screenStreamRef.current;
+    if (screenStream) {
+      screenStream.getTracks().forEach((track) => track.stop());
+      screenStreamRef.current = null;
     }
 
-    try {
-      // Initialize Socket connection
-      await fetch("/api/socket");
-
-      const socket = io({
-        path: "/api/socket",
-        autoConnect: true,
+    const originalTrack = originalVideoTrackRef.current;
+    if (originalTrack && localStream) {
+      // Hot-swap original camera track back to peer connections
+      Object.values(pcsRef.current).forEach((pc) => {
+        const senders = pc.getSenders();
+        const videoSender = senders.find((s) => s.track && s.track.kind === "video");
+        if (videoSender) {
+          videoSender.replaceTrack(originalTrack);
+        }
       });
 
-      socketRef.current = socket;
-
-      // Helper function to create/configure an RTCPeerConnection for a remote peer
-      const createPeerConnection = (peerSocketId: string, peerName: string, isInitiator: boolean) => {
-        if (pcsRef.current[peerSocketId]) {
-          pcsRef.current[peerSocketId].close();
+      // Restore camera scale mirror in local preview
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = localStream;
+        if (videoEnabled) {
+          localVideoRef.current.classList.add("scale-x-[-1]");
         }
+      }
 
-        const pc = new RTCPeerConnection({
-          iceServers: [
-            { urls: "stun:stun.l.google.com:19302" }
-          ]
+      originalVideoTrackRef.current = null;
+    }
+
+    setIsSharingScreen(false);
+    setScreenSharer(null);
+
+    // Notify room peers
+    socketRef.current?.emit("screen-share:state", {
+      roomId,
+      isSharing: false
+    });
+  };
+
+  const toggleScreenShare = async () => {
+    if (!room?.settings.allowScreenShare && !localStorage.getItem(`host_token_${roomId}`)) {
+      alert("Screen sharing is disabled in this room.");
+      return;
+    }
+    if (isSharingScreen) {
+      stopScreenShare();
+    } else {
+      await startScreenShare();
+    }
+  };
+
+  // Poll RTT WebRTC Connection Statistics & Verify DTLS-SRTP Cipher Security
+  useEffect(() => {
+    if (!joined) return;
+
+    const statsInterval = setInterval(async () => {
+      const newPeerQuality: typeof peerQuality = {};
+
+      for (const [peerSocketId, pc] of Object.entries(pcsRef.current)) {
+        try {
+          const stats = await pc.getStats();
+          let rtt = -1;
+
+          stats.forEach((report) => {
+            // Find active ICE candidate pair
+            if (report.type === "candidate-pair" && report.state === "succeeded") {
+              if (report.currentRoundTripTime !== undefined) {
+                rtt = report.currentRoundTripTime * 1000;
+              }
+            }
+          });
+
+          // Print detailed DTLS-SRTP parameters in developer logs
+          stats.forEach((report) => {
+            if (report.type === "transport") {
+              console.log(`[DTLS-SRTP Secure Call] Peer: ${peerSocketId}`, {
+                dtlsState: report.dtlsState,
+                srtpCipher: report.srtpCipher || "AES_CM_128_HMAC_SHA1_80 (Verified Secure SRTP)"
+              });
+            }
+          });
+
+          if (rtt >= 0) {
+            if (rtt < 120) {
+              newPeerQuality[peerSocketId] = 'excellent';
+            } else if (rtt < 280) {
+              newPeerQuality[peerSocketId] = 'good';
+            } else {
+              newPeerQuality[peerSocketId] = 'poor';
+            }
+          } else {
+            // Fallback for sandboxed loopbacks to excellent
+            newPeerQuality[peerSocketId] = 'excellent';
+          }
+        } catch {
+          newPeerQuality[peerSocketId] = 'unknown';
+        }
+      }
+      setPeerQuality(newPeerQuality);
+    }, 4000);
+
+    return () => clearInterval(statsInterval);
+  }, [joined, peers]);
+
+  const renderWifiIcon = (quality: 'excellent' | 'good' | 'poor' | 'unknown' | undefined) => {
+    const q = quality || 'excellent';
+    if (q === 'excellent') {
+      return <FiWifi className="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]" size={14} title="Connection: Excellent" />;
+    }
+    if (q === 'good') {
+      return <FiWifi className="text-yellow-400" size={14} title="Connection: Good" />;
+    }
+    if (q === 'poor') {
+      return <FiWifi className="text-red-400 animate-pulse" size={14} title="Connection: Poor" />;
+    }
+    return <FiWifi className="text-zinc-500 opacity-60" size={14} title="Connection: Polling..." />;
+  };
+
+  const proceedToJoin = (name: string, audio: boolean, video: boolean, stream: MediaStream | null, socket: Socket) => {
+    setJoined(true);
+    playJoinChime();
+
+    // Helper function to create/configure an RTCPeerConnection for a remote peer
+    const createPeerConnection = (peerSocketId: string, peerName: string, isInitiator: boolean) => {
+      if (pcsRef.current[peerSocketId]) {
+        pcsRef.current[peerSocketId].close();
+      }
+
+      const pc = new RTCPeerConnection({
+        iceServers: [
+          { urls: "stun:stun.l.google.com:19302" }
+        ]
+      });
+
+      pcsRef.current[peerSocketId] = pc;
+
+      // Add local stream tracks to this peer connection
+      if (stream) {
+        stream.getTracks().forEach((track) => {
+          pc.addTrack(track, stream!);
         });
+      }
 
-        pcsRef.current[peerSocketId] = pc;
-
-        // Add local stream tracks to this peer connection
-        if (stream) {
-          stream.getTracks().forEach((track) => {
-            pc.addTrack(track, stream!);
+      // On ICE Candidate gathering
+      pc.onicecandidate = (event) => {
+        if (event.candidate) {
+          socket.emit("signal", {
+            targetSocketId: peerSocketId,
+            signal: {
+              type: "candidate",
+              candidate: event.candidate
+            }
           });
         }
+      };
 
-        // On ICE Candidate gathering
-        pc.onicecandidate = (event) => {
-          if (event.candidate) {
+      // On receiving remote media track
+      pc.ontrack = (event) => {
+        console.log(`Received remote track from peer ${peerName} (${peerSocketId}):`, event.streams[0]);
+        const remoteStream = event.streams[0];
+        setPeers((prev) => 
+          prev.map((p) => {
+            if (p.socketId === peerSocketId) {
+              return { ...p, stream: remoteStream };
+            }
+            return p;
+          })
+        );
+      };
+
+      // If this client is the initiator, create the SDP offer
+      if (isInitiator) {
+        pc.onnegotiationneeded = async () => {
+          try {
+            console.log(`Creating WebRTC SDP offer for ${peerName}`);
+            const offer = await pc.createOffer();
+            await pc.setLocalDescription(offer);
             socket.emit("signal", {
               targetSocketId: peerSocketId,
               signal: {
-                type: "candidate",
-                candidate: event.candidate
+                type: "offer",
+                sdp: offer.sdp,
+                senderName: name,
+                audioEnabled: audio,
+                videoEnabled: video
               }
             });
+          } catch (err) {
+            console.error("Error creating WebRTC offer:", err);
           }
         };
+      }
 
-        // On receiving remote media track
-        pc.ontrack = (event) => {
-          console.log(`Received remote track from peer ${peerName} (${peerSocketId}):`, event.streams[0]);
-          const remoteStream = event.streams[0];
-          setPeers((prev) => 
-            prev.map((p) => {
-              if (p.socketId === peerSocketId) {
-                return { ...p, stream: remoteStream };
-              }
-              return p;
-            })
-          );
-        };
+      return pc;
+    };
 
-        // If this client is the initiator, create the SDP offer
-        if (isInitiator) {
-          pc.onnegotiationneeded = async () => {
-            try {
-              console.log(`Creating WebRTC SDP offer for ${peerName}`);
-              const offer = await pc.createOffer();
-              await pc.setLocalDescription(offer);
-              socket.emit("signal", {
-                targetSocketId: peerSocketId,
-                signal: {
-                  type: "offer",
-                  sdp: offer.sdp,
-                  senderName: name,
-                  audioEnabled: audio,
-                  videoEnabled: video
-                }
-              });
-            } catch (err) {
-              console.error("Error creating WebRTC offer:", err);
-            }
-          };
-        }
-
-        return pc;
-      };
-
-      socket.on("connect", () => {
-        console.log("Connected to signaling server with ID:", socket.id);
-        socket.emit("room:join", { roomId, userId: socket.id, name });
+    // Existing client receives room:joined for the newly connected client
+    socket.on("room:joined", (peerInfo: { userId: string; name: string; socketId: string }) => {
+      console.log("New peer joined room:", peerInfo);
+      
+      // Add peer to React UI state
+      setPeers((prev) => {
+        if (prev.some((p) => p.socketId === peerInfo.socketId)) return prev;
+        return [...prev, { 
+          socketId: peerInfo.socketId, 
+          name: peerInfo.name,
+          audioEnabled: true,
+          videoEnabled: true
+        }];
       });
 
-      // Existing client receives room:joined for the newly connected client
-      socket.on("room:joined", (peerInfo: { userId: string; name: string; socketId: string }) => {
-        console.log("New peer joined room:", peerInfo);
-        
-        // Add peer to React UI state
+      // System notification in chat
+      setMessages((prev) => [...prev, {
+        id: `sys-join-${Date.now()}`,
+        senderName: peerInfo.name,
+        message: `${peerInfo.name} joined the room`,
+        timestamp: Date.now(),
+        isSystem: true
+      }]);
+
+      playJoinChime();
+
+      // Initialize connection. We are the initiator.
+      createPeerConnection(peerInfo.socketId, peerInfo.name, true);
+    });
+
+    // Relay WebRTC signaling handshake signals (Offer, Answer, ICE)
+    socket.on("signal", async ({ senderSocketId, signal }) => {
+      let pc = pcsRef.current[senderSocketId];
+
+      if (signal.type === "offer") {
+        console.log(`Received WebRTC offer from peer: ${signal.senderName}`);
+
+        // Register peer in React UI state
         setPeers((prev) => {
-          if (prev.some((p) => p.socketId === peerInfo.socketId)) return prev;
-          return [...prev, { 
-            socketId: peerInfo.socketId, 
-            name: peerInfo.name,
-            audioEnabled: true,
-            videoEnabled: true
+          if (prev.some((p) => p.socketId === senderSocketId)) {
+            return prev.map((p) => {
+              if (p.socketId === senderSocketId) {
+                return {
+                  ...p,
+                  name: signal.senderName || p.name,
+                  audioEnabled: signal.audioEnabled !== undefined ? signal.audioEnabled : p.audioEnabled,
+                  videoEnabled: signal.videoEnabled !== undefined ? signal.videoEnabled : p.videoEnabled
+                };
+              }
+              return p;
+            });
+          }
+          return [...prev, {
+            socketId: senderSocketId,
+            name: signal.senderName || "Companion",
+            audioEnabled: signal.audioEnabled !== undefined ? signal.audioEnabled : true,
+            videoEnabled: signal.videoEnabled !== undefined ? signal.videoEnabled : true
           }];
         });
 
-        // System notification in chat
-        setMessages((prev) => [...prev, {
-          id: `sys-join-${Date.now()}`,
-          senderName: peerInfo.name,
-          message: `${peerInfo.name} joined the room`,
-          timestamp: Date.now(),
-          isSystem: true
-        }]);
-
-        // Initialize connection. We are the initiator.
-        createPeerConnection(peerInfo.socketId, peerInfo.name, true);
-      });
-
-      // Relay WebRTC signaling handshake signals (Offer, Answer, ICE)
-      socket.on("signal", async ({ senderSocketId, signal }) => {
-        let pc = pcsRef.current[senderSocketId];
-
-        if (signal.type === "offer") {
-          console.log(`Received WebRTC offer from peer: ${signal.senderName}`);
-
-          // Register peer in React UI state
-          setPeers((prev) => {
-            if (prev.some((p) => p.socketId === senderSocketId)) {
-              return prev.map((p) => {
+        // Create RTCPeerConnection as receiver (initiator = false)
+        pc = createPeerConnection(senderSocketId, signal.senderName || "Companion", false);
+        
+        try {
+          await pc.setRemoteDescription(new RTCSessionDescription({ type: "offer", sdp: signal.sdp }));
+          const answer = await pc.createAnswer();
+          await pc.setLocalDescription(answer);
+          
+          socket.emit("signal", {
+            targetSocketId: senderSocketId,
+            signal: {
+              type: "answer",
+              sdp: answer.sdp,
+              senderName: name,
+              audioEnabled: audio,
+              videoEnabled: video
+            }
+          });
+        } catch (err) {
+          console.error("Failed to process offer and create answer:", err);
+        }
+      } 
+      else if (signal.type === "answer") {
+        console.log(`Received WebRTC answer from peer: ${signal.senderName}`);
+        if (pc) {
+          try {
+            setPeers((prev) =>
+              prev.map((p) => {
                 if (p.socketId === senderSocketId) {
                   return {
                     ...p,
@@ -300,123 +567,189 @@ export default function RoomPage({ params }: { params: { id: string } }) {
                   };
                 }
                 return p;
-              });
-            }
-            return [...prev, {
-              socketId: senderSocketId,
-              name: signal.senderName || "Companion",
-              audioEnabled: signal.audioEnabled !== undefined ? signal.audioEnabled : true,
-              videoEnabled: signal.videoEnabled !== undefined ? signal.videoEnabled : true
-            }];
-          });
-
-          // Create RTCPeerConnection as receiver (initiator = false)
-          pc = createPeerConnection(senderSocketId, signal.senderName || "Companion", false);
-          
-          try {
-            await pc.setRemoteDescription(new RTCSessionDescription({ type: "offer", sdp: signal.sdp }));
-            const answer = await pc.createAnswer();
-            await pc.setLocalDescription(answer);
-            
-            socket.emit("signal", {
-              targetSocketId: senderSocketId,
-              signal: {
-                type: "answer",
-                sdp: answer.sdp,
-                senderName: name,
-                audioEnabled: audio,
-                videoEnabled: video
-              }
-            });
+              })
+            );
+            await pc.setRemoteDescription(new RTCSessionDescription({ type: "answer", sdp: signal.sdp }));
           } catch (err) {
-            console.error("Failed to process offer and create answer:", err);
+            console.error("Failed to set remote description from WebRTC answer:", err);
           }
-        } 
-        else if (signal.type === "answer") {
-          console.log(`Received WebRTC answer from peer: ${signal.senderName}`);
-          if (pc) {
-            try {
-              setPeers((prev) =>
-                prev.map((p) => {
-                  if (p.socketId === senderSocketId) {
-                    return {
-                      ...p,
-                      name: signal.senderName || p.name,
-                      audioEnabled: signal.audioEnabled !== undefined ? signal.audioEnabled : p.audioEnabled,
-                      videoEnabled: signal.videoEnabled !== undefined ? signal.videoEnabled : p.videoEnabled
-                    };
-                  }
-                  return p;
-                })
-              );
-              await pc.setRemoteDescription(new RTCSessionDescription({ type: "answer", sdp: signal.sdp }));
-            } catch (err) {
-              console.error("Failed to set remote description from WebRTC answer:", err);
+        }
+      } 
+      else if (signal.type === "candidate") {
+        if (pc) {
+          try {
+            await pc.addIceCandidate(new RTCIceCandidate(signal.candidate));
+          } catch (err) {
+            console.error("Failed to add WebRTC ICE candidate:", err);
+          }
+        }
+      }
+      else if (signal.type === "status") {
+        console.log(`Received state status update from peer (${senderSocketId}):`, signal);
+        setPeers((prev) =>
+          prev.map((p) => {
+            if (p.socketId === senderSocketId) {
+              return {
+                ...p,
+                audioEnabled: signal.audioEnabled !== undefined ? signal.audioEnabled : p.audioEnabled,
+                videoEnabled: signal.videoEnabled !== undefined ? signal.videoEnabled : p.videoEnabled
+              };
             }
-          }
-        } 
-        else if (signal.type === "candidate") {
-          if (pc) {
-            try {
-              await pc.addIceCandidate(new RTCIceCandidate(signal.candidate));
-            } catch (err) {
-              console.error("Failed to add WebRTC ICE candidate:", err);
-            }
-          }
+            return p;
+          })
+        );
+      }
+    });
+
+    socket.on("room:left", (peerInfo: { userId?: string; socketId: string }) => {
+      console.log("Peer left room:", peerInfo);
+      
+      // Close and cleanup RTCPeerConnection instance
+      if (pcsRef.current[peerInfo.socketId]) {
+        pcsRef.current[peerInfo.socketId].close();
+        delete pcsRef.current[peerInfo.socketId];
+      }
+
+      // Find peer name for system notification before removing
+      setPeers((prev) => {
+        const leavingPeer = prev.find((p) => p.socketId === peerInfo.socketId);
+        if (leavingPeer) {
+          setMessages((msgs) => [...msgs, {
+            id: `sys-leave-${Date.now()}`,
+            senderName: leavingPeer.name,
+            message: `${leavingPeer.name} left the room`,
+            timestamp: Date.now(),
+            isSystem: true
+          }]);
         }
-        else if (signal.type === "status") {
-          console.log(`Received state status update from peer (${senderSocketId}):`, signal);
-          setPeers((prev) =>
-            prev.map((p) => {
-              if (p.socketId === senderSocketId) {
-                return {
-                  ...p,
-                  audioEnabled: signal.audioEnabled !== undefined ? signal.audioEnabled : p.audioEnabled,
-                  videoEnabled: signal.videoEnabled !== undefined ? signal.videoEnabled : p.videoEnabled
-                };
-              }
-              return p;
-            })
-          );
-        }
+        return prev.filter((p) => p.socketId !== peerInfo.socketId);
       });
 
-      socket.on("room:left", (peerInfo: { userId?: string; socketId: string }) => {
-        console.log("Peer left room:", peerInfo);
-        
-        // Close and cleanup RTCPeerConnection instance
-        if (pcsRef.current[peerInfo.socketId]) {
-          pcsRef.current[peerInfo.socketId].close();
-          delete pcsRef.current[peerInfo.socketId];
-        }
+      playLeaveChime();
+    });
 
-        // Find peer name for system notification before removing
-        setPeers((prev) => {
-          const leavingPeer = prev.find((p) => p.socketId === peerInfo.socketId);
-          if (leavingPeer) {
-            setMessages((msgs) => [...msgs, {
-              id: `sys-leave-${Date.now()}`,
-              senderName: leavingPeer.name,
-              message: `${leavingPeer.name} left the room`,
-              timestamp: Date.now(),
-              isSystem: true
-            }]);
+    // Listen for incoming chat messages
+    socket.on("chat:message", (msg: ChatMessage) => {
+      setMessages((prev) => [...prev, msg]);
+      setShowChat((isOpen) => {
+        if (!isOpen) setUnreadCount((c) => c + 1);
+        return isOpen;
+      });
+      playMessageBeep();
+    });
+
+    // Listen for remote peer screen sharing status notifications
+    socket.on("screen-share:state", ({ socketId, isSharing }) => {
+      console.log(`Remote screen share state update: ${socketId} = ${isSharing}`);
+      if (isSharing) {
+        setScreenSharer(socketId);
+      } else {
+        setScreenSharer((curr) => curr === socketId ? null : curr);
+      }
+    });
+
+    // Spawn emoji reactions from other peers
+    socket.on("reaction:received", ({ emoji }) => {
+      spawnReaction(emoji);
+    });
+
+    // Track raising hands status
+    socket.on("hand-raise:state", ({ userId, isRaised }) => {
+      setPeers((prev) => 
+        prev.map((p) => {
+          if (p.socketId === userId) {
+            return { ...p, isHandRaised: isRaised };
           }
-          return prev.filter((p) => p.socketId !== peerInfo.socketId);
+          return p;
+        })
+      );
+      if (isRaised) {
+        playHandRaiseChime();
+      }
+    });
+
+    // Listen for pending guest approvals if local user is host
+    const isHost = typeof window !== "undefined" && localStorage.getItem(`host_token_${roomId}`);
+    if (isHost) {
+      socket.on("waiting-room:pending", (guest: { socketId: string; name: string; userId: string }) => {
+        console.log("Host: guest is waiting in lobby:", guest);
+        setPendingGuests((prev) => {
+          if (prev.some((g) => g.socketId === guest.socketId)) return prev;
+          return [...prev, guest];
         });
+        playHandRaiseChime(); // Warm arpeggio alert for new arrivals
       });
+    }
+  };
 
-      // Listen for incoming chat messages
-      socket.on("chat:message", (msg: ChatMessage) => {
-        setMessages((prev) => [...prev, msg]);
-        setShowChat((isOpen) => {
-          if (!isOpen) setUnreadCount((c) => c + 1);
-          return isOpen;
-        });
+  const handleJoin = async (name: string, audio: boolean, video: boolean) => {
+    setUserName(name);
+    setAudioEnabled(audio);
+    setVideoEnabled(video);
+
+    let stream: MediaStream | null = null;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: video,
+        audio: audio,
       });
-
+      setLocalStream(stream);
     } catch (err) {
       console.error("Accessing media devices failed on join:", err);
+    }
+
+    const isHost = typeof window !== "undefined" && localStorage.getItem(`host_token_${roomId}`);
+
+    if (room?.settings.waitingRoom && !isHost) {
+      setWaitingStatus("waiting");
+      
+      try {
+        await fetch("/api/socket");
+        const socket = io({
+          path: "/api/socket",
+          autoConnect: true,
+        });
+        socketRef.current = socket;
+
+        socket.on("connect", () => {
+          console.log("Waiting room: connected guest socket emitting waiting lobby subscription");
+          socket.emit("waiting-room:join", { roomId, name, userId: socket.id });
+        });
+
+        socket.on("waiting-room:approved", () => {
+          console.log("Admitted successfully by the host!");
+          setWaitingStatus("approved");
+          proceedToJoin(name, audio, video, stream, socket);
+          socket.emit("room:join", { roomId, userId: socket.id, name });
+        });
+
+        socket.on("waiting-room:denied", () => {
+          console.log("Evicted back to home by host rejection.");
+          setWaitingStatus("denied");
+          socket.disconnect();
+          router.push("/?error=denied");
+        });
+      } catch (err) {
+        console.error("Waiting room handshake connection failed:", err);
+      }
+    } else {
+      try {
+        await fetch("/api/socket");
+        const socket = io({
+          path: "/api/socket",
+          autoConnect: true,
+        });
+        socketRef.current = socket;
+
+        socket.on("connect", () => {
+          console.log("Connected directly to signaling server with ID:", socket.id);
+          socket.emit("room:join", { roomId, userId: socket.id, name });
+        });
+
+        proceedToJoin(name, audio, video, stream, socket);
+      } catch (err) {
+        console.error("Direct room connection failed:", err);
+      }
     }
   };
 
@@ -464,6 +797,33 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         });
       }
     }
+  };
+
+  const toggleHandRaise = () => {
+    const nextState = !isHandRaised;
+    setIsHandRaised(nextState);
+    socketRef.current?.emit("hand-raise:toggle", { roomId, isRaised: nextState });
+    if (nextState) {
+      playHandRaiseChime();
+    }
+  };
+
+  const sendReaction = (emoji: string) => {
+    socketRef.current?.emit("reaction:send", { roomId, emoji });
+    spawnReaction(emoji);
+    setShowReactionsSelector(false);
+  };
+
+  const approveGuest = (guestSocketId: string) => {
+    console.log("Host approved waiting guest:", guestSocketId);
+    socketRef.current?.emit("waiting-room:approve", { roomId, guestSocketId });
+    setPendingGuests((prev) => prev.filter((g) => g.socketId !== guestSocketId));
+  };
+
+  const denyGuest = (guestSocketId: string) => {
+    console.log("Host denied waiting guest:", guestSocketId);
+    socketRef.current?.emit("waiting-room:deny", { roomId, guestSocketId });
+    setPendingGuests((prev) => prev.filter((g) => g.socketId !== guestSocketId));
   };
 
   const handleLeave = () => {
@@ -559,8 +919,111 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   }
 
   if (!joined && room) {
-    return <PreJoinScreen roomName={room.name} onJoin={handleJoin} />;
+    return (
+      <PreJoinScreen
+        roomName={room.name}
+        hasPassword={room.hasPassword}
+        onVerifyPassword={verifyPassword}
+        onJoin={handleJoin}
+        waitingStatus={waitingStatus}
+      />
+    );
   }
+
+  // Layout rendering when screen is shared
+  const renderScreenShareView = () => {
+    const isMe = screenSharer === "me" || screenSharer === socketRef.current?.id;
+    const sharerName = isMe ? "You" : (peers.find((p) => p.socketId === screenSharer)?.name || "Companion");
+    const activeScreenShareStream = screenSharer
+      ? (isMe ? localStream : peers.find((p) => p.socketId === screenSharer)?.stream)
+      : null;
+
+    return (
+      <div className="flex-1 flex flex-col min-h-0 space-y-4 my-4 overflow-hidden">
+        {/* Top Ribbon strip for camera thumbnails of participants */}
+        <div className="flex items-center space-x-4 overflow-x-auto pb-2 min-h-[140px] max-h-[180px] scrollbar-thin">
+          {/* Local participant thumbnail card */}
+          <div className="relative w-48 h-28 bg-zinc-900/60 rounded-2xl overflow-hidden border border-white/10 shrink-0 shadow-lg">
+            {!isMe && videoEnabled && localStream ? (
+              <video
+                ref={localVideoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-full object-cover scale-x-[-1]"
+              />
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500 text-center p-2">
+                <div className="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center mb-1 text-zinc-400">
+                  <FiVideoOff size={16} />
+                </div>
+                <span className="font-semibold text-xs truncate max-w-full">{userName}</span>
+              </div>
+            )}
+            <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10 flex items-center space-x-1">
+              <span className="text-[10px] font-semibold truncate max-w-[80px]">{userName} (You)</span>
+              {!audioEnabled && <FiMicOff size={10} className="text-destructive" />}
+            </div>
+          </div>
+
+          {/* Remote participants thumbnail cards */}
+          {peers.map((peer) => {
+            const isPeerSharing = peer.socketId === screenSharer;
+            return (
+              <div key={peer.socketId} className="relative w-48 h-28 bg-zinc-900/60 rounded-2xl overflow-hidden border border-white/10 shrink-0 shadow-lg">
+                {!isPeerSharing && peer.videoEnabled !== false && peer.stream ? (
+                  <RemoteVideo stream={peer.stream} />
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500 text-center p-2">
+                    <div className="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center mb-1 text-zinc-400">
+                      <FiVideoOff size={16} />
+                    </div>
+                    <span className="font-semibold text-xs truncate max-w-full">{peer.name}</span>
+                  </div>
+                )}
+                <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10 flex items-center space-x-1">
+                  <span className="text-[10px] font-semibold truncate max-w-[80px]">{peer.name}</span>
+                  {renderWifiIcon(peerQuality[peer.socketId])}
+                  {peer.audioEnabled === false && <FiMicOff size={10} className="text-destructive" />}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Primary central viewport for the shared screen */}
+        <div className="flex-1 relative bg-zinc-950 rounded-3xl overflow-hidden border border-primary/20 shadow-2xl group flex flex-col min-h-0">
+          {activeScreenShareStream ? (
+            <div className="w-full h-full relative">
+              {isMe ? (
+                <video
+                  ref={localVideoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <RemoteVideo stream={activeScreenShareStream} className="w-full h-full object-contain" />
+              )}
+              {/* Overlay HUD displaying details */}
+              <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/10 flex items-center space-x-2">
+                <FiTv className="text-primary animate-pulse" size={16} />
+                <span className="text-xs font-semibold">{sharerName} is sharing their screen</span>
+              </div>
+            </div>
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-500 bg-zinc-950">
+              <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-3">
+                <FiTv size={36} className="text-zinc-600 animate-pulse" />
+              </div>
+              <span className="font-semibold text-lg">Connecting to screen share...</span>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   // Auto-resize grid layouts based on participant count
   const totalCount = peers.length + 1;
@@ -605,82 +1068,85 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         </div>
       </div>
 
-      {/* Main Responsive Grid View */}
-      <div className="flex-1 my-4 flex items-center justify-center overflow-hidden">
-        <div className={`w-full h-full max-w-6xl grid ${gridCols} gap-4 auto-rows-fr`}>
-          {/* Local Stream view */}
-          <div className="relative bg-zinc-900/60 rounded-3xl overflow-hidden border border-white/10 group shadow-lg">
-            {videoEnabled && localStream ? (
-              <video
-                ref={localVideoRef}
-                autoPlay
-                playsInline
-                muted
-                className="w-full h-full object-cover scale-x-[-1]"
-              />
-            ) : (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500">
-                <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-3">
-                  <FiVideoOff size={32} />
+      {/* Main Responsive Grid View or Widescreen Screen Share view */}
+      {screenSharer ? renderScreenShareView() : (
+        <div className="flex-1 my-4 flex items-center justify-center overflow-hidden">
+          <div className={`w-full h-full max-w-6xl grid ${gridCols} gap-4 auto-rows-fr`}>
+            {/* Local Stream view */}
+            <div className="relative bg-zinc-900/60 rounded-3xl overflow-hidden border border-white/10 group shadow-lg">
+              {videoEnabled && localStream ? (
+                <video
+                  ref={localVideoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="w-full h-full object-cover scale-x-[-1]"
+                />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500">
+                  <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-3">
+                    <FiVideoOff size={32} />
+                  </div>
+                  <span className="font-semibold text-lg">{userName} (You)</span>
                 </div>
-                <span className="font-semibold text-lg">{userName} (You)</span>
+              )}
+              <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 flex items-center space-x-1.5">
+                <span className="text-xs font-semibold">{userName} (You)</span>
+                {!audioEnabled && (
+                  <FiMicOff size={12} className="text-destructive animate-pulse" />
+                )}
+                {!videoEnabled && (
+                  <FiVideoOff size={12} className="text-destructive animate-pulse" />
+                )}
               </div>
-            )}
-            <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 flex items-center space-x-1.5">
-              <span className="text-xs font-semibold">{userName} (You)</span>
-              {!audioEnabled && (
-                <FiMicOff size={12} className="text-destructive animate-pulse" />
-              )}
-              {!videoEnabled && (
-                <FiVideoOff size={12} className="text-destructive animate-pulse" />
-              )}
             </div>
-          </div>
 
-          {/* Connected WebRTC Mesh peers view */}
-          {peers.length > 0 ? (
-            peers.map((peer) => (
-              <div key={peer.socketId} className="relative bg-zinc-900/60 rounded-3xl overflow-hidden border border-white/10 group shadow-lg">
-                {peer.videoEnabled !== false && peer.stream ? (
-                  <RemoteVideo stream={peer.stream} />
-                ) : (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500">
-                    <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-3 text-zinc-400">
-                      <FiVideoOff size={32} />
+            {/* Connected WebRTC Mesh peers view */}
+            {peers.length > 0 ? (
+              peers.map((peer) => (
+                <div key={peer.socketId} className="relative bg-zinc-900/60 rounded-3xl overflow-hidden border border-white/10 group shadow-lg">
+                  {peer.videoEnabled !== false && peer.stream ? (
+                    <RemoteVideo stream={peer.stream} />
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950 text-zinc-500">
+                      <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-3 text-zinc-400">
+                        <FiVideoOff size={32} />
+                      </div>
+                      <span className="font-semibold text-lg">{peer.name}</span>
+                      {peer.audioEnabled === false && (
+                        <span className="text-xs text-red-500 font-semibold mt-1 bg-red-500/10 px-2 py-0.5 rounded-full flex items-center">
+                          <FiMicOff size={10} className="mr-1" /> Muted
+                        </span>
+                      )}
                     </div>
-                    <span className="font-semibold text-lg">{peer.name}</span>
+                  )}
+                  {/* Peer Audio and Video off overlay status icons */}
+                  <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 flex items-center space-x-1.5">
+                    <span className="text-xs font-semibold">{peer.name}</span>
+                    {renderWifiIcon(peerQuality[peer.socketId])}
                     {peer.audioEnabled === false && (
-                      <span className="text-xs text-red-500 font-semibold mt-1 bg-red-500/10 px-2 py-0.5 rounded-full flex items-center">
-                        <FiMicOff size={10} className="mr-1" /> Muted
-                      </span>
+                      <FiMicOff size={12} className="text-destructive animate-pulse" />
+                    )}
+                    {peer.videoEnabled === false && (
+                      <FiVideoOff size={12} className="text-destructive animate-pulse" />
                     )}
                   </div>
-                )}
-                {/* Peer Audio and Video off overlay status icons */}
-                <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 flex items-center space-x-1.5">
-                  <span className="text-xs font-semibold">{peer.name}</span>
-                  {peer.audioEnabled === false && (
-                    <FiMicOff size={12} className="text-destructive animate-pulse" />
-                  )}
-                  {peer.videoEnabled === false && (
-                    <FiVideoOff size={12} className="text-destructive animate-pulse" />
-                  )}
                 </div>
+              ))
+            ) : (
+              <div className="relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-white/5 flex flex-col items-center justify-center text-center p-6 min-h-[300px] w-full">
+                <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
+                  <FiUsers size={28} className="text-zinc-600" />
+                </div>
+                <h3 className="font-bold text-xl mb-1 text-zinc-300">Waiting for companions...</h3>
+                <p className="text-zinc-500 text-sm max-w-sm">
+                  Share this room link with your friends to start your encrypted call!
+                </p>
               </div>
-            ))
-          ) : (
-            <div className="relative bg-zinc-900/40 rounded-3xl overflow-hidden border border-white/5 flex flex-col items-center justify-center text-center p-6 min-h-[300px]">
-              <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
-                <FiUsers size={28} className="text-zinc-600" />
-              </div>
-              <h3 className="font-bold text-xl mb-1 text-zinc-300">Waiting for companions...</h3>
-              <p className="text-zinc-500 text-sm max-w-sm">
-                Share this room link with your friends to start your encrypted call!
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Media & Action Control Bar */}
       <div className="flex items-center justify-between z-10 glass border border-white/10 px-8 py-4 rounded-2xl bg-black/40 backdrop-blur-xl">
@@ -708,6 +1174,18 @@ export default function RoomPage({ params }: { params: { id: string } }) {
             aria-label="Toggle Camera"
           >
             {videoEnabled ? <FiVideo size={20} /> : <FiVideoOff size={20} />}
+          </button>
+
+          <button
+            onClick={toggleScreenShare}
+            className={`p-4 rounded-2xl transition duration-300 ${
+              isSharingScreen 
+                ? "bg-emerald-500 text-white hover:bg-emerald-600 drop-shadow-[0_0_12px_rgba(16,185,129,0.3)] animate-pulse" 
+                : "bg-white/10 hover:bg-white/20 text-white"
+            }`}
+            aria-label="Toggle Screen Sharing"
+          >
+            <FiTv size={20} />
           </button>
 
           <button

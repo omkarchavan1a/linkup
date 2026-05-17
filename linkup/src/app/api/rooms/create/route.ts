@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
 import Room from '@/models/Room';
 import { generateHostToken } from '@/lib/auth';
@@ -13,11 +14,16 @@ export async function POST(req: Request) {
     const roomId = crypto.randomUUID();
     const hostToken = generateHostToken(roomId);
 
+    let hashedPassword = null;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+
     const room = new Room({
       _id: roomId,
       name: name || `Room-${roomId.slice(0, 8)}`,
       hostToken,
-      password: password || null,
+      password: hashedPassword,
       maxParticipants: maxParticipants || 10,
       expiresAt: expiresAt ? new Date(expiresAt) : null,
       settings: {
