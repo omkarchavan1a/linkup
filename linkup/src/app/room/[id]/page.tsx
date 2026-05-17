@@ -349,6 +349,7 @@ function LobbyRequestToast({ guest, index, onAdmit, onDeny }: LobbyRequestToastP
 export default function RoomPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const roomId = params.id;
+  const isHost = typeof window !== "undefined" && !!localStorage.getItem(`host_token_${roomId}`);
 
   // App & Room state
   const [room, setRoom] = useState<RoomDetails | null>(null);
@@ -359,6 +360,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   const [showQR, setShowQR] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  const [showParticipants, setShowParticipants] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [unreadCount, setUnreadCount] = useState(0);
@@ -1099,12 +1101,19 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     // Listen for pending guest approvals if local user is host
     const isHost = typeof window !== "undefined" && localStorage.getItem(`host_token_${roomId}`);
     if (isHost) {
-      socket.on("waiting-room:pending", (guest: { socketId: string; name: string; userId: string }) => {
-        console.log("Host: guest is waiting in lobby:", guest);
+      const handlePendingGuest = (guest: { socketId: string; name: string; userId: string }) => {
+        // Set pending guest in React state (prevent duplicates)
+        setPendingGuests((prev) => {
+          if (prev.some((g) => g.socketId === guest.socketId)) return prev;
+          return [...prev, guest];
+        });
 
         // ── Lobby Preview WebRTC ──────────────────────────────────────────────
         // Create a lightweight one-way RTCPeerConnection to pull the guest camera.
         // The guest sends us their stream so the host can see who is knocking.
+        if (lobbyPcsRef.current[guest.socketId]) {
+          try { lobbyPcsRef.current[guest.socketId].close(); } catch {}
+        }
         const lobbyPc = new RTCPeerConnection({
           iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
         });
@@ -1135,11 +1144,6 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           targetSocketId: guest.socketId,
           signal: { type: "lobby-offer-request", hostSocketId: socket.id }
         });
-
-        setPendingGuests((prev) => {
-          if (prev.some((g) => g.socketId === guest.socketId)) return prev;
-          return [...prev, guest];
-        });
         
         // Play premium synthesized lobby alarm
         playLobbyAlertChime();
@@ -1160,6 +1164,35 @@ export default function RoomPage({ params }: { params: { id: string } }) {
             console.warn("Push notification blocked or failed:", e);
           }
         }
+      };
+
+      // Listen for waiting-room:list from server
+      socket.on("waiting-room:list", (list: { socketId: string; name: string; userId: string }[]) => {
+        console.log("Host: received waiting-room:list:", list);
+        
+        // Remove guests that are no longer in the list (e.g. they disconnected or were handled)
+        setPendingGuests((prev) => {
+          prev.forEach((prevGuest) => {
+            if (!list.some((g) => g.socketId === prevGuest.socketId)) {
+              if (lobbyPcsRef.current[prevGuest.socketId]) {
+                try { lobbyPcsRef.current[prevGuest.socketId].close(); } catch {}
+                delete lobbyPcsRef.current[prevGuest.socketId];
+              }
+            }
+          });
+          
+          return prev.filter((prevGuest) => list.some((g) => g.socketId === prevGuest.socketId));
+        });
+
+        // Initialize preview connections for new guests
+        list.forEach((guest) => {
+          handlePendingGuest(guest);
+        });
+      });
+
+      socket.on("waiting-room:pending", (guest: { socketId: string; name: string; userId: string }) => {
+        console.log("Host: guest is waiting in lobby:", guest);
+        handlePendingGuest(guest);
       });
 
       // Handle lobby preview signaling answer from the waiting guest
@@ -1569,6 +1602,12 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   const toggleChat = () => {
     setShowChat((prev) => !prev);
     setUnreadCount(0);
+    setShowParticipants(false);
+  };
+
+  const toggleParticipants = () => {
+    setShowParticipants((prev) => !prev);
+    setShowChat(false);
   };
 
   const updateRoomSetting = async (key: 'allowChat' | 'allowScreenShare' | 'waitingRoom', value: boolean) => {
@@ -2250,6 +2289,21 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           </button>
 
           <button
+            onClick={toggleParticipants}
+            className={`p-4 rounded-2xl transition duration-300 relative ${
+              showParticipants ? "bg-primary text-primary-foreground" : "bg-white/10 hover:bg-white/20 text-white"
+            }`}
+            aria-label="Toggle People & Lobby"
+          >
+            <FiUsers size={20} />
+            {isHost && pendingGuests.length > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 text-black text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
+                {pendingGuests.length}
+              </span>
+            )}
+          </button>
+
+          <button
             onClick={toggleChat}
             className={`p-4 rounded-2xl transition duration-300 relative ${
               showChat ? "bg-primary text-primary-foreground" : "bg-white/10 hover:bg-white/20 text-white"
@@ -2501,6 +2555,167 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         ))}
       </div>
     </div>
+
+    {/* People Sidebar Panel */}
+    {showParticipants && (
+      <div 
+        className="fixed top-0 right-0 h-full w-full md:w-[380px] z-40 flex flex-col bg-black/90 backdrop-blur-2xl border-l border-white/10 shadow-2xl relative"
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+          <div className="flex items-center space-x-2">
+            <FiUsers size={18} className="text-primary" />
+            <h3 className="font-bold text-lg tracking-tight">People</h3>
+            <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-mono">
+              {peers.length + 1}
+            </span>
+          </div>
+          <button
+            onClick={toggleParticipants}
+            className="p-2 hover:bg-white/10 rounded-lg transition duration-200"
+            aria-label="Close People Sidebar"
+          >
+            <FiX size={18} />
+          </button>
+        </div>
+
+        {/* Scrollable list content */}
+        <div className="flex-1 overflow-y-auto px-4 py-3 space-y-6 scrollbar-thin">
+          
+          {/* Section 1: Waiting Room Lobby (only for Host) */}
+          {isHost && (
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-500/80 flex items-center space-x-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
+                <span>Lobby Join Requests ({pendingGuests.length})</span>
+              </h4>
+              
+              {pendingGuests.length === 0 ? (
+                <p className="text-xs text-zinc-500 italic px-2">No pending join requests.</p>
+              ) : (
+                <div className="space-y-3">
+                  {pendingGuests.map((guest) => (
+                    <div 
+                      key={guest.socketId} 
+                      className="bg-white/5 border border-white/10 rounded-2xl p-3 flex flex-col space-y-3"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-sm text-zinc-200">{guest.name}</span>
+                        <span className="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">
+                          Waiting
+                        </span>
+                      </div>
+                      
+                      {/* Live Video Preview element if previewStream is attached */}
+                      {guest.previewStream ? (
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black border border-white/5 shadow-inner">
+                          <video
+                            ref={(el) => {
+                              if (el && guest.previewStream) {
+                                el.srcObject = guest.previewStream;
+                                el.play().catch(err => console.warn("Lobby preview failed playing:", err));
+                              }
+                            }}
+                            autoPlay
+                            playsInline
+                            muted
+                            className="w-full h-full object-cover mirror"
+                          />
+                          <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md text-[9px] text-white/80 font-mono tracking-wider flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            LIVE PREVIEW
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-full aspect-video rounded-xl overflow-hidden bg-black/50 border border-dashed border-white/10 flex flex-col items-center justify-center text-zinc-500 space-y-1">
+                          <span className="text-xl">📷</span>
+                          <span className="text-[10px] font-medium tracking-wide">Connecting video feed...</span>
+                        </div>
+                      )}
+
+                      {/* Action buttons */}
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => approveGuest(guest.socketId)}
+                          className="flex-1 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition duration-200 flex items-center justify-center gap-1 shadow-md hover:shadow-emerald-900/35"
+                        >
+                          <span>Admit</span>
+                        </button>
+                        <button
+                          onClick={() => denyGuest(guest.socketId)}
+                          className="flex-1 py-1.5 bg-rose-600/30 hover:bg-rose-600 border border-rose-500/40 text-rose-200 font-bold text-xs rounded-xl transition duration-200 flex items-center justify-center gap-1 shadow-md"
+                        >
+                          <span>Decline</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Section 2: Active Participants */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+              Active Participants ({peers.length + 1})
+            </h4>
+            
+            <div className="space-y-2">
+              {/* Local Host / Participant */}
+              <div className="bg-white/5 border border-white/5 rounded-2xl px-4 py-3 flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-sm text-primary">
+                    {userName ? userName.charAt(0).toUpperCase() : "Y"}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-semibold text-zinc-200">
+                      {userName || "You"} (You)
+                    </span>
+                    <span className="text-[10px] text-zinc-500 font-mono">
+                      {isHost ? "Host" : "Participant"}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-1.5 text-zinc-400">
+                  <span>{audioEnabled ? "🎙️" : "🔇"}</span>
+                  <span>{videoEnabled ? "📷" : "🚫"}</span>
+                  {/* hand raise indication */}
+                  {peers.some(p => p.socketId === "local" && p.isHandRaised) && (
+                    <span className="animate-bounce">✋</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Other Peers */}
+              {peers.map((peer) => (
+                <div 
+                  key={peer.socketId} 
+                  className="bg-white/5 border border-white/5 rounded-2xl px-4 py-3 flex items-center justify-between"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-sm text-zinc-300">
+                      {peer.name ? peer.name.charAt(0).toUpperCase() : "?"}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-semibold text-zinc-200">{peer.name}</span>
+                      <span className="text-[10px] text-zinc-500 font-mono">Connected</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-zinc-400">
+                    <span>{peer.audioEnabled !== false ? "🎙️" : "🔇"}</span>
+                    <span>{peer.videoEnabled !== false ? "📷" : "🚫"}</span>
+                    {peer.isHandRaised && (
+                      <span className="text-yellow-400 animate-bounce">✋</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
 
     {/* Chat Sidebar Panel */}
     {showChat && (

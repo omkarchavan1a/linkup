@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Room from '@/models/Room';
 
+import { validateUUID } from '@/lib/validation';
+
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
@@ -9,6 +11,14 @@ export async function GET(
   try {
     await dbConnect();
     const { id } = params;
+
+    // Validate room ID parameter
+    if (!id || !validateUUID(id)) {
+      return NextResponse.json({
+        success: false,
+        error: "Invalid Room ID format"
+      }, { status: 400 });
+    }
 
     const room = await Room.findById(id);
 
@@ -60,7 +70,16 @@ export async function PATCH(
   try {
     await dbConnect();
     const { id } = params;
-    const body = await req.json();
+
+    // Validate room ID parameter
+    if (!id || !validateUUID(id)) {
+      return NextResponse.json({
+        success: false,
+        error: "Invalid Room ID format"
+      }, { status: 400 });
+    }
+
+    const body = await req.json().catch(() => ({}));
     const { key, value } = body;
 
     // Validate that the setting key is a valid room setting
@@ -68,6 +87,14 @@ export async function PATCH(
       return NextResponse.json({
         success: false,
         error: "Invalid setting key"
+      }, { status: 400 });
+    }
+
+    // Validate setting value is boolean
+    if (typeof value !== 'boolean') {
+      return NextResponse.json({
+        success: false,
+        error: "Setting value must be a boolean"
       }, { status: 400 });
     }
 

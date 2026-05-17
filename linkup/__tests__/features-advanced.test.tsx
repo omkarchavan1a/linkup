@@ -222,12 +222,12 @@ describe('LinkUp Advanced Features - Waiting Room, Hand Raise, Reactions & Expir
 
     // Host should see lobby card list populated
     await waitFor(() => {
-      expect(screen.getByText('Lobby Guest Request')).toBeInTheDocument();
+      expect(screen.getByText('Join Request')).toBeInTheDocument();
       expect(screen.getByText('Pending Alice')).toBeInTheDocument();
     });
 
     // Click Admit to accept guest
-    const admitBtn = screen.getByRole('button', { name: 'Admit' });
+    const admitBtn = screen.getByRole('button', { name: /Admit/i });
     
     await act(async () => {
       fireEvent.click(admitBtn);

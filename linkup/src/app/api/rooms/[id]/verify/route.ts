@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
 import Room from '@/models/Room';
 
+import { validateUUID } from '@/lib/validation';
+
 export async function POST(
   req: Request,
   { params }: { params: { id: string } }
@@ -10,6 +12,15 @@ export async function POST(
   try {
     await dbConnect();
     const { id } = params;
+
+    // Validate room ID parameter
+    if (!id || !validateUUID(id)) {
+      return NextResponse.json({
+        success: false,
+        error: "Invalid Room ID format"
+      }, { status: 400 });
+    }
+
     const body = await req.json().catch(() => ({}));
     const { password } = body;
 
@@ -17,6 +28,20 @@ export async function POST(
       return NextResponse.json({
         success: false,
         error: "Password is required"
+      }, { status: 400 });
+    }
+
+    if (typeof password !== 'string') {
+      return NextResponse.json({
+        success: false,
+        error: "Password must be a string"
+      }, { status: 400 });
+    }
+
+    if (password.length > 128) {
+      return NextResponse.json({
+        success: false,
+        error: "Password cannot exceed 128 characters"
       }, { status: 400 });
     }
 

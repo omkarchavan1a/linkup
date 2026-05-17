@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import HelpPage from "@/app/help/page";
 import sitemap from "@/app/sitemap";
 import robots from "@/app/robots";
@@ -86,17 +86,14 @@ describe("LinkUp Phase 3 Production Features & SEO", () => {
         fireEvent.click(runBtn);
       });
 
-      // Wait for diagnostic mock timers
-      await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 4500));
-      });
-
-      // Confirm success logs
-      expect(screen.getByText(/Fully Compatible/)).toBeInTheDocument();
-      expect(screen.getByText(/Camera active & permissions verified/)).toBeInTheDocument();
-      expect(screen.getByText(/Microphone active & permissions verified/)).toBeInTheDocument();
-      expect(screen.getByText(/Signaling endpoint responsive & online/)).toBeInTheDocument();
-      expect(screen.getByText(/Ping:/)).toBeInTheDocument();
+      // Confirm success logs via waitFor
+      await waitFor(() => {
+        expect(screen.getByText(/Fully Compatible/)).toBeInTheDocument();
+        expect(screen.getByText(/Camera active & permissions verified/)).toBeInTheDocument();
+        expect(screen.getByText(/Microphone active & permissions verified/)).toBeInTheDocument();
+        expect(screen.getByText(/Signaling endpoint responsive & online/)).toBeInTheDocument();
+        expect(screen.getByText(/Ping:/)).toBeInTheDocument();
+      }, { timeout: 10000 });
     });
   });
 
