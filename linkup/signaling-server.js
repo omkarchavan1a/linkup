@@ -24,15 +24,30 @@ const io = new Server(server, {
   }
 });
 
+// In-memory waiting lobby storage cache to persist guests list per room ID
+const waitingGuests = {};
+
+// Safe validation utilities for room ID and hex colors
+const validateUUID = (id) => typeof id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+const validateColor = (color) => typeof color === 'string' && /^#([0-9a-f]{3}){1,2}$/i.test(color);
+
 io.on('connection', (socket) => {
   console.log('Client connected:', socket.id);
 
   socket.on('room:join', ({ roomId, userId, name }) => {
+    if (!roomId || !validateUUID(roomId)) {
+      console.warn(`[Socket.io] Rejected room:join due to invalid roomId: ${roomId}`);
+      return;
+    }
     socket.join(roomId);
     console.log(`User ${name} (${userId}) joined room ${roomId}`);
     
     // Notify others in the room
     socket.to(roomId).emit('room:joined', { userId, name, socketId: socket.id });
+
+    // Instantly synchronize joining clients (like the host) with current waiting lobby
+    const currentList = waitingGuests[roomId] || [];
+    socket.emit('waiting-room:list', currentList);
   });
 
   socket.on('signal', ({ targetSocketId, signal }) => {
@@ -44,12 +59,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chat:message', ({ roomId, message, senderName, timestamp, type, fileId, fileMetadata }) => {
+    if (!roomId || !validateUUID(roomId)) return;
+
+    // Limit text message length to 2000 chars to avoid memory exhaustion
+    const sanitizedMsg = typeof message === 'string' ? message.slice(0, 2000) : "";
+
     // Broadcast chat message to all other participants in the room
     socket.to(roomId).emit('chat:message', {
       id: `${socket.id}-${Date.now()}`,
       senderSocketId: socket.id,
       senderName,
-      message,
+      message: sanitizedMsg,
       timestamp,
       isSystem: false,
       type: type || "text",
@@ -89,21 +109,66 @@ io.on('connection', (socket) => {
 
   // Waiting Lobby Event Pipeline
   socket.on('waiting-room:join', ({ roomId, name, userId }) => {
+    if (!roomId || !validateUUID(roomId)) {
+      console.warn(`[Socket.io] Rejected waiting-room:join due to invalid roomId: ${roomId}`);
+      return;
+    }
+    
     socket.join(`${roomId}-waiting`);
     console.log(`User ${name} (${userId}) waiting for approval in ${roomId}`);
-    socket.to(roomId).emit('waiting-room:request', {
+    
+    const payload = {
       socketId: socket.id,
-      name,
-      userId
-    });
+      name: name || "Guest",
+      userId: userId || `guest-${Date.now()}`
+    };
+
+    // Initialize array for this room if not already cached
+    if (!waitingGuests[roomId]) {
+      waitingGuests[roomId] = [];
+    }
+
+    // Avoid adding duplicate guests
+    if (!waitingGuests[roomId].some(guest => guest.socketId === socket.id)) {
+      waitingGuests[roomId].push(payload);
+    }
+
+    // Broadcast to main room using server-wide io.to(roomId) to fix socket.to room limitations
+    io.to(roomId).emit('waiting-room:pending', payload);
+    io.to(roomId).emit('waiting-room:request', payload);
+    io.to(roomId).emit('waiting-room:list', waitingGuests[roomId]);
   });
 
-  socket.on('waiting-room:approve', ({ targetSocketId }) => {
-    io.to(targetSocketId).emit('waiting-room:approved');
+  socket.on('waiting-room:approve', ({ roomId, targetSocketId, guestSocketId }) => {
+    const targetId = targetSocketId || guestSocketId;
+    if (!targetId) return;
+
+    io.to(targetId).emit('waiting-room:approved');
+
+    // Clean up from waitlist cache
+    if (roomId && validateUUID(roomId) && waitingGuests[roomId]) {
+      waitingGuests[roomId] = waitingGuests[roomId].filter(guest => guest.socketId !== targetId);
+      io.to(roomId).emit('waiting-room:list', waitingGuests[roomId]);
+    }
   });
 
-  socket.on('waiting-room:deny', ({ targetSocketId }) => {
-    io.to(targetSocketId).emit('waiting-room:denied');
+  socket.on('waiting-room:deny', ({ roomId, targetSocketId, guestSocketId }) => {
+    const targetId = targetSocketId || guestSocketId;
+    if (!targetId) return;
+
+    io.to(targetId).emit('waiting-room:denied');
+
+    // Clean up from waitlist cache
+    if (roomId && validateUUID(roomId) && waitingGuests[roomId]) {
+      waitingGuests[roomId] = waitingGuests[roomId].filter(guest => guest.socketId !== targetId);
+      io.to(roomId).emit('waiting-room:list', waitingGuests[roomId]);
+    }
+  });
+
+  // Real-time Host Settings Synchronization Relays
+  socket.on('room:settings:update', ({ roomId, settings }) => {
+    if (!roomId || !validateUUID(roomId)) return;
+    socket.to(roomId).emit('room:settings:updated', { settings });
   });
 
   // Whiteboard Synchronization & Permission Relays
@@ -112,7 +177,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('whiteboard:draw', ({ roomId, prevPos, currentPos, color, size }) => {
-    socket.to(roomId).emit('whiteboard:draw', { prevPos, currentPos, color, size });
+    if (!roomId || !validateUUID(roomId)) return;
+    if (color && !validateColor(color)) return;
+    
+    const parsedSize = parseInt(size, 10);
+    if (isNaN(parsedSize) || parsedSize < 1 || parsedSize > 50) return;
+
+    socket.to(roomId).emit('whiteboard:draw', { prevPos, currentPos, color, size: parsedSize });
   });
 
   socket.on('whiteboard:clear', ({ roomId }) => {
@@ -128,9 +199,18 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnecting', () => {
-    socket.rooms.forEach((roomId) => {
-      if (roomId !== socket.id) {
-        socket.to(roomId).emit('room:left', { socketId: socket.id });
+    socket.rooms.forEach((roomName) => {
+      if (roomName !== socket.id) {
+        // Check if socket is disconnecting while in waiting room queue
+        if (roomName.endsWith('-waiting')) {
+          const actualRoomId = roomName.slice(0, -8);
+          if (waitingGuests[actualRoomId]) {
+            waitingGuests[actualRoomId] = waitingGuests[actualRoomId].filter(guest => guest.socketId !== socket.id);
+            io.to(actualRoomId).emit('waiting-room:list', waitingGuests[actualRoomId]);
+          }
+        } else {
+          socket.to(roomName).emit('room:left', { socketId: socket.id });
+        }
       }
     });
   });
