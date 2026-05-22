@@ -5,7 +5,7 @@ import dbConnect from '@/lib/db';
 import Room from '@/models/Room';
 import { generateHostToken } from '@/lib/auth';
 
-import { sanitizeInput, validateRoomId } from '@/lib/validation';
+import { sanitizeInput } from '@/lib/validation';
 
 export async function POST(req: Request) {
   try {
