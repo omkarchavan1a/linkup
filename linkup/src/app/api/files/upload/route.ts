@@ -3,7 +3,7 @@ import dbConnect from '@/lib/db';
 import File from '@/models/File';
 
 import Room from '@/models/Room';
-import { validateUUID, sanitizeInput, validateBase64, validateMimeType } from '@/lib/validation';
+import { validateRoomId, sanitizeInput, validateBase64, validateMimeType } from '@/lib/validation';
 
 export async function POST(req: Request) {
   try {
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     }
 
     // 1. Validate roomId format
-    if (!validateUUID(roomId)) {
+    if (!validateRoomId(roomId)) {
       return NextResponse.json({
         success: false,
         error: "Invalid Room ID format"
