@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Room from '@/models/Room';
 
-import { validateUUID } from '@/lib/validation';
+import { validateRoomId } from '@/lib/validation';
 
 export async function GET(
   req: Request,
@@ -13,14 +13,14 @@ export async function GET(
     const { id } = params;
 
     // Validate room ID parameter
-    if (!id || !validateUUID(id)) {
+    if (!id || !validateRoomId(id)) {
       return NextResponse.json({
         success: false,
         error: "Invalid Room ID format"
       }, { status: 400 });
     }
 
-    const room = await Room.findById(id);
+    const room = await Room.findOne({ $or: [{ _id: id }, { slug: id }] });
 
     if (!room) {
       return NextResponse.json({
@@ -72,7 +72,7 @@ export async function PATCH(
     const { id } = params;
 
     // Validate room ID parameter
-    if (!id || !validateUUID(id)) {
+    if (!id || !validateRoomId(id)) {
       return NextResponse.json({
         success: false,
         error: "Invalid Room ID format"
@@ -98,7 +98,7 @@ export async function PATCH(
       }, { status: 400 });
     }
 
-    const room = await Room.findById(id);
+    const room = await Room.findOne({ $or: [{ _id: id }, { slug: id }] });
     if (!room) {
       return NextResponse.json({
         success: false,

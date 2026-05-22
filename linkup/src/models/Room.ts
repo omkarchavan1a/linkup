@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 export interface IRoom {
   _id: string; // UUID string
   name?: string;
+  slug?: string;
   hostToken: string;
   password?: string | null;
   createdAt: Date;
@@ -19,6 +20,7 @@ export interface IRoom {
 const RoomSchema: Schema = new Schema({
   _id: { type: String, required: true },
   name: { type: String, required: false },
+  slug: { type: String, required: false, unique: true, sparse: true },
   hostToken: { type: String, required: true },
   password: { type: String, required: false, default: null },
   createdAt: { type: Date, default: Date.now },

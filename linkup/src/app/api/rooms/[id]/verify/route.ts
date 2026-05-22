@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
 import Room from '@/models/Room';
 
-import { validateUUID } from '@/lib/validation';
+import { validateRoomId } from '@/lib/validation';
 
 export async function POST(
   req: Request,
@@ -14,7 +14,7 @@ export async function POST(
     const { id } = params;
 
     // Validate room ID parameter
-    if (!id || !validateUUID(id)) {
+    if (!id || !validateRoomId(id)) {
       return NextResponse.json({
         success: false,
         error: "Invalid Room ID format"

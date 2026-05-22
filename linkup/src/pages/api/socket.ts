@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { Server as NetServer } from 'http';
 import { Socket as NetSocket } from 'net';
 import { Server as SocketIOServer } from 'socket.io';
-import { validateUUID, validateColor } from '../../lib/validation';
+import { validateRoomId, validateColor } from '../../lib/validation';
 
 export const config = {
   api: {
@@ -45,7 +45,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
       console.log('Client connected:', socket.id);
 
       socket.on('room:join', ({ roomId, userId, name }) => {
-        if (!roomId || !validateUUID(roomId)) {
+        if (!roomId || !validateRoomId(roomId)) {
           console.warn(`[Socket.io] Rejected room:join due to invalid roomId: ${roomId}`);
           return;
         }
@@ -70,7 +70,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
       });
 
       socket.on('chat:message', ({ roomId, message, senderName, timestamp, type, fileId, fileMetadata }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         
         // Limit text message length to 2000 chars to avoid memory exhaustion
         const sanitizedMsg = typeof message === 'string' ? message.slice(0, 2000) : "";
@@ -90,14 +90,14 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
       });
 
       socket.on('room:leave', ({ roomId, userId }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.leave(roomId);
         console.log(`User ${userId} left room ${roomId}`);
         socket.to(roomId).emit('room:left', { userId, socketId: socket.id });
       });
 
       socket.on('screen-share:state', ({ roomId, isSharing }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.to(roomId).emit('screen-share:state', {
           socketId: socket.id,
           isSharing
@@ -106,7 +106,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 
       // Interactive Emoji Reaction Event
       socket.on('reaction:send', ({ roomId, reactionType }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.to(roomId).emit('reaction:received', {
           senderSocketId: socket.id,
           reactionType
@@ -115,7 +115,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 
       // Hand Raise Toggle Event
       socket.on('hand-raise:toggle', ({ roomId, isRaised }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.to(roomId).emit('hand-raise:state', {
           socketId: socket.id,
           isRaised
@@ -124,7 +124,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 
       // Waiting Lobby Event Pipeline (Robust synchronization & persistence)
       socket.on('waiting-room:join', ({ roomId, name, userId }) => {
-        if (!roomId || !validateUUID(roomId)) {
+        if (!roomId || !validateRoomId(roomId)) {
           console.warn(`[Socket.io] Rejected waiting-room:join due to invalid roomId: ${roomId}`);
           return;
         }
@@ -161,7 +161,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
         io.to(targetId).emit('waiting-room:approved');
 
         // Clean up from waitlist cache
-        if (roomId && validateUUID(roomId) && waitingGuests[roomId]) {
+        if (roomId && validateRoomId(roomId) && waitingGuests[roomId]) {
           waitingGuests[roomId] = waitingGuests[roomId].filter(guest => guest.socketId !== targetId);
           io.to(roomId).emit('waiting-room:list', waitingGuests[roomId]);
         }
@@ -174,7 +174,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
         io.to(targetId).emit('waiting-room:denied');
 
         // Clean up from waitlist cache
-        if (roomId && validateUUID(roomId) && waitingGuests[roomId]) {
+        if (roomId && validateRoomId(roomId) && waitingGuests[roomId]) {
           waitingGuests[roomId] = waitingGuests[roomId].filter(guest => guest.socketId !== targetId);
           io.to(roomId).emit('waiting-room:list', waitingGuests[roomId]);
         }
@@ -182,18 +182,18 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
 
       // Real-time Host Settings Synchronization Relays
       socket.on('room:settings:update', ({ roomId, settings }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.to(roomId).emit('room:settings:updated', { settings });
       });
 
       // Whiteboard Synchronization & Permission Relays
       socket.on('whiteboard:toggle', ({ roomId, isOpen }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.to(roomId).emit('whiteboard:toggle', { isOpen });
       });
 
       socket.on('whiteboard:draw', ({ roomId, prevPos, currentPos, color, size }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         if (color && !validateColor(color)) return;
         
         const parsedSize = parseInt(size, 10);
@@ -203,17 +203,17 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
       });
 
       socket.on('whiteboard:clear', ({ roomId }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.to(roomId).emit('whiteboard:clear');
       });
 
       socket.on('whiteboard:undo', ({ roomId }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.to(roomId).emit('whiteboard:undo');
       });
 
       socket.on('whiteboard:lock', ({ roomId, isLocked }) => {
-        if (!roomId || !validateUUID(roomId)) return;
+        if (!roomId || !validateRoomId(roomId)) return;
         socket.to(roomId).emit('whiteboard:lock', { isLocked });
       });
 
